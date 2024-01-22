@@ -38,7 +38,7 @@ public class CustomExceptionHandler {
         return e.getMessage();
     }
 
-    @ResponseStatus(NOT_FOUND)
+    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(ResourceAlreadyExistException.class)
     public String resourceAlreadyExistException(ResourceAlreadyExistException e) {
         log.error(e.getMessage());

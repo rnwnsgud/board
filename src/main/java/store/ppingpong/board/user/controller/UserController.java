@@ -1,5 +1,6 @@
 package store.ppingpong.board.user.controller;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +14,14 @@ import java.net.URI;
 
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@Builder
 @RestController
 public class UserController {
 
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> sendEmail(@RequestBody UserCreate userCreate) {
+    public ResponseEntity<UserResponse> sendEmail(@RequestBody UserCreate userCreate) {
         User user = userService.create(userCreate);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

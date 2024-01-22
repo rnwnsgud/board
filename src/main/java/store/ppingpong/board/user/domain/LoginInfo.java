@@ -5,12 +5,15 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.user.dto.UserCreate;
+import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Embeddable
 public class LoginInfo {
     private String loginId;
@@ -26,7 +29,7 @@ public class LoginInfo {
     }
 
 
-    public static LoginInfo of(UserCreate userCreate, PasswordEncoder passwordEncoder) {
+    public static LoginInfo of(UserCreate userCreate, CustomPasswordEncoder passwordEncoder) {
         LoginType loginType = extractDomain(userCreate.getEmail());
 
         return LoginInfo.builder()
@@ -42,7 +45,7 @@ public class LoginInfo {
         String domain = parts[1];
         if ("naver.com".equals(domain)) {
             return LoginType.NAVER;
-        } else if ("google.com".equals(domain)) {
+        } else if ("gmail.com".equals(domain)) {
             return LoginType.GOOGLE;
         } else throw new EmailNotSupportException("지원하지 않는 이메일 형식입니다.");
     }
