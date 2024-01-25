@@ -7,7 +7,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.user.dto.UserCreate;
 import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
@@ -30,7 +29,7 @@ public class LoginInfo {
 
 
     public static LoginInfo of(UserCreate userCreate, CustomPasswordEncoder passwordEncoder) {
-        LoginType loginType = extractDomain(userCreate.getEmail());
+        LoginType loginType = extractDomainName(userCreate.getEmail());
 
         return LoginInfo.builder()
                 .loginId(userCreate.getLoginId())
@@ -40,7 +39,7 @@ public class LoginInfo {
 
     }
 
-    private static LoginType extractDomain(String email) {
+    private static LoginType extractDomainName(String email) {
         String[] parts = email.split("@");
         String domain = parts[1];
         if ("naver.com".equals(domain)) {

@@ -1,9 +1,7 @@
 package store.ppingpong.board.user.controller;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
@@ -47,7 +45,6 @@ class UserControllerTest {
         assertThat(response.getBody().getLoginType()).isEqualTo(LoginType.NAVER);
 
     }
-
 
     @Test
     void 회원가입_시_이메일형식이_네이버_및_구글_이메일이_아니면_오류를_발생한다() {
@@ -105,7 +102,7 @@ class UserControllerTest {
     }
 
     @Test
-    void 사용자는_인증_코드로_계정을_활성화_시킬_수_있다() {
+    void 사용자는_인증코드로_계정을_활성화_시킬_수_있다() {
         // given
         TestContainer testContainer = TestContainer.builder()
                 .build();
