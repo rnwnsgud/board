@@ -35,7 +35,7 @@ public class FakeUserRepository implements UserRepository {
                     .userInfo(user.getUserInfo())
                     .loginInfo(user.getLoginInfo())
                     .userStatus(user.getUserStatus())
-                    .createdAt(user.getCreatedAt())
+                    .createdAt(100L)
                     .lastLoginAt(user.getLastLoginAt())
                     .build();
 

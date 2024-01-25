@@ -37,7 +37,6 @@ public class RedisService implements InMemoryService {
     public void verifyCode(String key, String certificationCode) {
 
         String value = getValue(key);
-        System.out.println(value);
         if (!certificationCode.equals(value)) throw new CertificationCodeNotMatchedException();
     }
 

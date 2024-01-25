@@ -17,7 +17,7 @@ public class UserResponse {
     private String nickname;
     private UserStatus status;
     private LoginType loginType;
-    private LocalDateTime createdAt;
+    private Long createdAt;
 
     public static UserResponse from(User user) {
         return UserResponse.builder()
@@ -26,6 +26,7 @@ public class UserResponse {
                 .nickname(user.getUserInfo().getNickname())
                 .loginType(user.getLoginInfo().getLoginType())
                 .status(UserStatus.PENDING)
+                .createdAt(user.getCreatedAt())
                 .build();
 
     }

@@ -41,6 +41,7 @@ class UserControllerTest {
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getNickname()).isEqualTo("쌀");
         assertThat(response.getBody().getEmail()).isEqualTo("ssar@naver.com");
+        assertThat(response.getBody().getCreatedAt()).isEqualTo(100L);
         assertThat(response.getBody().getStatus()).isEqualTo(UserStatus.PENDING);
         assertThat(response.getBody().getLoginType()).isEqualTo(LoginType.NAVER);
 
