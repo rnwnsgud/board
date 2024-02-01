@@ -10,4 +10,7 @@ public interface UserService {
     User create(UserCreate userCreate);
 
     void verifyEmail(Long id, String certificationCode);
+
+    void login(long id);
+
 }

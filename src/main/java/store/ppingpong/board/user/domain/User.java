@@ -7,6 +7,7 @@ import store.ppingpong.board.common.service.port.ClockHolder;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class User {
@@ -38,9 +39,43 @@ public class User {
                 .build();
     }
 
+    public static User valueOf(long id, String role) {
+
+        UserEnum userEnum = UserEnum.USER;
+
+        UserEnum[] userEnums = {UserEnum.USER, UserEnum.ASSISTANT, UserEnum.MANAGER, UserEnum.ADMIN};
+
+        for (UserEnum tmp : userEnums) {
+            if (tmp.name().equals(role)) userEnum = tmp;
+        }
+
+        UserInfo userInfo = UserInfo.builder()
+                .userEnum(userEnum)
+                .build();
+
+        return User.builder()
+                .id(id)
+                .userInfo(userInfo)
+                .build();
+    }
+
     public void verified() {
         this.userStatus = UserStatus.ACTIVE;
     }
+
+    public User login(ClockHolder clockHolder) {
+        return User.builder()
+                .id(id)
+                .loginInfo(loginInfo)
+                .userInfo(userInfo)
+                .userStatus(userStatus)
+                .createdAt(createdAt)
+                .lastLoginAt(clockHolder.mills())
+                .build();
+
+    }
+
+
 
 
 }

@@ -10,13 +10,12 @@ import store.ppingpong.board.user.controller.response.UserResponse;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.dto.UserCreate;
 
-import java.net.URI;
 
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Builder
 @RestController
-public class UserController {
+public class UserAccountController {
 
     private final UserService userService;
 

@@ -1,11 +1,10 @@
 package store.ppingpong.board.mock;
 
 import lombok.Builder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import store.ppingpong.board.common.service.port.ClockHolder;
 import store.ppingpong.board.common.controller.port.InMemoryService;
 import store.ppingpong.board.common.service.port.RandomHolder;
-import store.ppingpong.board.user.controller.UserController;
+import store.ppingpong.board.user.controller.UserAccountController;
 import store.ppingpong.board.user.service.CertificationService;
 import store.ppingpong.board.user.service.UserServiceImpl;
 import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
@@ -19,7 +18,7 @@ public class TestContainer {
     public final CertificationService certificationService;
     public final InMemoryService inMemoryService;
     public final CustomPasswordEncoder passwordEncoder;
-    public final UserController userController;
+    public final UserAccountController userController;
 
     @Builder
     public TestContainer(RandomHolder randomHolder, ClockHolder clockHolder) {
@@ -38,7 +37,7 @@ public class TestContainer {
                 .inMemoryService(inMemoryService)
                 .build();
 
-        this.userController = UserController.builder()
+        this.userController = UserAccountController.builder()
                 .userService(userService)
                 .build();
     }

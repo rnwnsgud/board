@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.auth0:java-jwt:4.0.0'
 
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.1'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'

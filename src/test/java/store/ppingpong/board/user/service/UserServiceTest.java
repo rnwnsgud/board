@@ -1,6 +1,5 @@
 package store.ppingpong.board.user.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
@@ -74,7 +73,6 @@ public class UserServiceTest {
         assertThat(user.getLoginInfo().getLoginType()).isEqualTo(LoginType.GOOGLE);
         assertThat(user.getLoginInfo().getEncodePassword()).isEqualTo("1234");
         assertThat(user.getLastLoginAt()).isNull();
-
 
     }
 

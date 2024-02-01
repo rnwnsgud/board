@@ -3,6 +3,7 @@ package store.ppingpong.board.user.infrastructure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.service.port.UserRepository;
 
@@ -24,9 +25,10 @@ public class UserRepositoryImpl implements UserRepository {
         return userJpaRepository.findByLoginInfoLoginId(loginId).map(UserEntity::toModel);
     }
 
+
     @Override
     public User getById(long id) {
-        return findById(id).orElseThrow();
+        return findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
     @Override
