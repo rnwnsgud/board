@@ -32,4 +32,35 @@ public class UserTest {
       assertThat(user.getCreatedAt()).isEqualTo(100);
       assertThat(user.getLastLoginAt()).isNull();
   }
+
+  @Test
+  void 로그인을_할_수_있고_로그인시_마지막_로그인_시간이_변경된다() {
+      // given
+      LoginInfo loginInfo = LoginInfo.builder()
+              .loginId("ssar1234")
+              .loginType(LoginType.NAVER)
+              .encodePassword("abc123def45")
+              .build();
+      UserInfo userInfo = UserInfo.builder()
+              .nickname("쌀")
+              .email("ssar@naver.com")
+              .userEnum(UserEnum.USER)
+              .build();
+
+      User user = User.builder()
+              .id(1L)
+              .userStatus(UserStatus.ACTIVE)
+              .loginInfo(loginInfo)
+              .userInfo(userInfo)
+              .createdAt(100L)
+              .lastLoginAt(200L)
+              .build();
+
+      // when
+      user = user.login(new TestClockHolder(123455667L));
+
+      // then
+      assertThat(user.getLastLoginAt()).isEqualTo(123455667L);
+
+  }
 }

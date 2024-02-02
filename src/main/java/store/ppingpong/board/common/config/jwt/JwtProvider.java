@@ -42,8 +42,7 @@ public class JwtProvider {
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET)).build().verify(token);
         Long id = decodedJWT.getClaim("id").asLong();
         String role = decodedJWT.getClaim("role").asString();
-        User user = User.valueOf(id, role);// ENUM값 넣어주기
-        LoginUser loginUser = new LoginUser(user);
-        return loginUser;
+        User user = User.valueOf(id, role);
+        return new LoginUser(user);
     }
 }

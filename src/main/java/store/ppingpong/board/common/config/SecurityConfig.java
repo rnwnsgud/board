@@ -36,7 +36,7 @@ public class SecurityConfig {
     // 생성자주입으로 가져오려니 다음 순환참조가 생김
     // jwtAuthenticatiorFilter -> AuthenticationManager(AuthConfig) -> SecurityConfig
 
-    // 등록순서때문에 발생하는거로 짐작해서, filterChain 파라미터에 선언해서 빈이 등록된걸 가져오도록 바꿈
+    // 빈등록순서때문에 발생하는거로 짐작해서, filterChain 파라미터에 선언해서 빈이 등록된걸 가져오도록 바꿈
 
     // JwtAuthenticationFilter 정상동작
 
@@ -56,8 +56,10 @@ public class SecurityConfig {
         http.formLogin(AbstractHttpConfigurer::disable);
         http.httpBasic((AbstractHttpConfigurer::disable));
 
-        http.addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class);
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class);
+//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilter(jwtAuthenticationFilter);
+        http.addFilter(jwtAuthorizationFilter);
 
 
         http.exceptionHandling((exception) -> exception.authenticationEntryPoint((request, response, e) -> {
