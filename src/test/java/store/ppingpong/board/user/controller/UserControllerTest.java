@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
+import store.ppingpong.board.common.handler.exception.ValidationException;
 import store.ppingpong.board.mock.TestContainer;
 import store.ppingpong.board.user.controller.response.UserResponse;
 import store.ppingpong.board.user.domain.*;
@@ -45,6 +46,26 @@ class UserControllerTest {
         assertThat(response.getBody().getStatus()).isEqualTo(UserStatus.PENDING);
         assertThat(response.getBody().getLoginType()).isEqualTo(LoginType.NAVER);
 
+    }
+
+    @Test
+    void 회원가입_시_이메일형식이_잘못됐으면_오류를_발생한다() {
+        // given
+        TestContainer testContainer = TestContainer.builder()
+                .build();
+
+        UserCreate userCreate = UserCreate.builder()
+                .email("ssardaum.com")
+                .nickname("쌀")
+                .loginId("ssar1234")
+                .rawPassword("1234")
+                .build();
+
+        // when
+        // then
+        assertThatThrownBy(() -> {
+            testContainer.userController.sendEmail(userCreate);
+        }).isInstanceOf(ValidationException.class);
     }
 
     @Test

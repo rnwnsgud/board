@@ -20,6 +20,7 @@ import store.ppingpong.board.user.service.port.UserRepository;
 import java.util.Optional;
 
 
+@Builder
 @RequiredArgsConstructor
 @Transactional
 @Service

@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
+import store.ppingpong.board.common.handler.exception.ValidationException;
 import store.ppingpong.board.user.dto.UserCreate;
 import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
 
@@ -41,6 +42,7 @@ public class LoginInfo {
 
     private static LoginType extractDomainName(String email) {
         String[] parts = email.split("@");
+        if (parts.length == 1)throw new ValidationException("이메일형식이 아닙니다.", null);
         String domain = parts[1];
         if ("naver.com".equals(domain)) {
             return LoginType.NAVER;
