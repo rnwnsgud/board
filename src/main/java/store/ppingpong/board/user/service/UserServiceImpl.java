@@ -21,7 +21,6 @@ import java.util.Optional;
 
 
 @RequiredArgsConstructor
-@Builder
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
@@ -54,7 +53,7 @@ public class UserServiceImpl implements UserService {
     public void verifyEmail(Long id, String certificationCode) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
         inMemoryService.verifyCode(user.getUserInfo().getEmail(), certificationCode);
-        user.verified();
+        user = user.verified();
         userRepository.save(user);
     }
 

@@ -43,7 +43,7 @@ public class User {
 
         UserEnum userEnum = UserEnum.USER;
 
-        UserEnum[] userEnums = {UserEnum.USER, UserEnum.ASSISTANT, UserEnum.MANAGER, UserEnum.ADMIN};
+        UserEnum[] userEnums = {UserEnum.USER,  UserEnum.ADMIN};
 
         for (UserEnum tmp : userEnums) {
             if (tmp.name().equals(role)) userEnum = tmp;
@@ -59,8 +59,16 @@ public class User {
                 .build();
     }
 
-    public void verified() {
-        this.userStatus = UserStatus.ACTIVE;
+    public User verified() {
+        return User.builder()
+                .id(id)
+                .loginInfo(loginInfo)
+                .userInfo(userInfo)
+                .userStatus(UserStatus.ACTIVE)
+                .createdAt(createdAt)
+                .lastLoginAt(lastLoginAt)
+                .build();
+
     }
 
     public User login(ClockHolder clockHolder) {

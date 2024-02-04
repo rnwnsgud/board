@@ -27,9 +27,7 @@ public class UserEntity {
     private UserInfo userInfo;
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
-    @Column
     private Long createdAt;
-    @Column
     private Long lastLoginAt;
 
     @Builder
