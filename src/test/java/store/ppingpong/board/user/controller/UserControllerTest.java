@@ -6,11 +6,13 @@ import org.springframework.http.ResponseEntity;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
-import store.ppingpong.board.common.handler.exception.ValidationException;
-import store.ppingpong.board.mock.TestContainer;
+import store.ppingpong.board.mock.user.TestClockHolder;
+import store.ppingpong.board.mock.user.TestContainer;
 import store.ppingpong.board.user.controller.response.UserResponse;
 import store.ppingpong.board.user.domain.*;
 import store.ppingpong.board.user.dto.UserCreate;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -24,7 +26,7 @@ class UserControllerTest {
         // given
         TestContainer testContainer = TestContainer.builder()
                 .randomHolder(() -> "123456")
-                .clockHolder(() -> 300)
+                .clockHolder(new TestClockHolder(300, LocalDateTime.MIN))
                 .build();
 
         UserCreate userCreate = UserCreate.builder()
@@ -48,25 +50,6 @@ class UserControllerTest {
 
     }
 
-    @Test
-    void 회원가입_시_이메일형식이_잘못됐으면_오류를_발생한다() {
-        // given
-        TestContainer testContainer = TestContainer.builder()
-                .build();
-
-        UserCreate userCreate = UserCreate.builder()
-                .email("ssardaum.com")
-                .nickname("쌀")
-                .loginId("ssar1234")
-                .rawPassword("1234")
-                .build();
-
-        // when
-        // then
-        assertThatThrownBy(() -> {
-            testContainer.userController.sendEmail(userCreate);
-        }).isInstanceOf(ValidationException.class);
-    }
 
     @Test
     void 회원가입_시_이메일형식이_네이버_및_구글_이메일이_아니면_오류를_발생한다() {

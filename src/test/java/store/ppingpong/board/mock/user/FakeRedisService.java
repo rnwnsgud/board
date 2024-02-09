@@ -1,4 +1,4 @@
-package store.ppingpong.board.mock;
+package store.ppingpong.board.mock.user;
 
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.controller.port.InMemoryService;

@@ -3,12 +3,11 @@ package store.ppingpong.board.user.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
-import store.ppingpong.board.mock.FakeEmailSender;
-import store.ppingpong.board.mock.FakePasswordEncoder;
-import store.ppingpong.board.mock.FakeRedisService;
-import store.ppingpong.board.mock.FakeUserRepository;
+import store.ppingpong.board.mock.user.*;
 import store.ppingpong.board.user.domain.*;
 import store.ppingpong.board.user.dto.UserCreate;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -29,7 +28,7 @@ public class UserServiceTest {
                 .userRepository(fakeUserRepository)
                 .passwordEncoder(fakePasswordEncoder)
                 .randomHolder(() -> "123456")
-                .clockHolder(() -> 100L)
+                .clockHolder(new TestClockHolder(100L, LocalDateTime.MIN))
                 .build();
 
         UserInfo userInfo = UserInfo.builder()

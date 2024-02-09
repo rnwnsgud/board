@@ -4,23 +4,27 @@ import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.forum.domain.Category;
 import store.ppingpong.board.forum.domain.Forum;
+import store.ppingpong.board.forum.domain.ForumStatus;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
 public class ForumResponse {
 
-    private long id;
+
     private String forumId;
     private String name;
     private Category category;
-    private long createdAt;
+    private ForumStatus forumStatus;
+    private LocalDateTime createdAt;
 
     public static ForumResponse from(Forum forum) {
         return ForumResponse.builder()
-                .id(forum.getId())
                 .forumId(forum.getForumId())
                 .name(forum.getName())
                 .category(forum.getCategory())
+                .forumStatus(forum.getForumStatus())
                 .createdAt(forum.getCreatedAt())
                 .build();
     }

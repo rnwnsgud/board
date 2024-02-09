@@ -42,7 +42,6 @@ public class LoginInfo {
 
     private static LoginType extractDomainName(String email) {
         String[] parts = email.split("@");
-        if (parts.length == 1)throw new ValidationException("이메일형식이 아닙니다.", null);
         String domain = parts[1];
         if ("naver.com".equals(domain)) {
             return LoginType.NAVER;

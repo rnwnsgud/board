@@ -1,4 +1,4 @@
-package store.ppingpong.board.mock;
+package store.ppingpong.board.mock.user;
 
 import lombok.Builder;
 import store.ppingpong.board.common.service.port.ClockHolder;

@@ -1,7 +1,9 @@
 package store.ppingpong.board.user.domain;
 
 import org.junit.jupiter.api.Test;
-import store.ppingpong.board.mock.TestClockHolder;
+import store.ppingpong.board.mock.user.TestClockHolder;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -22,7 +24,7 @@ public class UserTest {
               .build();
 
       // when
-      User user = User.of(loginInfo, userInfo, new TestClockHolder(100));
+      User user = User.of(loginInfo, userInfo, new TestClockHolder(100, LocalDateTime.MIN));
 
       // then
       assertThat(user.getId()).isNull();
@@ -57,7 +59,7 @@ public class UserTest {
               .build();
 
       // when
-      user = user.login(new TestClockHolder(123455667L));
+      user = user.login(new TestClockHolder(123455667L, LocalDateTime.MIN));
 
       // then
       assertThat(user.getLastLoginAt()).isEqualTo(123455667L);

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import store.ppingpong.board.common.service.port.ClockHolder;
 
 import java.time.Clock;
+import java.time.LocalDateTime;
 
 @Component
 public class SystemClockHolder implements ClockHolder {
@@ -11,5 +12,10 @@ public class SystemClockHolder implements ClockHolder {
     @Override
     public long mills() {
         return Clock.systemUTC().millis();
+    }
+
+    @Override
+    public LocalDateTime localMills() {
+        return LocalDateTime.now(Clock.systemUTC());
     }
 }

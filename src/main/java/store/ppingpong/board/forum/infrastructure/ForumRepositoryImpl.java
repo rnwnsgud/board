@@ -3,7 +3,11 @@ package store.ppingpong.board.forum.infrastructure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import store.ppingpong.board.forum.domain.Forum;
+import store.ppingpong.board.forum.domain.ForumStatus;
 import store.ppingpong.board.forum.service.port.ForumRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -14,5 +18,11 @@ public class ForumRepositoryImpl implements ForumRepository {
     @Override
     public Forum save(Forum forum) {
         return forumJpaRepository.save(ForumEntity.from(forum)).toModel();
+    }
+
+    @Override
+    public List<Forum> getActiveList() {
+        List<ForumEntity> forumEntities = forumJpaRepository.findByForumStatus(ForumStatus.ACTIVE);
+        return forumEntities.stream().map(ForumEntity::toModel).collect(Collectors.toList());
     }
 }

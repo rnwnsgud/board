@@ -1,4 +1,4 @@
-package store.ppingpong.board.mock;
+package store.ppingpong.board.mock.user;
 
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
