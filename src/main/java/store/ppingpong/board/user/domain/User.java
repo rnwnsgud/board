@@ -15,7 +15,7 @@ public class User {
     private final Long id;
     private final LoginInfo loginInfo;
     private final UserInfo userInfo;
-    private UserStatus userStatus;
+    private final UserStatus userStatus;
     private final Long createdAt;
     private final Long lastLoginAt;
 
