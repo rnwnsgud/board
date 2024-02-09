@@ -3,6 +3,7 @@ package store.ppingpong.board.forum.domain;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.service.port.ClockHolder;
+import store.ppingpong.board.common.service.port.ClockLocalHolder;
 import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.user.domain.UserEnum;
 
@@ -31,7 +32,7 @@ public class Forum {
         this.createdAt = createdAt;
     }
 
-    public static Forum valueOf(ForumCreate forumCreate, ClockHolder clockHolder, UserEnum userEnum) {
+    public static Forum valueOf(ForumCreate forumCreate, ClockLocalHolder clockLocalHolder, UserEnum userEnum) {
         ForumStatus forumStatus;
         if (userEnum == UserEnum.USER) forumStatus = ForumStatus.PENDING;
         else forumStatus = ForumStatus.ACTIVE;
@@ -41,7 +42,7 @@ public class Forum {
                 .introduction(forumCreate.getIntroduction())
                 .category(forumCreate.getCategory())
                 .forumStatus(forumStatus)
-                .createdAt(clockHolder.localMills())
+                .createdAt(clockLocalHolder.localMills())
                 .build();
     }
 }

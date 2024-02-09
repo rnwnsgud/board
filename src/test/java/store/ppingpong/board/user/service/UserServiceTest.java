@@ -3,6 +3,7 @@ package store.ppingpong.board.user.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
+import store.ppingpong.board.mock.TestClockHolder;
 import store.ppingpong.board.mock.user.*;
 import store.ppingpong.board.user.domain.*;
 import store.ppingpong.board.user.dto.UserCreate;
@@ -28,7 +29,7 @@ public class UserServiceTest {
                 .userRepository(fakeUserRepository)
                 .passwordEncoder(fakePasswordEncoder)
                 .randomHolder(() -> "123456")
-                .clockHolder(new TestClockHolder(100L, LocalDateTime.MIN))
+                .clockHolder(new TestClockHolder(100L))
                 .build();
 
         UserInfo userInfo = UserInfo.builder()

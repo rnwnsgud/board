@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
-import store.ppingpong.board.mock.user.TestClockHolder;
-import store.ppingpong.board.mock.user.TestContainer;
+import store.ppingpong.board.mock.TestClockHolder;
+import store.ppingpong.board.mock.user.TestUserContainer;
 import store.ppingpong.board.user.controller.response.UserResponse;
 import store.ppingpong.board.user.domain.*;
 import store.ppingpong.board.user.dto.UserCreate;
@@ -24,9 +24,9 @@ class UserControllerTest {
     void 회원가입_사용자는_PENDING_상태이며_LOGINTYPE이_할당되었다() {
 
         // given
-        TestContainer testContainer = TestContainer.builder()
+        TestUserContainer testContainer = TestUserContainer.builder()
                 .randomHolder(() -> "123456")
-                .clockHolder(new TestClockHolder(300, LocalDateTime.MIN))
+                .clockHolder(new TestClockHolder(300L))
                 .build();
 
         UserCreate userCreate = UserCreate.builder()
@@ -54,7 +54,7 @@ class UserControllerTest {
     @Test
     void 회원가입_시_이메일형식이_네이버_및_구글_이메일이_아니면_오류를_발생한다() {
         // given
-        TestContainer testContainer = TestContainer.builder()
+        TestUserContainer testContainer = TestUserContainer.builder()
                 .build();
 
         UserCreate userCreate = UserCreate.builder()
@@ -74,7 +74,7 @@ class UserControllerTest {
     @Test
     void 이미_회원가입된_사용자가_회원가입을_진행하면_400_응답을_받는다() {
         // given
-        TestContainer testContainer = TestContainer.builder()
+        TestUserContainer testContainer = TestUserContainer.builder()
                 .build();
 
         LoginInfo loginInfo = LoginInfo.builder()
@@ -109,7 +109,7 @@ class UserControllerTest {
     @Test
     void 사용자는_인증코드로_계정을_활성화_시킬_수_있다() {
         // given
-        TestContainer testContainer = TestContainer.builder()
+        TestUserContainer testContainer = TestUserContainer.builder()
                 .build();
 
         LoginInfo loginInfo = LoginInfo.builder()
@@ -145,7 +145,7 @@ class UserControllerTest {
     @Test
     void 사용자는_인증_코드가_일치하지_않으면_권한_없음_에러를_내려준다() {
         // given
-        TestContainer testContainer = TestContainer.builder()
+        TestUserContainer testContainer = TestUserContainer.builder()
                 .build();
 
         LoginInfo loginInfo = LoginInfo.builder()

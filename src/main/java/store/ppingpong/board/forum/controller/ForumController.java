@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.forum.controller.port.ForumService;
 import store.ppingpong.board.forum.domain.Forum;
@@ -37,6 +34,7 @@ public class ForumController {
     }
 
     // ACTIVE 상태인 Forum만 가져오기
+    @GetMapping
     public ResponseEntity<ForumListResponse> getActiveList() {
         List<Forum> forums = forumService.getActiveList();
         return ResponseEntity

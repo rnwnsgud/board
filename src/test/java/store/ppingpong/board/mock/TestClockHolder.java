@@ -1,4 +1,4 @@
-package store.ppingpong.board.mock.user;
+package store.ppingpong.board.mock;
 
 import lombok.RequiredArgsConstructor;
 import store.ppingpong.board.common.service.port.ClockHolder;
@@ -9,15 +9,9 @@ import java.time.LocalDateTime;
 public class TestClockHolder implements ClockHolder {
 
     private final long millis;
-    private final LocalDateTime localDateTime;
     @Override
     public long mills() {
         return millis;
-    }
-
-    @Override
-    public LocalDateTime localMills() {
-        return localDateTime;
     }
 
 }

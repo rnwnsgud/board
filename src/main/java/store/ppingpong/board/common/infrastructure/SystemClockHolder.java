@@ -14,8 +14,5 @@ public class SystemClockHolder implements ClockHolder {
         return Clock.systemUTC().millis();
     }
 
-    @Override
-    public LocalDateTime localMills() {
-        return LocalDateTime.now(Clock.systemUTC());
-    }
+
 }

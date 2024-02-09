@@ -11,7 +11,7 @@ import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
 import store.ppingpong.board.user.service.port.EmailSender;
 import store.ppingpong.board.user.service.port.UserRepository;
 
-public class TestContainer {
+public class TestUserContainer {
 
     public final EmailSender emailSender;
     public final UserRepository userRepository;
@@ -21,7 +21,7 @@ public class TestContainer {
     public final UserAccountController userController;
 
     @Builder
-    public TestContainer(RandomHolder randomHolder, ClockHolder clockHolder) {
+    public TestUserContainer(RandomHolder randomHolder, ClockHolder clockHolder) {
         this.emailSender = new FakeEmailSender();
         this.userRepository = new FakeUserRepository();
         this.certificationService = new CertificationService(emailSender);
