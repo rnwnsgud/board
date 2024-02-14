@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Builder
 public class ForumResponse {
 
-
     private String forumId;
     private String name;
     private Category category;

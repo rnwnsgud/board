@@ -6,7 +6,7 @@ import store.ppingpong.board.forum.domain.Forum;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Getter
 public class ForumListResponse {
 
     List<ForumDto> forumDtoList;
