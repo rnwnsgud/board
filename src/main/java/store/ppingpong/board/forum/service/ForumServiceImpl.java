@@ -2,6 +2,7 @@ package store.ppingpong.board.forum.service;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.common.service.port.ClockHolder;
@@ -24,6 +25,7 @@ import java.util.List;
 @Transactional
 @Service
 public class ForumServiceImpl implements ForumService {
+
 
     private final ForumRepository forumRepository;
     private final ForumUserRepository forumUserRepository;

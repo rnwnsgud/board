@@ -3,12 +3,10 @@ package store.ppingpong.board.user.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
-import store.ppingpong.board.mock.TestClockHolder;
+import store.ppingpong.board.mock.user.TestClockHolder;
 import store.ppingpong.board.mock.user.*;
 import store.ppingpong.board.user.domain.*;
 import store.ppingpong.board.user.dto.UserCreate;
-
-import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

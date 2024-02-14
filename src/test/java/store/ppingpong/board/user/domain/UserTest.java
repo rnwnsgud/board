@@ -1,9 +1,7 @@
 package store.ppingpong.board.user.domain;
 
 import org.junit.jupiter.api.Test;
-import store.ppingpong.board.mock.TestClockHolder;
-
-import java.time.LocalDateTime;
+import store.ppingpong.board.mock.user.TestClockHolder;
 
 import static org.assertj.core.api.Assertions.*;
 

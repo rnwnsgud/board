@@ -6,13 +6,11 @@ import org.springframework.http.ResponseEntity;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
-import store.ppingpong.board.mock.TestClockHolder;
+import store.ppingpong.board.mock.user.TestClockHolder;
 import store.ppingpong.board.mock.user.TestUserContainer;
 import store.ppingpong.board.user.controller.response.UserResponse;
 import store.ppingpong.board.user.domain.*;
 import store.ppingpong.board.user.dto.UserCreate;
-
-import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
