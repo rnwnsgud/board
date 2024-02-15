@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class ForumTest {
+class ForumTest {
 
     @Test
     void ForumCreate으로_포럼을_만들_수_있다() {
