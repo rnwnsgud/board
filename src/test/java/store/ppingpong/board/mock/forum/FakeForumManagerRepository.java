@@ -1,20 +1,20 @@
 package store.ppingpong.board.mock.forum;
 
-import store.ppingpong.board.forum.domain.ForumUser;
-import store.ppingpong.board.forum.service.port.ForumUserRepository;
+import store.ppingpong.board.forum.domain.ForumManager;
+import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FakeForumUserRepository implements ForumUserRepository {
+public class FakeForumManagerRepository implements ForumManagerRepository {
 
-    private final List<ForumUser> data = new ArrayList<>();
+    private final List<ForumManager> data = new ArrayList<>();
     private static long sequence = 0L;
     @Override
-    public ForumUser save(ForumUser forumUser) {
+    public ForumManager save(ForumManager forumUser) {
         if (forumUser.getId()== null || forumUser.getId()==0){
-            ForumUser mockForumUser = ForumUser.builder()
+            ForumManager mockForumUser = ForumManager.builder()
                     .id(sequence++)
                     .user(forumUser.getUser())
                     .forum(forumUser.getForum())

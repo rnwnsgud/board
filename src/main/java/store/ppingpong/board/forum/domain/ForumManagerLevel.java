@@ -1,5 +1,5 @@
 package store.ppingpong.board.forum.domain;
 
-public enum ForumUserLevel {
+public enum ForumManagerLevel {
     USER, ASSISTANT, MANAGER
 }

@@ -7,6 +7,7 @@ import store.ppingpong.board.forum.domain.ForumStatus;
 import store.ppingpong.board.forum.service.port.ForumRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -24,5 +25,10 @@ public class ForumRepositoryImpl implements ForumRepository {
     public List<Forum> getActiveList() {
         List<ForumEntity> forumEntities = forumJpaRepository.findByForumStatus(ForumStatus.ACTIVE);
         return forumEntities.stream().map(ForumEntity::toModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Forum> findById(String forumId) {
+        return forumJpaRepository.findByForumId(forumId).map(ForumEntity::toModel);
     }
 }

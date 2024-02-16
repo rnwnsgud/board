@@ -11,7 +11,9 @@ import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.forum.controller.port.ForumService;
 import store.ppingpong.board.forum.domain.Forum;
+import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.dto.ForumCreate;
+import store.ppingpong.board.forum.dto.ForumDetailResponse;
 import store.ppingpong.board.forum.dto.ForumListResponse;
 import store.ppingpong.board.forum.dto.ForumResponse;
 
@@ -37,5 +39,13 @@ public class ForumController {
         List<Forum> forums = forumService.getActiveList();
         return new ResponseEntity<>(ResponseDto.of(1,"ACTIVE 포럼 리스트 가져오기", new ForumListResponse(forums)), HttpStatus.OK);
 
+    }
+
+
+    @GetMapping("/{forumId}") // FIX : 포스팅 기능 추가 후 responseDto 변경
+    public ResponseEntity<?> get(@PathVariable("forumId") String forumId) {
+        Forum forum = forumService.findById(forumId);
+        List<ForumManager> forumManagers = forumService.findForumManagers(forumId);
+        return new ResponseEntity<>(ResponseDto.of(1,"해당 포럼 상세정보 가져오기", new ForumDetailResponse(forum, forumManagers)), HttpStatus.OK);
     }
 }

@@ -1,12 +1,11 @@
 package store.ppingpong.board.forum.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.forum.domain.*;
 import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.mock.forum.FakeForumRepository;
-import store.ppingpong.board.mock.forum.FakeForumUserRepository;
+import store.ppingpong.board.mock.forum.FakeForumManagerRepository;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
 import store.ppingpong.board.user.domain.*;
 
@@ -22,7 +21,7 @@ class ForumServiceTest {
     @BeforeEach
     void init() {
         FakeForumRepository fakeForumRepository = new FakeForumRepository();
-        FakeForumUserRepository fakeForumUserRepository = new FakeForumUserRepository();
+        FakeForumManagerRepository fakeForumUserRepository = new FakeForumManagerRepository();
 
         this.forumService = ForumServiceImpl.builder()
                 .clockLocalHolder(new TestClockLocalHolder(LocalDateTime.MIN))
@@ -55,11 +54,11 @@ class ForumServiceTest {
                 .loginInfo(loginInfo)
                 .createdAt(100L).build();
         fakeForumRepository.save(forum);
-        fakeForumUserRepository.save(ForumUser.builder()
+        fakeForumUserRepository.save(ForumManager.builder()
                 .id(1L)
                 .user(user)
                 .forum(forum)
-                .forumUserLevel(ForumUserLevel.MANAGER)
+                .forumUserLevel(ForumManagerLevel.MANAGER)
                 .build());
 
     }
