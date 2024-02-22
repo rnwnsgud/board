@@ -51,8 +51,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override // PENDING 상태인 유저가 메일인증을 성공하면 ACTIVE 상태로 전환한다.
-    public void verifyEmail(Long id, String certificationCode) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
+    public void verifyEmail(long id, String certificationCode) {
+        User user = getById(id);
         inMemoryService.verifyCode(user.getUserInfo().getEmail(), certificationCode);
         user = user.verified();
         userRepository.save(user);
@@ -63,6 +63,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getById(id);
         user = user.login(clockHolder);
         userRepository.save(user);
+    }
+
+    @Override
+    public User getById(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
     private User getByInfo(LoginInfo loginInfo, UserInfo userInfo) {

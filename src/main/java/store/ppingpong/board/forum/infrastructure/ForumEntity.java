@@ -1,5 +1,6 @@
 package store.ppingpong.board.forum.infrastructure;
 
+import ch.qos.logback.core.spi.LifeCycle;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import store.ppingpong.board.forum.domain.ForumStatus;
 
 import java.time.LocalDateTime;
 
+
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,11 +27,14 @@ public class ForumEntity implements Persistable<String> { // 김영한 새로운
     private String forumId;
     private String name;
     private String introduction;
+
+    @Enumerated(value = EnumType.STRING)
     private Category category;
     @Enumerated(value = EnumType.STRING)
     private ForumStatus forumStatus;
     @CreatedDate
     private LocalDateTime createdAt;
+
 
     @Builder
     private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt) {
@@ -71,4 +76,5 @@ public class ForumEntity implements Persistable<String> { // 김영한 새로운
     public boolean isNew() {
         return createdAt == null;
     }
+
 }

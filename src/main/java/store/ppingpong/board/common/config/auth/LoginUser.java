@@ -13,7 +13,7 @@ import java.util.Map;
 @Getter
 public class LoginUser implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public LoginUser(User user) {
         this.user = user;

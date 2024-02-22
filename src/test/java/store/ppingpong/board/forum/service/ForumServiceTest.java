@@ -26,7 +26,7 @@ class ForumServiceTest {
         this.forumService = ForumServiceImpl.builder()
                 .clockLocalHolder(new TestClockLocalHolder(LocalDateTime.MIN))
                 .forumRepository(fakeForumRepository)
-                .forumUserRepository(fakeForumUserRepository)
+                .forumManagerRepository(fakeForumUserRepository)
                 .build();
 
         Forum forum = Forum.builder()

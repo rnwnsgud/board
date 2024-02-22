@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
+import store.ppingpong.board.forum.controller.port.ForumManagerService;
 import store.ppingpong.board.forum.controller.port.ForumService;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumManager;
@@ -26,6 +27,7 @@ import java.util.List;
 public class ForumController {
 
     private final ForumService forumService;
+    private final ForumManagerService forumManagerService;
 
     @PostMapping
     public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, @AuthenticationPrincipal LoginUser loginUser) {
@@ -41,11 +43,12 @@ public class ForumController {
 
     }
 
-
     @GetMapping("/{forumId}") // FIX : 포스팅 기능 추가 후 responseDto 변경
     public ResponseEntity<?> get(@PathVariable("forumId") String forumId) {
         Forum forum = forumService.findById(forumId);
-        List<ForumManager> forumManagers = forumService.findForumManagers(forumId);
+        List<ForumManager> forumManagers = forumManagerService.findForumManagers(forumId);
         return new ResponseEntity<>(ResponseDto.of(1,"해당 포럼 상세정보 가져오기", new ForumDetailResponse(forum, forumManagers)), HttpStatus.OK);
     }
+
+
 }

@@ -1,12 +1,10 @@
-package store.ppingpong.board.user.controller.response;
+package store.ppingpong.board.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.user.domain.LoginType;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.domain.UserStatus;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Builder

@@ -1,6 +1,5 @@
 package store.ppingpong.board.forum.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
@@ -40,7 +39,7 @@ class ForumTest {
                 .userStatus(UserStatus.ACTIVE)
                 .build();
 
-        Forum forum = Forum.valueOf(forumCreate, new TestClockLocalHolder(LocalDateTime.MIN), user.getUserInfo().getUserEnum());
+        Forum forum = Forum.of(forumCreate, new TestClockLocalHolder(LocalDateTime.MIN), user.getUserInfo().getUserEnum());
 
         assertThat(forum.getForumId()).isEqualTo("reverse1999");
         assertThat(forum.getName()).isEqualTo("리버스1999");

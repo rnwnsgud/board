@@ -20,7 +20,7 @@ public class TestForumContainer {
 
         ForumServiceImpl forumService = ForumServiceImpl.builder()
                 .forumRepository(forumRepository)
-                .forumUserRepository(forumUserRepository)
+                .forumManagerRepository(forumUserRepository)
                 .clockLocalHolder(clockLocalHolder)
                 .build();
         this.forumController = ForumController.builder()

@@ -14,6 +14,9 @@ public interface ForumService {
 
     Forum findById(String forumId);
 
-    List<ForumManager> findForumManagers(String forumId);
+
+
+
+
 
 }

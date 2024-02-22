@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.user.controller.port.UserService;
-import store.ppingpong.board.user.controller.response.UserResponse;
+import store.ppingpong.board.user.dto.UserResponse;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.dto.UserCreate;
 

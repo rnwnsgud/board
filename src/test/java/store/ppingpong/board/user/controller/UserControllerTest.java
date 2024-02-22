@@ -8,7 +8,7 @@ import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
 import store.ppingpong.board.mock.user.TestClockHolder;
 import store.ppingpong.board.mock.user.TestUserContainer;
-import store.ppingpong.board.user.controller.response.UserResponse;
+import store.ppingpong.board.user.dto.UserResponse;
 import store.ppingpong.board.user.domain.*;
 import store.ppingpong.board.user.dto.UserCreate;
 

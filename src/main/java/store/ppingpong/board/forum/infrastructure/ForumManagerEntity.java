@@ -28,14 +28,16 @@ public class ForumManagerEntity {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private UserEntity userEntity;
-    private ForumManagerLevel forumUserLevel;
+
+    @Enumerated(value = EnumType.STRING)
+    private ForumManagerLevel forumManagerLevel;
 
     @Builder
-    private ForumManagerEntity(Long id, ForumEntity forumEntity, UserEntity userEntity, ForumManagerLevel forumUserLevel) {
+    private ForumManagerEntity(Long id, ForumEntity forumEntity, UserEntity userEntity, ForumManagerLevel forumManagerLevel) {
         this.id = id;
         this.forumEntity = forumEntity;
         this.userEntity = userEntity;
-        this.forumUserLevel = forumUserLevel;
+        this.forumManagerLevel = forumManagerLevel;
     }
 
     public static ForumManagerEntity from(ForumManager forumUser) {
@@ -43,7 +45,7 @@ public class ForumManagerEntity {
                 .id(forumUser.getId())
                 .forumEntity(ForumEntity.from(forumUser.getForum()))
                 .userEntity(UserEntity.from(forumUser.getUser()))
-                .forumUserLevel(forumUser.getForumUserLevel())
+                .forumManagerLevel(forumUser.getForumUserLevel())
                 .build();
     }
 
@@ -52,7 +54,7 @@ public class ForumManagerEntity {
                 .id(id)
                 .user(userEntity.toModel())
                 .forum(forumEntity.toModel())
-                .forumUserLevel(forumUserLevel)
+                .forumUserLevel(forumManagerLevel)
                 .build();
     }
 }

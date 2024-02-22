@@ -26,16 +26,16 @@ public class ForumServiceImpl implements ForumService {
 
 
     private final ForumRepository forumRepository;
-    private final ForumManagerRepository forumUserRepository;
+    private final ForumManagerRepository forumManagerRepository;
     private final ClockLocalHolder clockLocalHolder;
     @Override
     public Forum create(ForumCreate forumCreate, User user) {
-        Forum forum = forumRepository.save(Forum.valueOf(forumCreate, clockLocalHolder, user.getUserInfo().getUserEnum()));
+        Forum forum = forumRepository.save(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserEnum()));
         ForumManager forumUser = ForumManager.builder()
                 .forum(forum)
                 .user(user)
                 .forumUserLevel(ForumManagerLevel.MANAGER).build();
-        forumUserRepository.save(forumUser);
+        forumManagerRepository.save(forumUser);
         return forum;
     }
 
@@ -49,10 +49,7 @@ public class ForumServiceImpl implements ForumService {
         return forumRepository.findById(forumId).orElseThrow(() -> new ResourceNotFoundException("Forums", forumId));
     }
 
-    @Override
-    public List<ForumManager> findForumManagers(String forumId) {
-        return forumUserRepository.getForumManagers(forumId);
-    }
+
 
 
 }

@@ -12,21 +12,21 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
     private final List<ForumManager> data = new ArrayList<>();
     private static long sequence = 0L;
     @Override
-    public ForumManager save(ForumManager forumUser) {
-        if (forumUser.getId()== null || forumUser.getId()==0){
+    public ForumManager save(ForumManager forumManager) {
+        if (forumManager.getId()== null || forumManager.getId()==0){
             ForumManager mockForumUser = ForumManager.builder()
                     .id(sequence++)
-                    .user(forumUser.getUser())
-                    .forum(forumUser.getForum())
-                    .forumUserLevel(forumUser.getForumUserLevel())
+                    .user(forumManager.getUser())
+                    .forum(forumManager.getForum())
+                    .forumUserLevel(forumManager.getForumUserLevel())
                     .build();
 
             data.add(mockForumUser);
-            return forumUser;
+            return forumManager;
         } else {
-            data.removeIf(item -> Objects.equals(item.getId(), forumUser.getId()));
-            data.add(forumUser);
-            return forumUser;
+            data.removeIf(item -> Objects.equals(item.getId(), forumManager.getId()));
+            data.add(forumManager);
+            return forumManager;
         }
     }
 }
