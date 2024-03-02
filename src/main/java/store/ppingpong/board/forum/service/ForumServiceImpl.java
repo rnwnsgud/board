@@ -31,10 +31,7 @@ public class ForumServiceImpl implements ForumService {
     @Override
     public Forum create(ForumCreate forumCreate, User user) {
         Forum forum = forumRepository.save(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserEnum()));
-        ForumManager forumUser = ForumManager.builder()
-                .forum(forum)
-                .user(user)
-                .forumUserLevel(ForumManagerLevel.MANAGER).build();
+        ForumManager forumUser = ForumManager.of(forum.getForumId(), user.getId(), ForumManagerLevel.MANAGER);
         forumManagerRepository.save(forumUser);
         return forum;
     }
