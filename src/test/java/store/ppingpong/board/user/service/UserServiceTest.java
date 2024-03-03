@@ -11,7 +11,8 @@ import store.ppingpong.board.user.dto.UserCreate;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-public class UserServiceTest {
+public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테스트 추가해야됨
+
 
     private UserServiceImpl userService;
 

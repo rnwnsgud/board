@@ -31,8 +31,7 @@ public class UserEntity {
     private Long lastLoginAt;
 
     @Builder
-    private UserEntity(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
-        this.id = id;
+    public UserEntity(LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
         this.loginInfo = loginInfo;
         this.userInfo = userInfo;
         this.userStatus = userStatus;
@@ -42,7 +41,6 @@ public class UserEntity {
 
     public static UserEntity from(User user) {
         return UserEntity.builder()
-                .id(user.getId())
                 .userInfo(user.getUserInfo())
                 .loginInfo(user.getLoginInfo())
                 .userStatus(user.getUserStatus())
