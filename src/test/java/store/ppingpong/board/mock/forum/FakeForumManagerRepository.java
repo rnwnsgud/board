@@ -29,4 +29,14 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
             return forumManager;
         }
     }
+
+    @Override
+    public List<ForumManager> getListByForumId(String forumId) {
+        return null;
+    }
+
+    @Override
+    public ForumManager getManagerByForumId(String forumId) {
+        return null;
+    }
 }

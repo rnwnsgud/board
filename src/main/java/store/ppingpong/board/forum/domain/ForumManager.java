@@ -1,7 +1,6 @@
 package store.ppingpong.board.forum.domain;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 import store.ppingpong.board.common.handler.exception.ResourceNotSameException;
 import store.ppingpong.board.user.domain.User;
 
@@ -10,28 +9,29 @@ import java.util.Objects;
 @Getter
 public class ForumManager {
     private final Long id;
-
-    private final Forum forum;
-    private final User user;
-    private final ForumManagerLevel forumUserLevel;
+    private final String forumId;
+    private final Long userId;
+    private final ForumManagerLevel forumManagerLevel;
 
     @Builder
-    private ForumManager(Long id, Forum forum, User user, ForumManagerLevel forumUserLevel) {
+    private ForumManager(Long id, String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
         this.id = id;
-        this.forum = forum;
-        this.user = user;
-        this.forumUserLevel = forumUserLevel;
+        this.forumId = forumId;
+        this.userId = userId;
+        this.forumManagerLevel = forumManagerLevel;
     }
 
-    public static ForumManager valueOf(Forum forum, User user) {
+    public static ForumManager of(String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
         return ForumManager.builder()
-                .forum(forum)
-                .user(user)
-                .forumUserLevel(ForumManagerLevel.ASSISTANT)
+                .forumId(forumId)
+                .userId(userId)
+                .forumManagerLevel(forumManagerLevel)
                 .build();
     }
 
+
+
     public void isSameUser(User user) {
-        if(!Objects.equals(this.user.getId(), user.getId())) throw new ResourceNotSameException("USER", user.getId());
+        if(!Objects.equals(this.userId, user.getId())) throw new ResourceNotSameException("본인은 해당 포럼의 매니저가 아닙니다. : ", user.getId());
     }
 }

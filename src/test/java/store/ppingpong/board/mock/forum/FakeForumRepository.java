@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FakeForumRepository implements ForumRepository {
@@ -39,5 +40,10 @@ public class FakeForumRepository implements ForumRepository {
         return data.stream()
                 .filter(item -> item.getForumStatus() == ForumStatus.ACTIVE)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Forum> findById(String forumId) {
+        return Optional.empty();
     }
 }

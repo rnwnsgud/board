@@ -3,7 +3,6 @@ package store.ppingpong.board.forum.infrastructure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import store.ppingpong.board.forum.domain.ForumManager;
-import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
 
@@ -19,16 +18,17 @@ public class ForumManagerRepositoryImpl implements ForumManagerRepository {
     @Override
     public ForumManager save(ForumManager forumManager) {
         return forumManagerJpaRepository.save(ForumManagerEntity.from(forumManager)).toModel();
+
     }
 
     @Override
     public List<ForumManager> getListByForumId(String forumId) {
-        return forumManagerJpaRepository.getListByForumId(forumId).stream().map(ForumManagerEntity::toModel).collect(Collectors.toList());
+        return forumManagerJpaRepository.findByForumId(forumId).stream().map(ForumManagerEntity::toModel).collect(Collectors.toList());
     }
 
     @Override
     public ForumManager getManagerByForumId(String forumId) {
-        return forumManagerJpaRepository.getByForumIdAndLevel(forumId).toModel();
+        return forumManagerJpaRepository.findMangerByForumId(forumId).toModel();
     }
 
 

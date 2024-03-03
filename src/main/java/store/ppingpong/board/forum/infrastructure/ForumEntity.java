@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "forum_tb")
-public class ForumEntity implements Persistable<String> { // 김영한 새로운 엔티티를 구별하는 방법
+public class ForumEntity implements Persistable<String> {
 
     @Id
     private String forumId;
