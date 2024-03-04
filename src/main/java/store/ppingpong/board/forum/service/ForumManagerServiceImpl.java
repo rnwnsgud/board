@@ -16,6 +16,7 @@ public class ForumManagerServiceImpl implements ForumManagerService {
 
     private final ForumManagerRepository forumManagerRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public ForumManager findForumManager(String forumId) {
         return forumManagerRepository.findByForumId(forumId);

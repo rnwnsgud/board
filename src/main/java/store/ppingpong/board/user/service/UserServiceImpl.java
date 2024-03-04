@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final CertificationService certificationService;
     private final RandomHolder randomHolder;
 
+
     @Override // 유저가 존재하지 않다면, PENDING 상태인 유저를 생성한다.
     public User create(UserCreate userCreate) {
         checkUserExistence(userCreate);
@@ -40,6 +41,11 @@ public class UserServiceImpl implements UserService {
         UserInfo userInfo = UserInfo.from(userCreate);
         User user = getByInfo(loginInfo, userInfo);
         sendEmail(userInfo, user);
+        return user;
+    }
+    public User getByInfo(LoginInfo loginInfo, UserInfo userInfo) {
+        User user = User.of(loginInfo, userInfo, clockHolder);
+        user = userRepository.save(user);
         return user;
     }
 
@@ -61,7 +67,6 @@ public class UserServiceImpl implements UserService {
         user = user.verified();
         userRepository.save(user);
     }
-
     @Override
     public void login(long id) {
         User user = userRepository.getById(id);
@@ -69,16 +74,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User getById(long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
-    private User getByInfo(LoginInfo loginInfo, UserInfo userInfo) {
-        User user = User.of(loginInfo, userInfo, clockHolder);
-        user = userRepository.save(user);
-        return user;
-    }
+
 
     
 }

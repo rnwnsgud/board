@@ -36,11 +36,13 @@ public class ForumServiceImpl implements ForumService {
         return forum;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Forum> getActiveList() {
         return forumRepository.getActiveList();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Forum findById(String forumId) {
         return forumRepository.findById(forumId).orElseThrow(() -> new ResourceNotFoundException("Forums", forumId));
