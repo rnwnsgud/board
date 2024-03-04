@@ -8,8 +8,6 @@ import store.ppingpong.board.forum.controller.port.ForumManagerService;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
-import java.util.List;
-
 @Builder
 @RequiredArgsConstructor
 @Transactional
@@ -17,11 +15,6 @@ import java.util.List;
 public class ForumManagerServiceImpl implements ForumManagerService {
 
     private final ForumManagerRepository forumManagerRepository;
-
-    @Override
-    public List<ForumManager> findForumManagers(String forumId) {
-        return forumManagerRepository.getListByForumId(forumId);
-    }
 
     @Override
     public ForumManager findForumManager(String forumId) {

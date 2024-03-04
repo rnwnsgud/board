@@ -5,10 +5,6 @@ import org.springframework.stereotype.Repository;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Repository
 @RequiredArgsConstructor
 public class ForumManagerRepositoryImpl implements ForumManagerRepository {
@@ -20,12 +16,6 @@ public class ForumManagerRepositoryImpl implements ForumManagerRepository {
         return forumManagerJpaRepository.save(ForumManagerEntity.from(forumManager)).toModel();
 
     }
-
-    @Override
-    public List<ForumManager> getListByForumId(String forumId) {
-        return forumManagerJpaRepository.findByForumId(forumId).stream().map(ForumManagerEntity::toModel).collect(Collectors.toList());
-    }
-
     @Override
     public ForumManager getManagerByForumId(String forumId) {
         return forumManagerJpaRepository.findMangerByForumId(forumId).toModel();

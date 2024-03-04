@@ -16,9 +16,9 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
         if (forumManager.getId()== null || forumManager.getId()==0){
             ForumManager mockForumUser = ForumManager.builder()
                     .id(sequence++)
-                    .user(forumManager.getUser())
-                    .forum(forumManager.getForum())
-                    .forumUserLevel(forumManager.getForumUserLevel())
+                    .userId(forumManager.getUserId())
+                    .forumId(forumManager.getForumId())
+                    .forumManagerLevel(forumManager.getForumManagerLevel())
                     .build();
 
             data.add(mockForumUser);
@@ -28,11 +28,6 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
             data.add(forumManager);
             return forumManager;
         }
-    }
-
-    @Override
-    public List<ForumManager> getListByForumId(String forumId) {
-        return null;
     }
 
     @Override
