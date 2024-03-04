@@ -4,5 +4,5 @@ import store.ppingpong.board.forum.domain.ForumManager;
 
 public interface ForumManagerRepository {
     ForumManager save(ForumManager forumManager);
-    ForumManager getManagerByForumId(String forumId);
+    ForumManager findByForumId(String forumId);
 }

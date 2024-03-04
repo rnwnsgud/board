@@ -18,7 +18,7 @@ public class ForumManagerServiceImpl implements ForumManagerService {
 
     @Override
     public ForumManager findForumManager(String forumId) {
-        return forumManagerRepository.getManagerByForumId(forumId);
+        return forumManagerRepository.findByForumId(forumId);
     }
 
     @Override

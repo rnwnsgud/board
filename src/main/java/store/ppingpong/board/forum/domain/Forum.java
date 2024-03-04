@@ -17,8 +17,6 @@ public class Forum {
     private final Category category;
     private final ForumStatus forumStatus;
     private final LocalDateTime createdAt;
-
-
     @Builder
     private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt) {
 

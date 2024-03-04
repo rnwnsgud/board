@@ -43,7 +43,6 @@ public class ForumController {
     public ResponseEntity<ResponseDto<ForumListResponse>> getActiveList() {
         List<Forum> forums = forumService.getActiveList();
         return new ResponseEntity<>(ResponseDto.of(1,"ACTIVE 포럼 리스트 가져오기", ForumListResponse.from(forums)), HttpStatus.OK);
-
     }
 
     @GetMapping("/{forumId}") // TODO : 포스팅 기능 추가 후 responseDto 변경
@@ -53,6 +52,4 @@ public class ForumController {
         List<User> forumAssistant = userRepository.findForumAssistant(forumId);
         return new ResponseEntity<>(ResponseDto.of(1,"해당 포럼 상세정보 가져오기", ForumDetailResponse.of(forum, forumManager, forumAssistant)), HttpStatus.OK);
     }
-
-
 }

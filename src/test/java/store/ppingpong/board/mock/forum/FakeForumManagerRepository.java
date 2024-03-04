@@ -31,7 +31,10 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
     }
 
     @Override
-    public ForumManager getManagerByForumId(String forumId) {
-        return null;
+    public ForumManager findByForumId(String forumId) {
+        return data.stream()
+                .filter(forumManager -> forumManager.getForumId().equals(forumId))
+                .findFirst()
+                .orElse(null);
     }
 }

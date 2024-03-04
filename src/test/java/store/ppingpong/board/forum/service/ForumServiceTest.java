@@ -56,9 +56,9 @@ class ForumServiceTest {
         fakeForumRepository.save(forum);
         fakeForumUserRepository.save(ForumManager.builder()
                 .id(1L)
-                .user(user)
-                .forum(forum)
-                .forumUserLevel(ForumManagerLevel.MANAGER)
+                .userId(1L)
+                .forumId("bg3")
+                .forumManagerLevel(ForumManagerLevel.MANAGER)
                 .build());
 
     }
@@ -91,8 +91,10 @@ class ForumServiceTest {
                 .userInfo(userInfo)
                 .loginInfo(loginInfo)
                 .createdAt(100L).build();
+        // when
         Forum forum = forumService.create(forumCreate, user);
 
+        // then
         assertThat(forum.getForumId()).isEqualTo("reverse1999");
         assertThat(forum.getName()).isEqualTo("리버스1999");
         assertThat(forum.getIntroduction()).isEqualTo("리버스1999 입니다.");
@@ -129,8 +131,11 @@ class ForumServiceTest {
                 .userInfo(userInfo)
                 .loginInfo(loginInfo)
                 .createdAt(100L).build();
+
+        // when
         Forum forum = forumService.create(forumCreate, user);
 
+        // then
         assertThat(forum.getForumId()).isEqualTo("reverse1999");
         assertThat(forum.getName()).isEqualTo("리버스1999");
         assertThat(forum.getIntroduction()).isEqualTo("리버스1999 입니다.");
@@ -167,10 +172,12 @@ class ForumServiceTest {
                 .userInfo(userInfo)
                 .loginInfo(loginInfo)
                 .createdAt(100L).build();
-        forumService.create(forumCreate, user);
 
+        // when
+        forumService.create(forumCreate, user);
         List<Forum> forums = forumService.getActiveList();
 
+        // then
         assertThat(forums.size()).isEqualTo(1);
         assertThat(forums.get(0).getForumId()).isEqualTo("reverse1999");
         assertThat(forums.get(0).getName()).isEqualTo("리버스1999");
@@ -178,5 +185,19 @@ class ForumServiceTest {
         assertThat(forums.get(0).getForumStatus()).isEqualTo(ForumStatus.ACTIVE);
         assertThat(forums.get(0).getIntroduction()).isEqualTo("리버스1999 입니다.");
 
+    }
+
+    @Test
+    void findById로_forumId와_같은_포럼을_가져올_수_있다() {
+        // when
+        Forum forum = forumService.findById("bg3");
+
+        // then
+        assertThat(forum.getForumId()).isEqualTo("bg3");
+        assertThat(forum.getName()).isEqualTo("발더스 게이트 3");
+        assertThat(forum.getCreatedAt()).isEqualTo(LocalDateTime.MIN);
+        assertThat(forum.getForumStatus()).isEqualTo(ForumStatus.PENDING);
+        assertThat(forum.getCategory()).isEqualTo(Category.GAME);
+        assertThat(forum.getIntroduction()).isEqualTo("라리안 스튜디오에서 제작한 턴제 RPG, 공식 한국어 지원");
     }
 }

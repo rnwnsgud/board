@@ -44,6 +44,8 @@ public class FakeForumRepository implements ForumRepository {
 
     @Override
     public Optional<Forum> findById(String forumId) {
-        return Optional.empty();
+        return data.stream()
+                .filter(forum -> forum.getForumId().equals(forumId))
+                .findFirst();
     }
 }

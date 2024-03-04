@@ -49,4 +49,14 @@ public class FakeUserRepository implements UserRepository {
         }
 
     }
+
+    @Override
+    public User findForumManager(String forumId) {
+        return null;
+    }
+
+    @Override
+    public List<User> findForumAssistant(String forumId) {
+        return null;
+    }
 }
