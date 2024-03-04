@@ -7,7 +7,9 @@ import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.service.port.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +27,6 @@ public class UserRepositoryImpl implements UserRepository {
         return userJpaRepository.findByLoginInfoLoginId(loginId).map(UserEntity::toModel);
     }
 
-
     @Override
     public User getById(long id) {
         return findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
@@ -34,5 +35,18 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         return userJpaRepository.save(UserEntity.from(user)).toModel();
+    }
+
+    @Override
+    public User findForumManager(String forumId) {
+        return userJpaRepository.findForumManager(forumId).toModel();
+    }
+
+    @Override
+    public List<User> findForumAssistant(String forumId) {
+        return userJpaRepository.findForumAssistants(forumId).stream()
+                .map(UserEntity::toModel)
+                .collect(Collectors.toList());
+
     }
 }

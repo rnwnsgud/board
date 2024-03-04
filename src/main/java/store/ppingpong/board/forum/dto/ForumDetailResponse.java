@@ -1,39 +1,32 @@
 package store.ppingpong.board.forum.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.forum.domain.Forum;
-import store.ppingpong.board.forum.domain.ForumManager;
-import store.ppingpong.board.forum.domain.ForumManagerLevel;
+import store.ppingpong.board.user.domain.User;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Getter
 public class ForumDetailResponse {
 
     private final String name;
     private final String introduction;
-    private final String manager;
-    private final List<String> assistants;
+    private final String managerName;
+    private final List<String> assistantNames;
 
-    public ForumDetailResponse(Forum forum, List<ForumManager> forumManagers) {
-        this.name = forum.getName();
-        this.introduction = forum.getIntroduction();
-
-        Optional<String> managerName = forumManagers.stream()
-                .filter(manager -> manager.getForumUserLevel() == ForumManagerLevel.MANAGER)
-                .map(manager -> manager.getUser().getUserInfo().getNickname() + "(" + manager.getUser().getLoginInfo().getLoginId() + ")")
-                .findFirst();
-
-        this.manager = managerName.orElse("");
-
-        this.assistants = forumManagers.stream()
-                .filter(manager -> manager.getForumUserLevel() == ForumManagerLevel.ASSISTANT)
-                .map(manager -> manager.getUser().getUserInfo().getNickname() + "(" + manager.getUser().getLoginInfo().getLoginId() + ")")
-                .collect(Collectors.toList());
-
+    private ForumDetailResponse(String name, String introduction, String managerName, List<String> assistantNames) {
+        this.name = name;
+        this.introduction = introduction;
+        this.managerName = managerName;
+        this.assistantNames = assistantNames;
     }
+
+    public static ForumDetailResponse of(Forum forum, User forumManager, List<User> forumAssistant) {
+        String managerName = forumManager.getUserInfo().getNickname() + "(" + forumManager.getLoginInfo().getLoginId() + ")";
+        List<String> assistantNames = forumAssistant.stream()
+                .map(assistant -> assistant.getUserInfo().getNickname() + "(" + assistant.getLoginInfo().getLoginId() + ")")
+                .toList();
+        return new ForumDetailResponse(forum.getName(), forum.getIntroduction(), managerName, assistantNames);
+    }
+
 }
 

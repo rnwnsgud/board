@@ -9,10 +9,10 @@ import java.util.stream.Collectors;
 @Getter
 public class ForumListResponse {
 
-    List<ForumDto> forumDtoList;
+    private final List<ForumDto> forumDtoList;
 
-    public ForumListResponse(List<Forum> forumList) {
-        this.forumDtoList = forumList.stream().map(ForumDto::new).collect(Collectors.toList());
+    private ForumListResponse(List<ForumDto> forumList) {
+        this.forumDtoList = forumList;
     }
 
     @Getter
@@ -24,5 +24,11 @@ public class ForumListResponse {
             this.forumId = forum.getForumId();
             this.name = forum.getName();
         }
+    }
+    public static ForumListResponse from(List<Forum> forumList) {
+        List<ForumDto> forumDtoList = forumList.stream()
+                .map(ForumDto::new)
+                .collect(Collectors.toList());
+        return new ForumListResponse(forumDtoList);
     }
 }

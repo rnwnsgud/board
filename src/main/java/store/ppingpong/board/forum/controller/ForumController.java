@@ -17,6 +17,8 @@ import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.forum.dto.ForumDetailResponse;
 import store.ppingpong.board.forum.dto.ForumListResponse;
 import store.ppingpong.board.forum.dto.ForumResponse;
+import store.ppingpong.board.user.domain.User;
+import store.ppingpong.board.user.service.port.UserRepository;
 
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class ForumController {
 
     private final ForumService forumService;
     private final ForumManagerService forumManagerService;
+    private final UserRepository userRepository;
 
     @PostMapping
     public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, @AuthenticationPrincipal LoginUser loginUser) {
@@ -39,15 +42,16 @@ public class ForumController {
     @GetMapping
     public ResponseEntity<ResponseDto<ForumListResponse>> getActiveList() {
         List<Forum> forums = forumService.getActiveList();
-        return new ResponseEntity<>(ResponseDto.of(1,"ACTIVE 포럼 리스트 가져오기", new ForumListResponse(forums)), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseDto.of(1,"ACTIVE 포럼 리스트 가져오기", ForumListResponse.from(forums)), HttpStatus.OK);
 
     }
 
-    @GetMapping("/{forumId}") // FIX : 포스팅 기능 추가 후 responseDto 변경
-    public ResponseEntity<?> get(@PathVariable("forumId") String forumId) {
+    @GetMapping("/{forumId}") // TODO : 포스팅 기능 추가 후 responseDto 변경
+    public ResponseEntity<ResponseDto<ForumDetailResponse>> get(@PathVariable("forumId") String forumId) {
         Forum forum = forumService.findById(forumId);
-        List<ForumManager> forumManagers = forumManagerService.findForumManagers(forumId);
-        return new ResponseEntity<>(ResponseDto.of(1,"해당 포럼 상세정보 가져오기", new ForumDetailResponse(forum, forumManagers)), HttpStatus.OK);
+        User forumManager = userRepository.findForumManager(forumId);
+        List<User> forumAssistant = userRepository.findForumAssistant(forumId);
+        return new ResponseEntity<>(ResponseDto.of(1,"해당 포럼 상세정보 가져오기", ForumDetailResponse.of(forum, forumManager, forumAssistant)), HttpStatus.OK);
     }
 
 

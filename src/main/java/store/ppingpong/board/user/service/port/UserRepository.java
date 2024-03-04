@@ -3,6 +3,7 @@ package store.ppingpong.board.user.service.port;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.infrastructure.UserEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
@@ -13,4 +14,8 @@ public interface UserRepository {
     User getById(long id);
 
     User save(User user);
+
+    User findForumManager(String forumId);
+
+    List<User> findForumAssistant(String forumId);
 }

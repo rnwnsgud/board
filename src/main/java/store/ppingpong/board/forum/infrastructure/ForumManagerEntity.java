@@ -7,26 +7,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
-import store.ppingpong.board.user.infrastructure.UserEntity;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-
 public class ForumManagerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String forumId;
-
     private Long userId;
-
     @Enumerated(value = EnumType.STRING)
     private ForumManagerLevel forumManagerLevel;
 
     @Builder
-    private ForumManagerEntity(Long id, String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
+    public ForumManagerEntity(Long id, String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
         this.id = id;
         this.forumId = forumId;
         this.userId = userId;
@@ -39,7 +34,7 @@ public class ForumManagerEntity {
                 .id(forumManager.getId())
                 .forumId(forumManager.getForumId())
                 .userId(forumManager.getUserId())
-                .forumManagerLevel(forumManager.getForumUserLevel())
+                .forumManagerLevel(forumManager.getForumManagerLevel())
                 .build();
     }
 
@@ -48,7 +43,7 @@ public class ForumManagerEntity {
                 .id(id)
                 .userId(userId)
                 .forumId(forumId)
-                .forumUserLevel(forumManagerLevel)
+                .forumManagerLevel(forumManagerLevel)
                 .build();
     }
 }

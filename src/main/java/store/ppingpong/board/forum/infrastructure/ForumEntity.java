@@ -37,13 +37,12 @@ public class ForumEntity implements Persistable<String> {
 
 
     @Builder
-    private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt) {
+    public ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus) {
         this.forumId = forumId;
         this.name = name;
         this.introduction = introduction;
         this.category = category;
         this.forumStatus = forumStatus;
-        this.createdAt = createdAt;
     }
 
     public static ForumEntity from(Forum forum) {
