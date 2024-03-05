@@ -1,6 +1,5 @@
 package store.ppingpong.board.forum.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.forum.domain.ForumManager;
@@ -29,7 +28,7 @@ public class ForumManagerServiceTest {
         String forumId = "리버스1999";
 
         // when
-        ForumManager forumManager = forumManagerService.findForumManager(forumId);
+        ForumManager forumManager = forumManagerService.findByForumId(forumId);
 
         // then
         assertThat(forumManager.getForumId()).isEqualTo(forumId);

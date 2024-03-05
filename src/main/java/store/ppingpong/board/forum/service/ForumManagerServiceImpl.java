@@ -18,13 +18,18 @@ public class ForumManagerServiceImpl implements ForumManagerService {
 
     @Transactional(readOnly = true)
     @Override
-    public ForumManager findForumManager(String forumId) {
+    public ForumManager findByForumId(String forumId) {
         return forumManagerRepository.findByForumId(forumId);
     }
 
     @Override
     public ForumManager save(ForumManager forumManager) {
         return forumManagerRepository.save(forumManager);
+    }
+
+    @Override
+    public void delete(String forumId, long userId) {
+        forumManagerRepository.deleteByUserId(forumId, userId);
     }
 
 }

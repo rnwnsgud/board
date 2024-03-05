@@ -10,16 +10,11 @@ import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.forum.controller.port.ForumManagerService;
 import store.ppingpong.board.forum.controller.port.ForumService;
-import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.dto.ForumAssistantResponse;
-import store.ppingpong.board.user.controller.port.UserService;
 import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.infrastructure.UserEntity;
 import store.ppingpong.board.user.service.port.UserRepository;
-
-import java.util.List;
 
 @RequestMapping("/api/forums/management")
 @RequiredArgsConstructor
@@ -45,14 +40,15 @@ public class ForumManagerController {
     }
 
     private void checkManager(String forumId, LoginUser loginUser) {
-        ForumManager forumManager = forumManagerService.findForumManager(forumId);
+        ForumManager forumManager = forumManagerService.findByForumId(forumId);
         forumManager.isSameUser(loginUser.getUser());
     }
 
     // Manager가 Assistant 해임
     @DeleteMapping("/{forumId}/appointment/{userId}")
-    public ResponseEntity<?> removeAssistant(@PathVariable("forumId") String forumId) {
-        return null;
+    public ResponseEntity<?> removeAssistant(@PathVariable("forumId") String forumId, @PathVariable("userId") long userId) {
+        forumManagerService.delete(forumId, userId);
+        return new ResponseEntity<>(ResponseDto.of(1,"Assistant 해임 완료"), HttpStatus.NO_CONTENT);
     }
 
 }

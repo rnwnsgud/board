@@ -15,6 +15,6 @@ public interface ForumManagerJpaRepository extends JpaRepository<ForumManagerEnt
     @Query("select fm from ForumManagerEntity fm where fm.forumId = :forumId and fm.forumManagerLevel = 'MANAGER'")
     ForumManagerEntity findMangerByForumId(@Param("forumId") String forumId);
 
-
+    void deleteByForumIdAndUserId(String forumId, long userId);
 
 }

@@ -21,5 +21,10 @@ public class ForumManagerRepositoryImpl implements ForumManagerRepository {
         return forumManagerJpaRepository.findMangerByForumId(forumId).toModel();
     }
 
+    @Override
+    public void deleteByUserId(String forumId, long userId) {
+        forumManagerJpaRepository.deleteByForumIdAndUserId(forumId, userId);
+    }
+
 
 }
