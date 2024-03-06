@@ -20,7 +20,7 @@ public class User {
     private final Long lastLoginAt;
 
     @Builder
-    private User(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
+    public User(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
         this.id = id;
         this.loginInfo = loginInfo;
         this.userInfo = userInfo;

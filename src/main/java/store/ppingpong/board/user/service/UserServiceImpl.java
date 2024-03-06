@@ -70,8 +70,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void login(long id) {
         User user = userRepository.getById(id);
-        user = user.login(clockHolder);
-        userRepository.save(user);
+        user.login(clockHolder);
     }
 
     @Transactional(readOnly = true)

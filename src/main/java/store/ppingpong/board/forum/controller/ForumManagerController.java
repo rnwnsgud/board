@@ -48,7 +48,7 @@ public class ForumManagerController {
     @DeleteMapping("/{forumId}/appointment/{userId}")
     public ResponseEntity<?> removeAssistant(@PathVariable("forumId") String forumId, @PathVariable("userId") long userId) {
         forumManagerService.delete(forumId, userId);
-        return new ResponseEntity<>(ResponseDto.of(1,"Assistant 해임 완료"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(ResponseDto.of(1,"Assistant 해임 완료"), HttpStatus.OK);
     }
 
 }
