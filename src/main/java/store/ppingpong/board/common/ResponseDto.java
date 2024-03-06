@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -26,13 +27,11 @@ public class ResponseDto<T> {
                 .data(data)
                 .build();
     }
-
-    public static <T> ResponseDto<T[]> of(int code, String msg) {
-        T[] emptyArray = (T[]) new Object[0];
-        return ResponseDto.<T[]>builder()
+    public static <T> ResponseDto<List<T>> of(int code, String msg) {
+        return ResponseDto.<List<T>>builder()
                 .code(code)
                 .msg(msg)
-                .data(emptyArray)
+                .data(Collections.EMPTY_LIST)
                 .build();
     }
 
