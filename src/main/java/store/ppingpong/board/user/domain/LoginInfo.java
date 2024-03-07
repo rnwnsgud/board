@@ -21,7 +21,7 @@ public class LoginInfo {
     private LoginType loginType;
     private String encodePassword;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     public LoginInfo(String loginId, LoginType loginType, String encodePassword) {
         this.loginId = loginId;
         this.loginType = loginType;

@@ -30,13 +30,11 @@ public class UserEntity {
     private Long createdAt;
     private Long lastLoginAt;
 
-    @Builder
-    public UserEntity(LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
+    @Builder(access = AccessLevel.PRIVATE)
+    public UserEntity(LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus) {
         this.loginInfo = loginInfo;
         this.userInfo = userInfo;
         this.userStatus = userStatus;
-        this.createdAt = createdAt;
-        this.lastLoginAt = lastLoginAt;
     }
 
     public static UserEntity from(User user) {
@@ -44,19 +42,10 @@ public class UserEntity {
                 .userInfo(user.getUserInfo())
                 .loginInfo(user.getLoginInfo())
                 .userStatus(user.getUserStatus())
-                .createdAt(user.getCreatedAt())
-                .lastLoginAt(user.getLastLoginAt())
                 .build();
     }
 
     public User toModel() {
-        return User.builder()
-                .id(id)
-                .userInfo(userInfo)
-                .loginInfo(loginInfo)
-                .userInfo(userInfo)
-                .createdAt(createdAt)
-                .lastLoginAt(lastLoginAt)
-                .build();
+        return User.from(this);
     }
 }

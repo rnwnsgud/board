@@ -1,13 +1,10 @@
 package store.ppingpong.board.user.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.service.port.ClockHolder;
-
-import java.time.Clock;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.List;
+import store.ppingpong.board.user.infrastructure.UserEntity;
 
 @Getter
 public class User {
@@ -19,7 +16,7 @@ public class User {
     private final Long createdAt;
     private final Long lastLoginAt;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     public User(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
         this.id = id;
         this.loginInfo = loginInfo;
@@ -36,6 +33,16 @@ public class User {
                 .userInfo(userInfo)
                 .userStatus(UserStatus.PENDING)
                 .createdAt(clockHolder.mills())
+                .build();
+    }
+
+    public static User from(UserEntity userEntity) {
+        return User.builder()
+                .id(userEntity.getId())
+                .userInfo(userEntity.getUserInfo())
+                .loginInfo(userEntity.getLoginInfo())
+                .createdAt(userEntity.getCreatedAt())
+                .lastLoginAt(userEntity.getLastLoginAt())
                 .build();
     }
 

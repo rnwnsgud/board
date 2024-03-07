@@ -20,9 +20,8 @@ public class ForumManagerEntity {
     @Enumerated(value = EnumType.STRING)
     private ForumManagerLevel forumManagerLevel;
 
-    @Builder
-    public ForumManagerEntity(Long id, String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
-        this.id = id;
+    @Builder(access = AccessLevel.PRIVATE)
+    private ForumManagerEntity(String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
         this.forumId = forumId;
         this.userId = userId;
         this.forumManagerLevel = forumManagerLevel;
@@ -31,7 +30,6 @@ public class ForumManagerEntity {
 
     public static ForumManagerEntity from(ForumManager forumManager) {
         return ForumManagerEntity.builder()
-                .id(forumManager.getId())
                 .forumId(forumManager.getForumId())
                 .userId(forumManager.getUserId())
                 .forumManagerLevel(forumManager.getForumManagerLevel())
@@ -39,11 +37,6 @@ public class ForumManagerEntity {
     }
 
     public ForumManager toModel() {
-        return ForumManager.builder()
-                .id(id)
-                .userId(userId)
-                .forumId(forumId)
-                .forumManagerLevel(forumManagerLevel)
-                .build();
+        return ForumManager.from(this);
     }
 }

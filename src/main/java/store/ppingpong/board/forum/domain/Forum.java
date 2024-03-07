@@ -1,9 +1,11 @@
 package store.ppingpong.board.forum.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.service.port.ClockLocalHolder;
 import store.ppingpong.board.forum.dto.ForumCreate;
+import store.ppingpong.board.forum.infrastructure.ForumEntity;
 import store.ppingpong.board.user.domain.UserEnum;
 
 import java.time.LocalDateTime;
@@ -17,9 +19,8 @@ public class Forum {
     private final Category category;
     private final ForumStatus forumStatus;
     private final LocalDateTime createdAt;
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt) {
-
         this.forumId = forumId;
         this.name = name;
         this.introduction = introduction;
@@ -39,6 +40,17 @@ public class Forum {
                 .category(forumCreate.getCategory())
                 .forumStatus(forumStatus)
                 .createdAt(clockLocalHolder.localMills())
+                .build();
+    }
+
+    public static Forum from(ForumEntity forumEntity) {
+        return Forum.builder()
+                .forumId(forumEntity.getForumId())
+                .name(forumEntity.getName())
+                .introduction(forumEntity.getIntroduction())
+                .category(forumEntity.getCategory())
+                .forumStatus(forumEntity.getForumStatus())
+                .createdAt(forumEntity.getCreatedAt())
                 .build();
     }
 

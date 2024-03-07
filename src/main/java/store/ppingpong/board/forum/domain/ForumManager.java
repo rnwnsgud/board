@@ -2,6 +2,7 @@ package store.ppingpong.board.forum.domain;
 
 import lombok.*;
 import store.ppingpong.board.common.handler.exception.ResourceNotSameException;
+import store.ppingpong.board.forum.infrastructure.ForumManagerEntity;
 import store.ppingpong.board.user.domain.User;
 
 import java.util.Objects;
@@ -13,7 +14,7 @@ public class ForumManager {
     private final Long userId;
     private final ForumManagerLevel forumManagerLevel;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     public ForumManager(Long id, String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
         this.id = id;
         this.forumId = forumId;
@@ -28,6 +29,15 @@ public class ForumManager {
                 .forumManagerLevel(forumManagerLevel)
                 .build();
     }
+
+    public static ForumManager from(ForumManagerEntity forumManagerEntity) {
+        return ForumManager.builder()
+                .id(forumManagerEntity.getId())
+                .userId(forumManagerEntity.getUserId())
+                .forumId(forumManagerEntity.getForumId())
+                .build();
+    }
+
 
     public void isSameUser(User user) {
         if(!Objects.equals(this.userId, user.getId())) throw new ResourceNotSameException("본인은 해당 포럼의 매니저가 아닙니다. : ", user.getId());
