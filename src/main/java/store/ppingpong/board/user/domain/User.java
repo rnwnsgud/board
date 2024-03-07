@@ -17,7 +17,7 @@ public class User {
     private final Long lastLoginAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public User(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
+    private User(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
         this.id = id;
         this.loginInfo = loginInfo;
         this.userInfo = userInfo;

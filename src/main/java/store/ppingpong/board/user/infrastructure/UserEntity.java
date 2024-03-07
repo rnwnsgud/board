@@ -31,7 +31,7 @@ public class UserEntity {
     private Long lastLoginAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public UserEntity(LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus) {
+    private UserEntity(LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus) {
         this.loginInfo = loginInfo;
         this.userInfo = userInfo;
         this.userStatus = userStatus;
