@@ -56,10 +56,9 @@ public class SecurityConfig {
         http.formLogin(AbstractHttpConfigurer::disable);
         http.httpBasic((AbstractHttpConfigurer::disable));
 
-//        http.addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class);
-//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilter(jwtAuthenticationFilter);
-        http.addFilter(jwtAuthorizationFilter);
+        http.addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
 
 
         http.exceptionHandling((exception) -> exception.authenticationEntryPoint((request, response, e) -> {
