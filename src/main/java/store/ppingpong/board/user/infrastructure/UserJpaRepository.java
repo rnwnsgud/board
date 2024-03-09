@@ -25,4 +25,11 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
             "join UserEntity u on fm.userId = u.id " +
             "where fm.forumId = :forumId and fm.forumManagerLevel = 'ASSISTANT'")
     List<UserEntity> findForumAssistants(@Param("forumId") String forumId);
+
+    @Transactional(readOnly = true)
+    @Query("select u " +
+            "from ForumManagerEntity fm " +
+            "join UserEntity u on fm.userId = u.id " +
+            "where fm.forumId = :forumId and fm.forumManagerLevel != 'USER' and u.id = :userId")
+    Optional<UserEntity> findManagerOrAssistant(@Param("forumId") String forumId, @Param("userId") long userId);
 }

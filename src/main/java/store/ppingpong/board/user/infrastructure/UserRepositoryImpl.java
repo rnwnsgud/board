@@ -1,7 +1,6 @@
 package store.ppingpong.board.user.infrastructure;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.user.domain.User;
@@ -49,4 +48,10 @@ public class UserRepositoryImpl implements UserRepository {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public User findManagerOrAssistant(String forumId, long userId) {
+        return userJpaRepository.findManagerOrAssistant(forumId, userId).orElseThrow(() -> new ResourceNotFoundException("해당 포럼 관리자 리스트", userId)).toModel();
+    }
+
 }

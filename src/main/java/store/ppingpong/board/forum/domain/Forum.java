@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.service.port.ClockLocalHolder;
 import store.ppingpong.board.forum.dto.ForumCreate;
+import store.ppingpong.board.forum.dto.ForumUpdate;
 import store.ppingpong.board.forum.infrastructure.ForumEntity;
 import store.ppingpong.board.user.domain.UserEnum;
 
@@ -28,7 +29,6 @@ public class Forum {
         this.forumStatus = forumStatus;
         this.createdAt = createdAt;
     }
-
     public static Forum of(ForumCreate forumCreate, ClockLocalHolder clockLocalHolder, UserEnum userEnum) {
         ForumStatus forumStatus;
         if (userEnum == UserEnum.USER) forumStatus = ForumStatus.PENDING;
@@ -42,7 +42,6 @@ public class Forum {
                 .createdAt(clockLocalHolder.localMills())
                 .build();
     }
-
     public static Forum from(ForumEntity forumEntity) {
         return Forum.builder()
                 .forumId(forumEntity.getForumId())
@@ -51,6 +50,17 @@ public class Forum {
                 .category(forumEntity.getCategory())
                 .forumStatus(forumEntity.getForumStatus())
                 .createdAt(forumEntity.getCreatedAt())
+                .build();
+    }
+
+    public Forum managerModify(ForumUpdate forumUpdate) {
+        return Forum.builder()
+                .forumId(this.getForumId())
+                .name(this.getName())
+                .introduction(forumUpdate.getIntroduction())
+                .category(this.getCategory())
+                .forumStatus(this.getForumStatus())
+                .createdAt(this.getCreatedAt())
                 .build();
     }
 

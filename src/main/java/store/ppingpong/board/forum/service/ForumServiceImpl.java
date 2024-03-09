@@ -11,6 +11,7 @@ import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.dto.ForumCreate;
+import store.ppingpong.board.forum.dto.ForumUpdate;
 import store.ppingpong.board.forum.service.port.ForumRepository;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 import store.ppingpong.board.user.domain.User;
@@ -47,8 +48,12 @@ public class ForumServiceImpl implements ForumService {
     public Forum findById(String forumId) {
         return forumRepository.findById(forumId).orElseThrow(() -> new ResourceNotFoundException("Forums", forumId));
     }
-
-
+    @Override
+    public Forum modify(String forumId, ForumUpdate forumUpdate) {
+        Forum forum = findById(forumId);
+        forum = forum.managerModify(forumUpdate);
+        return forumRepository.save(forum);
+    }
 
 
 }
