@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface ForumRepository {
     Forum save(Forum forum);
-
     List<Forum> getActiveList();
-
     Optional<Forum> findById(String forumId);
 }

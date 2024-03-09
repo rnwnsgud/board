@@ -8,6 +8,8 @@ import store.ppingpong.board.forum.controller.port.ForumManagerService;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
+import java.util.List;
+
 @Builder
 @RequiredArgsConstructor
 @Transactional
@@ -23,7 +25,7 @@ public class ForumManagerServiceImpl implements ForumManagerService {
     }
 
     @Override
-    public ForumManager save(ForumManager forumManager) {
+    public ForumManager create(ForumManager forumManager) {
         return forumManagerRepository.save(forumManager);
     }
 
