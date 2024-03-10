@@ -31,10 +31,12 @@ public class UserEntity {
     private Long lastLoginAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserEntity(LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus) {
+    private UserEntity(LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
         this.loginInfo = loginInfo;
         this.userInfo = userInfo;
         this.userStatus = userStatus;
+        this.createdAt = createdAt;
+        this.lastLoginAt = lastLoginAt;
     }
 
     public static UserEntity from(User user) {
@@ -42,6 +44,8 @@ public class UserEntity {
                 .userInfo(user.getUserInfo())
                 .loginInfo(user.getLoginInfo())
                 .userStatus(user.getUserStatus())
+                .createdAt(user.getCreatedAt())
+                .lastLoginAt(user.getLastLoginAt())
                 .build();
     }
 

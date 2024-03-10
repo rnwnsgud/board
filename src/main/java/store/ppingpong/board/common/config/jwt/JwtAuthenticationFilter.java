@@ -32,11 +32,9 @@ import static store.ppingpong.board.common.util.CustomResponseUtil.success;
 @Component
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final UserService userService;
-
     @Value("${jwt.access_header}")
     private String accessHeader;
 
