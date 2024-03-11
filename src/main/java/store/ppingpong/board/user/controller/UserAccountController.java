@@ -26,7 +26,7 @@ public class UserAccountController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponse> sendEmail(@RequestBody @Valid UserCreate userCreate) {
+    public ResponseEntity< UserResponse> sendEmail(@RequestBody @Valid UserCreate userCreate) {
         User user = userService.create(userCreate);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

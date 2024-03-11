@@ -1,6 +1,5 @@
 package store.ppingpong.board.mock.user;
 
-import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.service.port.UserRepository;
@@ -57,6 +56,11 @@ public class FakeUserRepository implements UserRepository {
 
     @Override
     public List<User> findForumAssistant(String forumId) {
+        return null;
+    }
+
+    @Override
+    public User findManagerOrAssistant(String forumId, long userId) {
         return null;
     }
 }

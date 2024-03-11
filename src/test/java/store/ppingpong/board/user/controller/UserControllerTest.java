@@ -74,11 +74,9 @@ class UserControllerTest {
         // given
         TestUserContainer testContainer = TestUserContainer.builder()
                 .build();
-
         LoginInfo loginInfo = LoginInfo.builder()
                 .loginId("ssar1234")
                 .build();
-
         testContainer.userRepository.save(User.builder()
                 .id(1L)
                 .userInfo(null)

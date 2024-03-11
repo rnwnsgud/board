@@ -1,6 +1,5 @@
 package store.ppingpong.board.forum.controller;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import store.ppingpong.board.common.ResponseDto;
@@ -99,17 +98,17 @@ class ForumControllerTest {
         TestForumContainer testContainer = TestForumContainer.builder()
                 .clockLocalHolder(() -> LocalDateTime.MIN)
                 .build();
-        testContainer.forumRepository.save(Forum.builder()
+        testContainer.forumRepository.create(Forum.builder()
                 .forumId("PENDING")
                 .forumStatus(ForumStatus.PENDING)
                 .build()
         );
-        testContainer.forumRepository.save(Forum.builder()
+        testContainer.forumRepository.create(Forum.builder()
                 .forumId("ACTIVE1")
                 .forumStatus(ForumStatus.ACTIVE)
                 .build()
         );
-        testContainer.forumRepository.save(Forum.builder()
+        testContainer.forumRepository.create(Forum.builder()
                 .forumId("ACTIVE2")
                 .forumStatus(ForumStatus.ACTIVE)
                 .build()

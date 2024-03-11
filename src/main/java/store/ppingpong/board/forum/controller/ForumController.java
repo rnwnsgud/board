@@ -29,16 +29,19 @@ public class ForumController {
     private final ForumManagerService forumManagerService;
     private final UserRepository userRepository;
     private final ClockLocalHolder clockLocalHolder;
+
     @PostMapping
     public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, @AuthenticationPrincipal LoginUser loginUser) {
         Forum forum = forumService.create(forumCreate, loginUser.getUser());
         return new ResponseEntity<>(ResponseDto.of(1, "포럼의 생성 성공", ForumResponse.from(forum)), HttpStatus.CREATED);
     }
+
     @GetMapping
     public ResponseEntity<ResponseDto<ForumListResponse>> getActiveList() {
         List<Forum> forums = forumService.getActiveList();
         return new ResponseEntity<>(ResponseDto.of(1, "ACTIVE 상태인 포럼 리스트 가져오기 성공", ForumListResponse.from(forums)), HttpStatus.OK);
     }
+
     @GetMapping("/{forumId}") // TODO : 포스팅 기능 추가 후 responseDto 변경
     public ResponseEntity<ResponseDto<ForumDetailResponse>> get(@PathVariable("forumId") String forumId) {
         Forum forum = forumService.findById(forumId);
@@ -47,7 +50,7 @@ public class ForumController {
         return new ResponseEntity<>(ResponseDto.of(1, "해당 포럼 상세정보 가져오기 성공", ForumDetailResponse.of(forum, forumManager, forumAssistant)), HttpStatus.OK);
     }
     // TODO : 이미지 기능 추가 후 변경(메서드 명 및 기능)
-    @PutMapping("{/forumId}")
+    @PutMapping("/{forumId}")
     public ResponseEntity<?> modify(@PathVariable("forumId") String forumId, @RequestBody ForumUpdate forumUpdate, @AuthenticationPrincipal LoginUser loginUser) {
         User authorizedUser = userRepository.findManagerOrAssistant(forumId, loginUser.getUser().getId());
         Forum forum = forumService.modify(forumId, forumUpdate);

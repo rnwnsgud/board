@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
 public class FakeForumRepository implements ForumRepository {
 
     private final List<Forum> data = new ArrayList<>();
+
     @Override
-    public Forum save(Forum forum) {
+    public Forum create(Forum forum) {
         if (forum.getForumId() == null || forum.getForumId().isEmpty()) {
             Forum mockForum = Forum.builder()
                     .forumId(forum.getForumId())
@@ -32,7 +33,6 @@ public class FakeForumRepository implements ForumRepository {
             data.add(forum);
             return forum;
         }
-
     }
 
     @Override
@@ -48,4 +48,10 @@ public class FakeForumRepository implements ForumRepository {
                 .filter(forum -> forum.getForumId().equals(forumId))
                 .findFirst();
     }
+
+    @Override
+    public void modify(Forum forum) {
+
+    }
+
 }

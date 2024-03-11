@@ -53,7 +53,7 @@ class ForumServiceTest {
                 .userInfo(userInfo)
                 .loginInfo(loginInfo)
                 .createdAt(100L).build();
-        fakeForumRepository.save(forum);
+        fakeForumRepository.create(forum);
         fakeForumUserRepository.save(ForumManager.builder()
                 .id(1L)
                 .userId(1L)

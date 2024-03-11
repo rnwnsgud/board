@@ -11,6 +11,7 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
 
     private final List<ForumManager> data = new ArrayList<>();
     private static long sequence = 0L;
+
     @Override
     public ForumManager save(ForumManager forumManager) {
         if (forumManager.getId()== null || forumManager.getId()==0){
@@ -20,7 +21,6 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
                     .forumId(forumManager.getForumId())
                     .forumManagerLevel(forumManager.getForumManagerLevel())
                     .build();
-
             data.add(mockForumUser);
             return forumManager;
         } else {
@@ -36,5 +36,10 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
                 .filter(forumManager -> forumManager.getForumId().equals(forumId))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public void deleteByUserId(String forumId, long userId) {
+
     }
 }

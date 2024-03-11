@@ -1,6 +1,5 @@
 package store.ppingpong.board.forum.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.service.port.ClockLocalHolder;
@@ -20,15 +19,19 @@ public class Forum {
     private final Category category;
     private final ForumStatus forumStatus;
     private final LocalDateTime createdAt;
-    @Builder(access = AccessLevel.PRIVATE)
-    private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt) {
+    private final LocalDateTime lastModifiedAt;
+
+    @Builder
+    private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.forumId = forumId;
         this.name = name;
         this.introduction = introduction;
         this.category = category;
         this.forumStatus = forumStatus;
         this.createdAt = createdAt;
+        this.lastModifiedAt = lastModifiedAt;
     }
+
     public static Forum of(ForumCreate forumCreate, ClockLocalHolder clockLocalHolder, UserEnum userEnum) {
         ForumStatus forumStatus;
         if (userEnum == UserEnum.USER) forumStatus = ForumStatus.PENDING;
@@ -42,6 +45,7 @@ public class Forum {
                 .createdAt(clockLocalHolder.localMills())
                 .build();
     }
+
     public static Forum from(ForumEntity forumEntity) {
         return Forum.builder()
                 .forumId(forumEntity.getForumId())
@@ -53,17 +57,15 @@ public class Forum {
                 .build();
     }
 
-    public Forum managerModify(ForumUpdate forumUpdate) {
+    public Forum managerModify(ForumUpdate forumUpdate, ClockLocalHolder clockLocalHolder) {
         return Forum.builder()
-                .forumId(this.getForumId())
-                .name(this.getName())
+                .forumId(forumId)
+                .name(name)
                 .introduction(forumUpdate.getIntroduction())
-                .category(this.getCategory())
-                .forumStatus(this.getForumStatus())
-                .createdAt(this.getCreatedAt())
+                .category(category)
+                .forumStatus(forumStatus)
+                .createdAt(createdAt)
+                .lastModifiedAt(clockLocalHolder.localMills())
                 .build();
     }
-
-
-
 }

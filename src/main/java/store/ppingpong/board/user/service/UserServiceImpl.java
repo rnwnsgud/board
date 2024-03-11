@@ -43,8 +43,10 @@ public class UserServiceImpl implements UserService {
         sendEmail(userInfo, user);
         return user;
     }
-    public User getByInfo(LoginInfo loginInfo, UserInfo userInfo) {
+
+    private User getByInfo(LoginInfo loginInfo, UserInfo userInfo) {
         User user = User.of(loginInfo, userInfo, clockHolder);
+        System.out.println("getByInfo : " + user.getCreatedAt());
         user = userRepository.save(user);
         return user;
     }

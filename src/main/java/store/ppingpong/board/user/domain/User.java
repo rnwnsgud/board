@@ -1,6 +1,5 @@
 package store.ppingpong.board.user.domain;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.service.port.ClockHolder;
@@ -16,7 +15,7 @@ public class User {
     private final Long createdAt;
     private final Long lastLoginAt;
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder
     private User(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
         this.id = id;
         this.loginInfo = loginInfo;
@@ -27,7 +26,6 @@ public class User {
     }
 
     public static User of(LoginInfo loginInfo, UserInfo userInfo, ClockHolder clockHolder) {
-
         return User.builder()
                 .loginInfo(loginInfo)
                 .userInfo(userInfo)
@@ -47,15 +45,12 @@ public class User {
     }
 
     public static User valueOf(long id, String role) {
-
         UserEnum userEnum = UserEnum.USER;
-
         UserEnum[] userEnums = {UserEnum.USER,  UserEnum.ADMIN};
 
         for (UserEnum tmp : userEnums) {
             if (tmp.name().equals(role)) userEnum = tmp;
         }
-
         UserInfo userInfo = UserInfo.builder()
                 .userEnum(userEnum)
                 .build();
@@ -75,7 +70,6 @@ public class User {
                 .createdAt(createdAt)
                 .lastLoginAt(lastLoginAt)
                 .build();
-
     }
 
     public User login(ClockHolder clockHolder) {
@@ -87,10 +81,5 @@ public class User {
                 .createdAt(createdAt)
                 .lastLoginAt(clockHolder.mills())
                 .build();
-
     }
-
-
-
-
 }
