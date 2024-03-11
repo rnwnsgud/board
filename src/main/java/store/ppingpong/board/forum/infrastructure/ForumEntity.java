@@ -1,6 +1,5 @@
 package store.ppingpong.board.forum.infrastructure;
 
-import ch.qos.logback.core.spi.LifeCycle;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,8 +16,8 @@ import java.time.LocalDateTime;
 
 
 @Getter
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "forum_tb")
 public class ForumEntity implements Persistable<String> {
@@ -34,15 +33,16 @@ public class ForumEntity implements Persistable<String> {
     private ForumStatus forumStatus;
     @CreatedDate
     private LocalDateTime createdAt;
-
+    private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus) {
+    private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt) {
         this.forumId = forumId;
         this.name = name;
         this.introduction = introduction;
         this.category = category;
         this.forumStatus = forumStatus;
+        this.createdAt = createdAt;
     }
 
     public static ForumEntity from(Forum forum) {
@@ -52,6 +52,7 @@ public class ForumEntity implements Persistable<String> {
                 .introduction(forum.getIntroduction())
                 .category(forum.getCategory())
                 .forumStatus(forum.getForumStatus())
+                .createdAt(forum.getCreatedAt())
                 .build();
     }
 

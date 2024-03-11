@@ -1,7 +1,11 @@
 package store.ppingpong.board.forum.service;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
@@ -25,13 +29,14 @@ import java.util.List;
 @Service
 public class ForumServiceImpl implements ForumService {
 
-
     private final ForumRepository forumRepository;
     private final ForumManagerRepository forumManagerRepository;
     private final ClockLocalHolder clockLocalHolder;
+    private final EntityManager em;
+
     @Override
     public Forum create(ForumCreate forumCreate, User user) {
-        Forum forum = forumRepository.save(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserEnum()));
+        Forum forum = forumRepository.create(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserEnum()));
         ForumManager forumUser = ForumManager.of(forum.getForumId(), user.getId(), ForumManagerLevel.MANAGER);
         forumManagerRepository.save(forumUser);
         return forum;
@@ -51,8 +56,10 @@ public class ForumServiceImpl implements ForumService {
     @Override
     public Forum modify(String forumId, ForumUpdate forumUpdate) {
         Forum forum = findById(forumId);
-        forum = forum.managerModify(forumUpdate);
-        return forumRepository.save(forum);
+        em.clear();
+        forum = forum.managerModify(forumUpdate, clockLocalHolder);
+        forumRepository.modify(forum);
+        return forum;
     }
 
 

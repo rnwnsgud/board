@@ -17,7 +17,7 @@ public class ForumRepositoryImpl implements ForumRepository {
     private final ForumJpaRepository forumJpaRepository;
 
     @Override
-    public Forum save(Forum forum) {
+    public Forum create(Forum forum) {
         return forumJpaRepository.save(ForumEntity.from(forum)).toModel();
     }
 
@@ -30,5 +30,10 @@ public class ForumRepositoryImpl implements ForumRepository {
     @Override
     public Optional<Forum> findById(String forumId) {
         return forumJpaRepository.findByForumId(forumId).map(ForumEntity::toModel);
+    }
+
+    @Override
+    public void modify(Forum forum) {
+        forumJpaRepository.modify(forum.getForumId(), forum.getIntroduction(), forum.getCategory());
     }
 }

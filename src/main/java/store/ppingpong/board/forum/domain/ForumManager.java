@@ -14,7 +14,7 @@ public class ForumManager {
     private final Long userId;
     private final ForumManagerLevel forumManagerLevel;
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder
     private ForumManager(Long id, String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
         this.id = id;
         this.forumId = forumId;
