@@ -37,7 +37,6 @@ public class FakeUserRepository implements UserRepository {
                     .createdAt(100L)
                     .lastLoginAt(user.getLastLoginAt())
                     .build();
-
             data.add(mockUser);
             return mockUser;
 
@@ -66,6 +65,11 @@ public class FakeUserRepository implements UserRepository {
 
     @Override
     public void login(User user) {
+
+    }
+
+    @Override
+    public void verify(User user) {
 
     }
 }

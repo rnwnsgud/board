@@ -62,7 +62,7 @@ public class Forum {
                 .forumId(forumId)
                 .name(name)
                 .introduction(forumUpdate.getIntroduction())
-                .category(category)
+                .category(forumUpdate.getCategory())
                 .forumStatus(forumStatus)
                 .createdAt(createdAt)
                 .lastModifiedAt(clockLocalHolder.localMills())
