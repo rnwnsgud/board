@@ -54,4 +54,14 @@ public class UserRepositoryImpl implements UserRepository {
         return userJpaRepository.findManagerOrAssistant(forumId, userId).orElseThrow(() -> new ResourceNotFoundException("해당 포럼 관리자 리스트", userId)).toModel();
     }
 
+    @Override
+    public void login(User user) {
+        userJpaRepository.login(user.getId(), user.getLastLoginAt());
+    }
+
+    @Override
+    public void verify(User user) {
+        userJpaRepository.verify(user.getId(), user.getUserStatus());
+    }
+
 }

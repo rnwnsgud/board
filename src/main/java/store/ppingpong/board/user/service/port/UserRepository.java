@@ -19,4 +19,7 @@ public interface UserRepository {
     List<User> findForumAssistant(String forumId);
 
     User findManagerOrAssistant(String forumId, long userId);
+    void login(User user);
+
+    void verify(User user);
 }

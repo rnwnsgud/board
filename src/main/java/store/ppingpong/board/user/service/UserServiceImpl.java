@@ -33,8 +33,7 @@ public class UserServiceImpl implements UserService {
     private final CertificationService certificationService;
     private final RandomHolder randomHolder;
 
-
-    @Override // 유저가 존재하지 않다면, PENDING 상태인 유저를 생성한다.
+    @Override
     public User create(UserCreate userCreate) {
         checkUserExistence(userCreate);
         LoginInfo loginInfo = LoginInfo.of(userCreate, passwordEncoder);
@@ -62,17 +61,18 @@ public class UserServiceImpl implements UserService {
         if (userOP.isPresent()) throw new ResourceAlreadyExistException("해당 유저가 이미 존재합니다.", userOP.get().getId());
     }
 
-    @Override // PENDING 상태인 유저가 메일인증을 성공하면 ACTIVE 상태로 전환한다.
+    @Override
     public void verifyEmail(long id, String certificationCode) {
         User user = getById(id);
         inMemoryService.verifyCode(user.getUserInfo().getEmail(), certificationCode);
         user = user.verified();
-        userRepository.save(user);
+        userRepository.verify(user);
     }
     @Override
     public void login(long id) {
         User user = userRepository.getById(id);
-        user.login(clockHolder);
+        user = user.login(clockHolder);
+        userRepository.login(user);
     }
 
     @Transactional(readOnly = true)

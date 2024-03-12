@@ -63,4 +63,9 @@ public class FakeUserRepository implements UserRepository {
     public User findManagerOrAssistant(String forumId, long userId) {
         return null;
     }
+
+    @Override
+    public void login(User user) {
+
+    }
 }

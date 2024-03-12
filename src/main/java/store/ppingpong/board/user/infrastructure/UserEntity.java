@@ -38,7 +38,6 @@ public class UserEntity {
         this.createdAt = createdAt;
         this.lastLoginAt = lastLoginAt;
     }
-
     public static UserEntity from(User user) {
         return UserEntity.builder()
                 .userInfo(user.getUserInfo())
@@ -48,7 +47,6 @@ public class UserEntity {
                 .lastLoginAt(user.getLastLoginAt())
                 .build();
     }
-
     public User toModel() {
         return User.from(this);
     }
