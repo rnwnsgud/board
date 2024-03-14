@@ -27,6 +27,7 @@ public class ResponseDto<T> {
                 .data(data)
                 .build();
     }
+
     public static <T> ResponseDto<List<T>> of(int code, String msg) {
         return ResponseDto.<List<T>>builder()
                 .code(code)
@@ -34,6 +35,5 @@ public class ResponseDto<T> {
                 .data(Collections.EMPTY_LIST)
                 .build();
     }
-
 
 }

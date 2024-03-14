@@ -2,11 +2,21 @@ package store.ppingpong.board.common.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.handler.exception.*;
+
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -15,41 +25,35 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
-    @ResponseStatus(NOT_FOUND)
     @ExceptionHandler(ResourceNotFoundException.class)
-    public String resourceNotFoundException(ResourceNotFoundException e) {
-        log.error(e.getMessage());
-        return e.getMessage();
+    public ResponseEntity<ResponseDto<?>> resourceNotFoundException(ResourceNotFoundException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1, e.getMessage()), NOT_FOUND);
     }
 
-    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(EmailNotSupportException.class)
-    public String emailNotSupportException(EmailNotSupportException e) {
-        log.error(e.getMessage());
-        return e.getMessage();
+    public ResponseEntity<ResponseDto<?>> emailNotSupportException(EmailNotSupportException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
-    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
-    public String validationException(ValidationException e) {
-        log.error(e.getMessage());
-        return e.getMessage();
+    public ResponseEntity<ResponseDto<?>> validationException(ValidationException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
-    @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(ResourceAlreadyExistException.class)
-    public String resourceAlreadyExistException(ResourceAlreadyExistException e) {
-        log.error(e.getMessage());
-        return e.getMessage();
+    public ResponseEntity<ResponseDto<?>> resourceAlreadyExistException(ResourceAlreadyExistException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
     @ResponseStatus(FORBIDDEN)
     @ExceptionHandler(CertificationCodeNotMatchedException.class)
-    public String certificationCodeNotMatchedException(CertificationCodeNotMatchedException e) {
-        log.error(e.getMessage());
-        return e.getMessage();
+    public ResponseEntity<ResponseDto<?>> certificationCodeNotMatchedException(CertificationCodeNotMatchedException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), FORBIDDEN);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ResponseDto<?>> requestDtoBindingException(HttpMessageNotReadableException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,"요청 본문이 잘못되었거나, DTO로 변환할 수 없습니다."), BAD_REQUEST);
     }
 
 }

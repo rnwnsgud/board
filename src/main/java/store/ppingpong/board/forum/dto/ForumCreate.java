@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.yaml.snakeyaml.util.EnumUtils;
 import store.ppingpong.board.forum.domain.Category;
 
 @Getter

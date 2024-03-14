@@ -3,6 +3,7 @@ package store.ppingpong.board.user.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
@@ -35,7 +36,7 @@ class UserControllerTest {
                 .build();
 
         // when
-        ResponseEntity<UserResponse> response = testContainer.userController.sendEmail(userCreate);
+        ResponseEntity<UserResponse> response = testContainer.userController.sendEmail(userCreate, null);
 
         // then
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -65,7 +66,7 @@ class UserControllerTest {
         // when
         // then
         assertThatThrownBy(() -> {
-            testContainer.userController.sendEmail(userCreate);
+            testContainer.userController.sendEmail(userCreate, null);
         }).isInstanceOf(EmailNotSupportException.class);
     }
 
@@ -97,7 +98,7 @@ class UserControllerTest {
 
         // then
         assertThatThrownBy(() -> {
-            testContainer.userController.sendEmail(userCreate);
+            testContainer.userController.sendEmail(userCreate, null);
         }).isInstanceOf(ResourceAlreadyExistException.class);
 
     }

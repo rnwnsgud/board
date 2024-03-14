@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
@@ -31,7 +32,7 @@ public class ForumController {
     private final ClockLocalHolder clockLocalHolder;
 
     @PostMapping
-    public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, @AuthenticationPrincipal LoginUser loginUser) {
+    public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
         Forum forum = forumService.create(forumCreate, loginUser.getUser());
         return new ResponseEntity<>(ResponseDto.of(1, "포럼의 생성 성공", ForumResponse.from(forum)), HttpStatus.CREATED);
     }
@@ -51,7 +52,8 @@ public class ForumController {
     }
     // TODO : 이미지 기능 추가 후 변경(메서드 명 및 기능)
     @PutMapping("/{forumId}")
-    public ResponseEntity<?> modify(@PathVariable("forumId") String forumId, @RequestBody ForumUpdate forumUpdate, @AuthenticationPrincipal LoginUser loginUser) {
+    public ResponseEntity<?> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,
+                                    BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
         User authorizedUser = userRepository.findManagerOrAssistant(forumId, loginUser.getUser().getId());
         Forum forum = forumService.modify(forumId, forumUpdate);
         return new ResponseEntity<>(ResponseDto.of(1, "포럼 수정 성공", ForumUpdateResponse.of(forum, authorizedUser, clockLocalHolder)), HttpStatus.OK);
