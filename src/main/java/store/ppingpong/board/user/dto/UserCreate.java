@@ -3,6 +3,7 @@ package store.ppingpong.board.user.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +12,9 @@ public class UserCreate {
 
     @NotBlank
     private final String loginId;
+    @Size(min = 2, max = 12)
     private final String nickname;
+    @Size(min = 4, max = 20)
     private final String rawPassword;
     @Email
     private final String email;

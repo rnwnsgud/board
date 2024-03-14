@@ -22,4 +22,6 @@ public interface UserRepository {
     void login(User user);
 
     void verify(User user);
+
+    boolean existById(long id);
 }

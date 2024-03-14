@@ -64,4 +64,9 @@ public class UserRepositoryImpl implements UserRepository {
         userJpaRepository.verify(user.getId(), user.getUserStatus());
     }
 
+    @Override
+    public boolean existById(long id) {
+        return userJpaRepository.existsById(id);
+    }
+
 }

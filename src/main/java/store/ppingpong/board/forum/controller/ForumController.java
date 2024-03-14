@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
+import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.common.service.port.ClockLocalHolder;
 import store.ppingpong.board.forum.controller.port.ForumManagerService;
 import store.ppingpong.board.forum.controller.port.ForumService;
@@ -32,8 +33,11 @@ public class ForumController {
     private final ClockLocalHolder clockLocalHolder;
 
     @PostMapping
-    public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
-        Forum forum = forumService.create(forumCreate, loginUser.getUser());
+    public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, BindingResult bindingResult,
+                                                             @AuthenticationPrincipal LoginUser loginUser) {
+        User user = loginUser.getUser();
+        if (!userRepository.existById(user.getId())) throw new ResourceNotFoundException("Users", user.getId());
+        Forum forum = forumService.create(forumCreate, user);
         return new ResponseEntity<>(ResponseDto.of(1, "포럼의 생성 성공", ForumResponse.from(forum)), HttpStatus.CREATED);
     }
 
