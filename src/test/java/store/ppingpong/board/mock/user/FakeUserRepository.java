@@ -70,6 +70,7 @@ public class FakeUserRepository implements UserRepository {
 
     @Override
     public void verify(User user) {
-
+        User getUser = getById(user.getId());
+        save(getUser.verified());
     }
 }

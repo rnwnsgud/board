@@ -46,7 +46,7 @@ class ForumControllerTest {
                 .loginInfo(null)
                 .createdAt(100L).build();
 
-        ResponseEntity<ResponseDto<ForumResponse>> response = testContainer.forumController.create(forumCreate, new LoginUser(user));
+        ResponseEntity<ResponseDto<ForumResponse>> response = testContainer.forumController.create(forumCreate, null, new LoginUser(user));
 
         assertThat(response.getBody().getData().getForumId()).isEqualTo("reverse1999");
         assertThat(response.getBody().getData().getName()).isEqualTo("리버스1999");
@@ -81,7 +81,7 @@ class ForumControllerTest {
                 .loginInfo(null)
                 .createdAt(100L).build();
 
-        ResponseEntity<ResponseDto<ForumResponse>> response = testContainer.forumController.create(forumCreate, new LoginUser(user));
+        ResponseEntity<ResponseDto<ForumResponse>> response = testContainer.forumController.create(forumCreate, null, new LoginUser(user));
 
         assertThat(response.getBody().getData().getForumId()).isEqualTo("reverse1999");
         assertThat(response.getBody().getData().getName()).isEqualTo("리버스1999");

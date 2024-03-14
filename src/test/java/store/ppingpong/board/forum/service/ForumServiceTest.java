@@ -1,9 +1,13 @@
 package store.ppingpong.board.forum.service;
 
+import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import store.ppingpong.board.forum.domain.*;
 import store.ppingpong.board.forum.dto.ForumCreate;
+import store.ppingpong.board.forum.dto.ForumUpdate;
 import store.ppingpong.board.mock.forum.FakeForumRepository;
 import store.ppingpong.board.mock.forum.FakeForumManagerRepository;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
@@ -13,7 +17,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-
+@RequiredArgsConstructor
 class ForumServiceTest {
 
     private ForumServiceImpl forumService;
@@ -22,9 +26,10 @@ class ForumServiceTest {
     void init() {
         FakeForumRepository fakeForumRepository = new FakeForumRepository();
         FakeForumManagerRepository fakeForumUserRepository = new FakeForumManagerRepository();
-
+        EntityManager em = Mockito.mock(EntityManager.class);
         this.forumService = ForumServiceImpl.builder()
                 .clockLocalHolder(new TestClockLocalHolder(LocalDateTime.MIN))
+                .em(em)
                 .forumRepository(fakeForumRepository)
                 .forumManagerRepository(fakeForumUserRepository)
                 .build();
@@ -199,5 +204,19 @@ class ForumServiceTest {
         assertThat(forum.getForumStatus()).isEqualTo(ForumStatus.PENDING);
         assertThat(forum.getCategory()).isEqualTo(Category.GAME);
         assertThat(forum.getIntroduction()).isEqualTo("라리안 스튜디오에서 제작한 턴제 RPG, 공식 한국어 지원");
+    }
+
+    @Test
+    void modify로_포럼의_정보를_수정할_수_있다() {
+        // given
+        ForumUpdate forumUpdate = ForumUpdate.builder()
+                .category(Category.ETC)
+                .introduction("수정된 정보")
+                .build();
+        // when
+        Forum forum = forumService.modify("bg3", forumUpdate);
+        assertThat(forum.getCategory()).isEqualTo(Category.ETC);
+        assertThat(forum.getIntroduction()).isEqualTo("수정된 정보");
+
     }
 }
