@@ -16,6 +16,8 @@ import store.ppingpong.board.forum.dto.ForumAssistantResponse;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.service.port.UserRepository;
 
+import java.util.List;
+
 @RequestMapping("/api/forums/management")
 @RequiredArgsConstructor
 @Builder
@@ -31,7 +33,7 @@ public class ForumManagerController {
 
     @GetMapping("/{forumId}/appointment/{userId}")
     public ResponseEntity<ResponseDto<ForumAssistantResponse>> appointmentAssistant(@PathVariable("forumId") String forumId, @PathVariable("userId") long userId, @AuthenticationPrincipal LoginUser loginUser) {
-        checkManager(forumId, loginUser);
+        checkManager(forumId, loginUser); // 컨트롤러가 Assistant 임명을 하나가 궁금한거니깐 이 private 메서드의 테스트는 궁금하지 않다.
         ForumManager assistant = ForumManager.of(forumId, userId, ForumManagerLevel.ASSISTANT);
         forumManagerService.create(assistant);
         User user = userRepository.getById(userId);

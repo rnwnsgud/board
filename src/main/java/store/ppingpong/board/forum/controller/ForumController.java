@@ -56,7 +56,7 @@ public class ForumController {
     }
     // TODO : 이미지 기능 추가 후 변경(메서드 명 및 기능)
     @PutMapping("/{forumId}")
-    public ResponseEntity<?> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,
+    public ResponseEntity<ResponseDto<ForumUpdateResponse>> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,
                                     BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
         User authorizedUser = userRepository.findManagerOrAssistant(forumId, loginUser.getUser().getId());
         Forum forum = forumService.modify(forumId, forumUpdate);

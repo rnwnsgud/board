@@ -6,9 +6,9 @@ public interface InMemoryService {
 
     String getValue(String key);
 
-    void deleteValue(String key);
-
     void verifyCode(String key, String certificationCode);
+
+    Long getExpirationTime(String key);
 
 
 }

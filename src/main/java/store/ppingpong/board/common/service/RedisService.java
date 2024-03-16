@@ -29,18 +29,15 @@ public class RedisService implements InMemoryService {
     }
 
     @Override
-    public void deleteValue(String key) {
-        redisTemplate.delete(key);
-    }
-
-    @Override
     public void verifyCode(String key, String certificationCode) {
-
         String value = getValue(key);
         if (!certificationCode.equals(value)) throw new CertificationCodeNotMatchedException();
     }
 
-
+    @Override
+    public Long getExpirationTime(String key) {
+        return redisTemplate.getExpire(key);
+    }
 
 
 }

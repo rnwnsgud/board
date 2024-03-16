@@ -73,4 +73,9 @@ public class FakeUserRepository implements UserRepository {
         User getUser = getById(user.getId());
         save(getUser.verified());
     }
+
+    @Override
+    public boolean existById(long id) {
+        return false;
+    }
 }

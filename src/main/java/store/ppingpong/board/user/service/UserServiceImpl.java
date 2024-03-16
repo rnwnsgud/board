@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService {
 
     private User getByInfo(LoginInfo loginInfo, UserInfo userInfo) {
         User user = User.of(loginInfo, userInfo, clockHolder);
-        System.out.println("getByInfo : " + user.getCreatedAt());
         user = userRepository.save(user);
         return user;
     }
@@ -68,6 +67,7 @@ public class UserServiceImpl implements UserService {
         user = user.verified();
         userRepository.verify(user);
     }
+
     @Override
     public void login(long id) {
         User user = userRepository.getById(id);

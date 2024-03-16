@@ -48,12 +48,10 @@ public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테�
                 .userInfo(userInfo)
                 .loginInfo(loginInfo)
                 .build());
-
     }
 
     @Test
     void UserCreate_객체로_PENDING_상태인_유저를_생성할_수_있다() {
-
         UserCreate userCreate = UserCreate
                 .builder()
                 .loginId("cos1234")
@@ -70,12 +68,10 @@ public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테�
         assertThat(user.getLoginInfo().getLoginType()).isEqualTo(LoginType.GOOGLE);
         assertThat(user.getLoginInfo().getEncodePassword()).isEqualTo("1234");
         assertThat(user.getLastLoginAt()).isNull();
-
     }
 
     @Test
     void create는_기존_유저가_존재하면_예외를_반환한다() {
-
         UserCreate userCreate = UserCreate
                 .builder()
                 .loginId("ssar1234")
@@ -86,7 +82,6 @@ public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테�
         assertThatThrownBy(() -> {
             userService.create(userCreate);
         }).isInstanceOf(ResourceAlreadyExistException.class);
-
     }
 
 }

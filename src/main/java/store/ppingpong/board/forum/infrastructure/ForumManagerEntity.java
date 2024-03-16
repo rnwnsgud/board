@@ -27,7 +27,6 @@ public class ForumManagerEntity {
         this.forumManagerLevel = forumManagerLevel;
     }
 
-
     public static ForumManagerEntity from(ForumManager forumManager) {
         return ForumManagerEntity.builder()
                 .forumId(forumManager.getForumId())
