@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class SystemClockLocalHolder implements ClockLocalHolder {
     @Override
     public LocalDateTime localMills() {
-        return LocalDateTime.now(Clock.systemUTC());
+        return LocalDateTime.now();
     }
 
 }

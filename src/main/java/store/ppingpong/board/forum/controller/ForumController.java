@@ -55,7 +55,7 @@ public class ForumController {
         return new ResponseEntity<>(ResponseDto.of(1, "해당 포럼 상세정보 가져오기 성공", ForumDetailResponse.of(forum, forumManager, forumAssistant)), HttpStatus.OK);
     }
     // TODO : 이미지 기능 추가 후 변경(메서드 명 및 기능)
-    @PutMapping("/{forumId}")
+    @PatchMapping("/{forumId}")
     public ResponseEntity<ResponseDto<ForumUpdateResponse>> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,
                                     BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
         User authorizedUser = userRepository.findManagerOrAssistant(forumId, loginUser.getUser().getId());

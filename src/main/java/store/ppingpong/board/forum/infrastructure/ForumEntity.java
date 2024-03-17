@@ -36,13 +36,14 @@ public class ForumEntity implements Persistable<String> {
     private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt) {
+    private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.forumId = forumId;
         this.name = name;
         this.introduction = introduction;
         this.category = category;
         this.forumStatus = forumStatus;
         this.createdAt = createdAt;
+        this.lastModifiedAt = lastModifiedAt;
     }
 
     public static ForumEntity from(Forum forum) {
@@ -53,6 +54,7 @@ public class ForumEntity implements Persistable<String> {
                 .category(forum.getCategory())
                 .forumStatus(forum.getForumStatus())
                 .createdAt(forum.getCreatedAt())
+                .lastModifiedAt(forum.getLastModifiedAt())
                 .build();
     }
 

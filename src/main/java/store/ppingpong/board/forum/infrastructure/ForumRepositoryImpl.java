@@ -34,6 +34,6 @@ public class ForumRepositoryImpl implements ForumRepository {
 
     @Override
     public void modify(Forum forum) {
-        forumJpaRepository.modify(forum.getForumId(), forum.getIntroduction(), forum.getCategory());
+        forumJpaRepository.modify(forum.getForumId(), forum.getIntroduction(), forum.getCategory(), forum.getLastModifiedAt());
     }
 }
