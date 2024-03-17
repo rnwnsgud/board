@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테스트 추가해야됨
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @BeforeEach
     void init() {
@@ -20,7 +20,7 @@ public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테�
         FakeEmailSender fakeEmailSender = new FakeEmailSender();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
         FakePasswordEncoder fakePasswordEncoder = new FakePasswordEncoder();
-        userService = UserServiceImpl.builder()
+        userService = UserService.builder()
                 .inMemoryService(new FakeRedisService())
                 .certificationService(new CertificationService(fakeEmailSender))
                 .userRepository(fakeUserRepository)

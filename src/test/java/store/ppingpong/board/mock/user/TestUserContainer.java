@@ -6,7 +6,7 @@ import store.ppingpong.board.common.controller.port.InMemoryService;
 import store.ppingpong.board.common.service.port.RandomHolder;
 import store.ppingpong.board.user.controller.UserAccountController;
 import store.ppingpong.board.user.service.CertificationService;
-import store.ppingpong.board.user.service.UserServiceImpl;
+import store.ppingpong.board.user.service.UserService;
 import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
 import store.ppingpong.board.user.service.port.EmailSender;
 import store.ppingpong.board.user.service.port.UserRepository;
@@ -28,7 +28,7 @@ public class TestUserContainer {
         this.passwordEncoder = new FakePasswordEncoder();
         this.inMemoryService = new FakeRedisService();
 
-        UserServiceImpl userService = UserServiceImpl.builder()
+        UserService userService = UserService.builder()
                 .randomHolder(randomHolder)
                 .clockHolder(clockHolder)
                 .userRepository(userRepository)

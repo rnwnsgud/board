@@ -8,11 +8,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
-import store.ppingpong.board.forum.controller.port.ForumManagerService;
-import store.ppingpong.board.forum.controller.port.ForumService;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.dto.ForumAssistantResponse;
+import store.ppingpong.board.forum.service.ForumManagerService;
+import store.ppingpong.board.forum.service.ForumService;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.service.port.UserRepository;
 
@@ -27,12 +27,9 @@ public class ForumManagerController {
     private final UserRepository userRepository;
     private final ForumService forumService;
 
-    // assistant : 금지어설정 , 유저차단(포스팅제한, 댓글제한), 글삭제, 삭제목록, 차단목록, 개념글기준설정(추천10개), 태그, 연관 포럼, 공지등록, 개념글해제
-    // manager : assistant + assistant 임명, 해임, 위임, 포럼정보수정
-
     @GetMapping("/{forumId}/appointment/{userId}")
     public ResponseEntity<ResponseDto<ForumAssistantResponse>> appointmentAssistant(@PathVariable("forumId") String forumId, @PathVariable("userId") Long userId, @AuthenticationPrincipal LoginUser loginUser) {
-        checkManager(forumId, loginUser); // 컨트롤러가 Assistant 임명을 하나가 궁금한거니깐 이 private 메서드의 테스트는 궁금하지 않다.
+        checkManager(forumId, loginUser);
         ForumManager assistant = ForumManager.of(forumId, userId, ForumManagerLevel.ASSISTANT);
         forumManagerService.create(assistant);
         User user = userRepository.getById(userId);

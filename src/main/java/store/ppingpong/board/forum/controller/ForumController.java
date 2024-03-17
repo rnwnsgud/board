@@ -12,10 +12,10 @@ import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.common.service.port.ClockLocalHolder;
-import store.ppingpong.board.forum.controller.port.ForumManagerService;
-import store.ppingpong.board.forum.controller.port.ForumService;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.dto.*;
+import store.ppingpong.board.forum.service.ForumManagerService;
+import store.ppingpong.board.forum.service.ForumService;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.service.port.UserRepository;
 

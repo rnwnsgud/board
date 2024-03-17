@@ -9,12 +9,12 @@ import store.ppingpong.board.mock.forum.FakeForumManagerRepository;
 import static org.assertj.core.api.Assertions.*;
 
 public class ForumManagerServiceTest {
-    private ForumManagerServiceImpl forumManagerService;
+    private ForumManagerService forumManagerService;
 
     @BeforeEach
     void init() {
         FakeForumManagerRepository fakeForumManagerRepository = new FakeForumManagerRepository();
-        this.forumManagerService = ForumManagerServiceImpl.builder()
+        this.forumManagerService = ForumManagerService.builder()
                 .forumManagerRepository(fakeForumManagerRepository)
                 .build();
 

@@ -20,14 +20,14 @@ import static org.assertj.core.api.Assertions.*;
 @RequiredArgsConstructor
 class ForumServiceTest {
 
-    private ForumServiceImpl forumService;
+    private ForumService forumService;
 
     @BeforeEach
     void init() {
         FakeForumRepository fakeForumRepository = new FakeForumRepository();
         FakeForumManagerRepository fakeForumUserRepository = new FakeForumManagerRepository();
         EntityManager em = Mockito.mock(EntityManager.class);
-        this.forumService = ForumServiceImpl.builder()
+        this.forumService = ForumService.builder()
                 .clockLocalHolder(new TestClockLocalHolder(LocalDateTime.MIN))
                 .em(em)
                 .forumRepository(fakeForumRepository)

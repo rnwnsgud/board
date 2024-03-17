@@ -17,10 +17,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import store.ppingpong.board.common.config.auth.LoginUser;
-import store.ppingpong.board.user.controller.port.UserService;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.dto.UserLoginReq;
 import store.ppingpong.board.user.dto.UserLoginResp;
+import store.ppingpong.board.user.service.UserService;
 
 
 import java.io.IOException;

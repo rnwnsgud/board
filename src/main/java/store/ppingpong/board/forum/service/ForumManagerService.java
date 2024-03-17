@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import store.ppingpong.board.forum.controller.port.ForumManagerService;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
@@ -12,22 +11,19 @@ import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class ForumManagerServiceImpl implements ForumManagerService {
+public class ForumManagerService {
 
     private final ForumManagerRepository forumManagerRepository;
 
     @Transactional(readOnly = true)
-    @Override
     public ForumManager findByForumId(String forumId) {
         return forumManagerRepository.findByForumId(forumId);
     }
 
-    @Override
     public ForumManager create(ForumManager forumManager) {
         return forumManagerRepository.save(forumManager);
     }
 
-    @Override
     public void delete(String forumId, Long userId) {
         forumManagerRepository.deleteByUserId(forumId, userId);
     }

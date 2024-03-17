@@ -9,7 +9,6 @@ import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.common.service.port.ClockHolder;
 import store.ppingpong.board.common.controller.port.InMemoryService;
 import store.ppingpong.board.common.service.port.RandomHolder;
-import store.ppingpong.board.user.controller.port.UserService;
 import store.ppingpong.board.user.domain.LoginInfo;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.domain.UserInfo;
@@ -24,7 +23,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService {
 
     private final CustomPasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -33,7 +32,6 @@ public class UserServiceImpl implements UserService {
     private final CertificationService certificationService;
     private final RandomHolder randomHolder;
 
-    @Override
     public User create(UserCreate userCreate) {
         checkUserExistence(userCreate);
         LoginInfo loginInfo = LoginInfo.of(userCreate, passwordEncoder);
@@ -60,7 +58,6 @@ public class UserServiceImpl implements UserService {
         if (userOP.isPresent()) throw new ResourceAlreadyExistException("해당 유저가 이미 존재합니다.", userOP.get().getId());
     }
 
-    @Override
     public void verifyEmail(Long id, String certificationCode) {
         User user = getById(id);
         inMemoryService.verifyCode(user.getUserInfo().getEmail(), certificationCode);
@@ -68,7 +65,6 @@ public class UserServiceImpl implements UserService {
         userRepository.verify(user);
     }
 
-    @Override
     public void login(Long id) {
         User user = userRepository.getById(id);
         user = user.login(clockHolder);
@@ -76,7 +72,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    @Override
     public User getById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
