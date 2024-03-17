@@ -1,6 +1,5 @@
 package store.ppingpong.board.user.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.mock.user.FakeEmailSender;
 
@@ -15,7 +14,7 @@ public class CertificationServiceTest {
         CertificationService certificationService = new CertificationService(fakeEmailSender);
 
         // when
-        certificationService.send("ssar@naver.com", 1, "213561");
+        certificationService.send("ssar@naver.com", 1L, "213561");
 
         // then
         assertThat(fakeEmailSender.email).isEqualTo("ssar@naver.com");

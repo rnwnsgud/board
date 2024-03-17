@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.domain.UserStatus;
 
 import java.util.List;
@@ -34,13 +33,13 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, Long> {
             "from ForumManagerEntity fm " +
             "join UserEntity u on fm.userId = u.id " +
             "where fm.forumId = :forumId and fm.forumManagerLevel != 'USER' and u.id = :userId")
-    Optional<UserEntity> findManagerOrAssistant(@Param("forumId") String forumId, @Param("userId") long userId);
+    Optional<UserEntity> findManagerOrAssistant(@Param("forumId") String forumId, @Param("userId") Long userId);
 
     @Modifying(clearAutomatically = true)
     @Query("update UserEntity u " +
             "set u.lastLoginAt = :lastLoginAt " +
             "where u.id = :userId")
-    void login(@Param("userId") long userId, @Param("lastLoginAt") long lastLoginAt);
+    void login(@Param("userId") long userId, @Param("lastLoginAt") Long lastLoginAt);
 
     @Modifying(clearAutomatically = true)
     @Query("update UserEntity u " +

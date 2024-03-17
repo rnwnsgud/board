@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    Optional<User> findById(long id);
+    Optional<User> findById(Long id);
 
     Optional<User> findByLoginId(String loginId);
 
-    User getById(long id);
+    User getById(Long id);
 
     User save(User user);
 
@@ -18,10 +18,10 @@ public interface UserRepository {
 
     List<User> findForumAssistant(String forumId);
 
-    User findManagerOrAssistant(String forumId, long userId);
+    User findManagerOrAssistant(String forumId, Long userId);
     void login(User user);
 
     void verify(User user);
 
-    boolean existById(long id);
+    boolean existById(Long id);
 }

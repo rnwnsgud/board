@@ -12,7 +12,7 @@ public class FakeUserRepository implements UserRepository {
     private static long sequence = 0L;
 
     @Override
-    public Optional<User> findById(long id) {
+    public Optional<User> findById(Long id) {
         return data.stream().filter(item -> item.getId().equals(id)).findAny(); // 아무거나 하나 반환
     }
 
@@ -22,7 +22,7 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public User getById(long id) {
+    public User getById(Long id) {
         return findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
@@ -59,7 +59,7 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public User findManagerOrAssistant(String forumId, long userId) {
+    public User findManagerOrAssistant(String forumId, Long userId) {
         return null;
     }
 
@@ -75,7 +75,7 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean existById(long id) {
+    public boolean existById(Long id) {
         return false;
     }
 }

@@ -39,7 +39,7 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
     }
 
     @Override
-    public void deleteByUserId(String forumId, long userId) {
+    public void deleteByUserId(String forumId, Long userId) {
 
     }
 }

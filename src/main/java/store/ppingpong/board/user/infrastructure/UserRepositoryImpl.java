@@ -17,7 +17,7 @@ public class UserRepositoryImpl implements UserRepository {
     private final UserJpaRepository userJpaRepository;
 
     @Override
-    public Optional<User> findById(long id) {
+    public Optional<User> findById(Long id) {
         return userJpaRepository.findById(id).map(UserEntity::toModel);
     }
 
@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getById(long id) {
+    public User getById(Long id) {
         return findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
@@ -46,11 +46,10 @@ public class UserRepositoryImpl implements UserRepository {
         return userJpaRepository.findForumAssistants(forumId).stream()
                 .map(UserEntity::toModel)
                 .collect(Collectors.toList());
-
     }
 
     @Override
-    public User findManagerOrAssistant(String forumId, long userId) {
+    public User findManagerOrAssistant(String forumId, Long userId) {
         return userJpaRepository.findManagerOrAssistant(forumId, userId).orElseThrow(() -> new ResourceNotFoundException("해당 포럼 관리자 리스트", userId)).toModel();
     }
 
@@ -65,7 +64,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean existById(long id) {
+    public boolean existById(Long id) {
         return userJpaRepository.existsById(id);
     }
 

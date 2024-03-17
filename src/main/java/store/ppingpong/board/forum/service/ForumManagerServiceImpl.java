@@ -8,8 +8,6 @@ import store.ppingpong.board.forum.controller.port.ForumManagerService;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
-import java.util.List;
-
 @Builder
 @RequiredArgsConstructor
 @Transactional
@@ -30,7 +28,7 @@ public class ForumManagerServiceImpl implements ForumManagerService {
     }
 
     @Override
-    public void delete(String forumId, long userId) {
+    public void delete(String forumId, Long userId) {
         forumManagerRepository.deleteByUserId(forumId, userId);
     }
 

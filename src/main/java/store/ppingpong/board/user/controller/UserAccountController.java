@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.user.controller.port.UserService;
@@ -37,7 +36,7 @@ public class UserAccountController {
 
     @GetMapping("/{id}/verify")
     public ResponseEntity<Void> verifyEmail(
-            @PathVariable("id") long id,
+            @PathVariable("id") Long id,
             @RequestParam("certificationCode") String certificationCode) {
         userService.verifyEmail(id, certificationCode);
         return ResponseEntity.status(HttpStatus.OK)

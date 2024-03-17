@@ -6,6 +6,6 @@ import store.ppingpong.board.forum.domain.ForumManager;
 public interface ForumManagerService {
     ForumManager findByForumId(String forumId);
     ForumManager create(ForumManager forumManager);
-    void delete(String forumId, long userId);
+    void delete(String forumId, Long userId);
 
 }

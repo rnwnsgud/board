@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     private void sendEmail(UserInfo userInfo, User user) {
         String certificationCode = randomHolder.sixDigit();
-        inMemoryService.setValueExpire(userInfo.getEmail(), certificationCode, 300);
+        inMemoryService.setValueExpire(userInfo.getEmail(), certificationCode, 300L);
         certificationService.send(userInfo.getEmail(), user.getId(), certificationCode);
     }
 
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void verifyEmail(long id, String certificationCode) {
+    public void verifyEmail(Long id, String certificationCode) {
         User user = getById(id);
         inMemoryService.verifyCode(user.getUserInfo().getEmail(), certificationCode);
         user = user.verified();
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(long id) {
+    public void login(Long id) {
         User user = userRepository.getById(id);
         user = user.login(clockHolder);
         userRepository.login(user);
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public User getById(long id) {
+    public User getById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
