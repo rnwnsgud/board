@@ -25,7 +25,6 @@ public class ForumManagerController {
 
     private final ForumManagerService forumManagerService;
     private final UserRepository userRepository;
-    private final ForumService forumService;
 
     @GetMapping("/{forumId}/appointment/{userId}")
     public ResponseEntity<ResponseDto<ForumAssistantResponse>> appointmentAssistant(@PathVariable("forumId") String forumId, @PathVariable("userId") Long userId, @AuthenticationPrincipal LoginUser loginUser) {
@@ -37,8 +36,8 @@ public class ForumManagerController {
     }
 
     private void checkManager(String forumId, LoginUser loginUser) {
-        ForumManager forumManager = forumManagerService.findByForumId(forumId);
-        forumManager.isSameUser(loginUser.getUser());
+        ForumManager forumManager = forumManagerService.findManagerByForumId(forumId);
+        forumManager.isOwnerOfForum(loginUser.getUser());
     }
 
     @DeleteMapping("/{forumId}/appointment/{userId}")

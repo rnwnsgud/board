@@ -38,8 +38,7 @@ public class ForumManager {
                 .build();
     }
 
-
-    public void isSameUser(User user) {
+    public void isOwnerOfForum(User user) {
         if(!Objects.equals(this.userId, user.getId())) throw new ResourceNotSameException("본인은 해당 포럼의 매니저가 아닙니다. : ", user.getId());
     }
 }

@@ -16,8 +16,8 @@ public class ForumManagerService {
     private final ForumManagerRepository forumManagerRepository;
 
     @Transactional(readOnly = true)
-    public ForumManager findByForumId(String forumId) {
-        return forumManagerRepository.findByForumId(forumId);
+    public ForumManager findManagerByForumId(String forumId) {
+        return forumManagerRepository.findManagerByForumId(forumId);
     }
 
     public ForumManager create(ForumManager forumManager) {

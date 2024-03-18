@@ -17,7 +17,7 @@ public class ForumManagerRepositoryImpl implements ForumManagerRepository {
 
     }
     @Override
-    public ForumManager findByForumId(String forumId) {
+    public ForumManager findManagerByForumId(String forumId) {
         return forumManagerJpaRepository.findMangerByForumId(forumId).toModel();
     }
 
