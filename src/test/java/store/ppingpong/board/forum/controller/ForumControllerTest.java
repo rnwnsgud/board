@@ -45,9 +45,10 @@ class ForumControllerTest {
                 .userInfo(userInfo)
                 .loginInfo(null)
                 .createdAt(100L).build();
-
+        // when
         ResponseEntity<ResponseDto<ForumResponse>> response = testContainer.forumController.create(forumCreate, null, new LoginUser(user));
 
+        // then
         assertThat(response.getBody().getData().getForumId()).isEqualTo("reverse1999");
         assertThat(response.getBody().getData().getName()).isEqualTo("리버스1999");
         assertThat(response.getBody().getData().getCategory()).isEqualTo(Category.GAME);
@@ -81,8 +82,10 @@ class ForumControllerTest {
                 .loginInfo(null)
                 .createdAt(100L).build();
 
+        // when
         ResponseEntity<ResponseDto<ForumResponse>> response = testContainer.forumController.create(forumCreate, null, new LoginUser(user));
 
+        // then
         assertThat(response.getBody().getData().getForumId()).isEqualTo("reverse1999");
         assertThat(response.getBody().getData().getName()).isEqualTo("리버스1999");
         assertThat(response.getBody().getData().getCategory()).isEqualTo(Category.GAME);
@@ -114,7 +117,9 @@ class ForumControllerTest {
                 .build()
         );
 
+        // when
         ResponseEntity<ResponseDto<ForumListResponse>> response = testContainer.forumController.getActiveList();
+        // then
         assertThat(response.getBody().getData().getForumDtoList().size()).isEqualTo(2);
         assertThat(response.getBody().getData().getForumDtoList().get(0).getForumId()).startsWith("ACTIVE");
 

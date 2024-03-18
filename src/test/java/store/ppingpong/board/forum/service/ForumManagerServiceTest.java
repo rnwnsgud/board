@@ -23,12 +23,12 @@ public class ForumManagerServiceTest {
     }
 
     @Test
-    void forumId로_ForumManger를_찾을_수_있다() {
+    void forumId로_Forum의_MANAGER를_찾을_수_있다() {
         // given
         String forumId = "리버스1999";
 
         // when
-        ForumManager forumManager = forumManagerService.findByForumId(forumId);
+        ForumManager forumManager = forumManagerService.findManagerByForumId(forumId);
 
         // then
         assertThat(forumManager.getForumId()).isEqualTo(forumId);
