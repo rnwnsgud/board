@@ -1,9 +1,7 @@
 package store.ppingpong.board.user.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import store.ppingpong.board.common.controller.port.InMemoryService;
-import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
+import store.ppingpong.board.common.service.port.InMemoryService;
 import store.ppingpong.board.mock.user.FakeRedisService;
 
 import static org.assertj.core.api.Assertions.*;

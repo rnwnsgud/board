@@ -50,7 +50,7 @@ public class UserAccountController {
             authority.getAuthority();
             System.out.println("Authority: " + authority.getAuthority());
         }
-        System.out.println(loginUser.getUser().getUserInfo().getUserEnum());
+        System.out.println(loginUser.getUser().getUserInfo().getUserType());
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }

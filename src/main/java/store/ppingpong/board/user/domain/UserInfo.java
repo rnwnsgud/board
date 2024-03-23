@@ -16,20 +16,20 @@ public class UserInfo {
     private String email;
     private String nickname;
     @Enumerated(EnumType.STRING)
-    private UserEnum userEnum;
+    private UserType userType;
 
     @Builder
-    public UserInfo(String email, String nickname, UserEnum userEnum) {
+    public UserInfo(String email, String nickname, UserType userType) {
         this.email = email;
         this.nickname = nickname;
-        this.userEnum = userEnum;
+        this.userType = userType;
     }
 
     public static UserInfo from(UserCreate userCreate) {
         return UserInfo.builder()
                 .email(userCreate.getEmail())
                 .nickname(userCreate.getNickname())
-                .userEnum(UserEnum.USER)
+                .userType(UserType.USER)
                 .build();
     }
 }

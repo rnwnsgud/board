@@ -30,7 +30,7 @@ public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테�
                 .build();
 
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.USER)
+                .userType(UserType.USER)
                 .email("ssar@naver.com")
                 .nickname("쌀")
                 .build();
@@ -61,7 +61,7 @@ public class UserServiceTest { // TODO: 2024-02-26 create :inMemoryService 테�
 
         User user = userService.create(userCreate);
         assertThat(user.getUserStatus()).isEqualTo(UserStatus.PENDING);
-        assertThat(user.getUserInfo().getUserEnum()).isEqualTo(UserEnum.USER);
+        assertThat(user.getUserInfo().getUserType()).isEqualTo(UserType.USER);
         assertThat(user.getUserInfo().getNickname()).isEqualTo("쌀루스");
         assertThat(user.getUserInfo().getEmail()).isEqualTo("ssar@gmail.com");
         assertThat(user.getLoginInfo().getLoginId()).isEqualTo("cos1234");

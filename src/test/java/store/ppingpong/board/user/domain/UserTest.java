@@ -18,7 +18,7 @@ public class UserTest {
       UserInfo userInfo = UserInfo.builder()
               .nickname("쌀")
               .email("ssar@naver.com")
-              .userEnum(UserEnum.USER)
+              .userType(UserType.USER)
               .build();
 
       // when
@@ -44,7 +44,7 @@ public class UserTest {
       UserInfo userInfo = UserInfo.builder()
               .nickname("쌀")
               .email("ssar@naver.com")
-              .userEnum(UserEnum.USER)
+              .userType(UserType.USER)
               .build();
 
       User user = User.builder()

@@ -1,4 +1,4 @@
-package store.ppingpong.board.common.controller.port;
+package store.ppingpong.board.common.service.port;
 
 public interface InMemoryService {
 

@@ -6,7 +6,7 @@ import store.ppingpong.board.common.service.port.ClockLocalHolder;
 import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.forum.dto.ForumUpdate;
 import store.ppingpong.board.forum.infrastructure.ForumEntity;
-import store.ppingpong.board.user.domain.UserEnum;
+import store.ppingpong.board.user.domain.UserType;
 
 import java.time.LocalDateTime;
 
@@ -32,9 +32,9 @@ public class Forum {
         this.lastModifiedAt = lastModifiedAt;
     }
 
-    public static Forum of(ForumCreate forumCreate, ClockLocalHolder clockLocalHolder, UserEnum userEnum) {
+    public static Forum of(ForumCreate forumCreate, ClockLocalHolder clockLocalHolder, UserType userType) {
         ForumStatus forumStatus;
-        if (userEnum == UserEnum.USER) forumStatus = ForumStatus.PENDING;
+        if (userType == UserType.USER) forumStatus = ForumStatus.PENDING;
         else forumStatus = ForumStatus.ACTIVE;
         return Forum.builder()
                 .forumId(forumCreate.getForumId())

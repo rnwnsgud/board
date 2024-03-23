@@ -4,11 +4,9 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.domain.UserEnum;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 @Getter
 public class LoginUser implements UserDetails {
@@ -22,7 +20,7 @@ public class LoginUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(() -> user.getUserInfo().getUserEnum().name());
+        authorities.add(() -> user.getUserInfo().getUserType().name());
         return authorities;
     }
 

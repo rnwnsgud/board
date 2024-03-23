@@ -24,7 +24,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ResponseDto<?>> resourceNotFoundException(ResourceNotFoundException e) {
         return new ResponseEntity<>(ResponseDto.of(-1, e.getMessage()), NOT_FOUND);
@@ -45,7 +44,6 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
-    @ResponseStatus(FORBIDDEN)
     @ExceptionHandler(CertificationCodeNotMatchedException.class)
     public ResponseEntity<ResponseDto<?>> certificationCodeNotMatchedException(CertificationCodeNotMatchedException e) {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), FORBIDDEN);

@@ -2,7 +2,7 @@ package store.ppingpong.board.mock.user;
 
 import lombok.Builder;
 import store.ppingpong.board.common.service.port.ClockHolder;
-import store.ppingpong.board.common.controller.port.InMemoryService;
+import store.ppingpong.board.common.service.port.InMemoryService;
 import store.ppingpong.board.common.service.port.RandomHolder;
 import store.ppingpong.board.user.controller.UserAccountController;
 import store.ppingpong.board.user.service.CertificationService;

@@ -1,5 +1,5 @@
 package store.ppingpong.board.user.domain;
 
-public enum UserEnum {
+public enum UserType {
     ADMIN, USER;
 }

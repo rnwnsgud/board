@@ -43,7 +43,7 @@ class ForumServiceTest {
                 .createdAt(LocalDateTime.MIN)
                 .build();
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.USER)
+                .userType(UserType.USER)
                 .email("ssar@naver.com")
                 .nickname("쌀")
                 .build();
@@ -79,7 +79,7 @@ class ForumServiceTest {
                 .build();
 
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.USER)
+                .userEnum(UserType.USER)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
@@ -119,7 +119,7 @@ class ForumServiceTest {
                 .build();
 
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.ADMIN)
+                .userEnum(UserType.ADMIN)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
@@ -160,7 +160,7 @@ class ForumServiceTest {
                 .build();
 
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.ADMIN)
+                .userEnum(UserType.ADMIN)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();

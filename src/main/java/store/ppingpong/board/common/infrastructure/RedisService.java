@@ -1,11 +1,11 @@
-package store.ppingpong.board.common.service;
+package store.ppingpong.board.common.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
-import store.ppingpong.board.common.controller.port.InMemoryService;
+import store.ppingpong.board.common.service.port.InMemoryService;
 
 import java.time.Duration;
 

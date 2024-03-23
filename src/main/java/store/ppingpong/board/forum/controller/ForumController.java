@@ -21,10 +21,9 @@ import store.ppingpong.board.user.service.port.UserRepository;
 
 import java.util.List;
 
-@RequestMapping("/api/forums")
 @RequiredArgsConstructor
 @Builder
-@RestController
+@RestController("/api/forums")
 public class ForumController {
 
     private final ForumService forumService;

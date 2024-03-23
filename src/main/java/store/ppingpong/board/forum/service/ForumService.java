@@ -24,14 +24,13 @@ import java.util.List;
 @Transactional
 @Service
 public class ForumService {
-
     private final ForumRepository forumRepository;
     private final ForumManagerRepository forumManagerRepository;
     private final ClockLocalHolder clockLocalHolder;
     private final EntityManager em;
 
     public Forum create(ForumCreate forumCreate, User user) {
-        Forum forum = forumRepository.create(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserEnum()));
+        Forum forum = forumRepository.create(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserType()));
         ForumManager forumUser = ForumManager.of(forum.getForumId(), user.getId(), ForumManagerLevel.MANAGER);
         forumManagerRepository.save(forumUser);
         return forum;

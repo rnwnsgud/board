@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.common.service.port.ClockHolder;
-import store.ppingpong.board.common.controller.port.InMemoryService;
+import store.ppingpong.board.common.service.port.InMemoryService;
 import store.ppingpong.board.common.service.port.RandomHolder;
 import store.ppingpong.board.user.domain.LoginInfo;
 import store.ppingpong.board.user.domain.User;

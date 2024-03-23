@@ -30,7 +30,7 @@ class ForumTest {
         UserInfo userInfo = UserInfo.builder()
                 .nickname("쌀")
                 .email("ssar@naver.com")
-                .userEnum(UserEnum.USER)
+                .userType(UserType.USER)
                 .build();
 
         User user = User.builder()
@@ -40,7 +40,7 @@ class ForumTest {
                 .userStatus(UserStatus.ACTIVE)
                 .build();
 
-        Forum forum = Forum.of(forumCreate, new TestClockLocalHolder(LocalDateTime.MIN), user.getUserInfo().getUserEnum());
+        Forum forum = Forum.of(forumCreate, new TestClockLocalHolder(LocalDateTime.MIN), user.getUserInfo().getUserType());
 
         assertThat(forum.getForumId()).isEqualTo("reverse1999");
         assertThat(forum.getName()).isEqualTo("리버스1999");

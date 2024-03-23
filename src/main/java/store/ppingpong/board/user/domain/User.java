@@ -45,14 +45,14 @@ public class User {
     }
 
     public static User valueOf(long id, String role) {
-        UserEnum userEnum = UserEnum.USER;
-        UserEnum[] userEnums = {UserEnum.USER,  UserEnum.ADMIN};
+        UserType userType = UserType.USER;
+        UserType[] userTypes = {UserType.USER,  UserType.ADMIN};
 
-        for (UserEnum tmp : userEnums) {
-            if (tmp.name().equals(role)) userEnum = tmp;
+        for (UserType tmp : userTypes) {
+            if (tmp.name().equals(role)) userType = tmp;
         }
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(userEnum)
+                .userType(userType)
                 .build();
 
         return User.builder()

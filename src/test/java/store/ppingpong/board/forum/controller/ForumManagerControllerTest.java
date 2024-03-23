@@ -1,6 +1,5 @@
 package store.ppingpong.board.forum.controller;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -22,7 +21,7 @@ public class ForumManagerControllerTest {
     @BeforeEach
     void init() {
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.USER)
+                .userType(UserType.USER)
                 .email("ssar@naver.com")
                 .nickname("쌀")
                 .build();

@@ -12,7 +12,7 @@ import store.ppingpong.board.forum.dto.ForumListResponse;
 import store.ppingpong.board.forum.dto.ForumResponse;
 import store.ppingpong.board.mock.forum.TestForumContainer;
 import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.domain.UserEnum;
+import store.ppingpong.board.user.domain.UserType;
 import store.ppingpong.board.user.domain.UserInfo;
 import store.ppingpong.board.user.domain.UserStatus;
 
@@ -35,7 +35,7 @@ class ForumControllerTest {
                 .category(Category.GAME)
                 .build();
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.USER)
+                .userEnum(UserType.USER)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
@@ -71,7 +71,7 @@ class ForumControllerTest {
                 .category(Category.GAME)
                 .build();
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserEnum.ADMIN)
+                .userEnum(UserType.ADMIN)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();

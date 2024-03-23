@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.domain.UserEnum;
 
 
 import java.util.Date;
@@ -32,7 +31,7 @@ public class JwtProvider {
                 .withSubject("accessToken")
                 .withExpiresAt(new Date(System.currentTimeMillis()+expiration)) // 현재시간에다 더해줘야함.
                 .withClaim("id", loginUser.getUser().getId())
-                .withClaim("role", loginUser.getUser().getUserInfo().getUserEnum().name())
+                .withClaim("role", loginUser.getUser().getUserInfo().getUserType().name())
                 .sign(Algorithm.HMAC512(SECRET));
         return TOKEN_PREFIX + jwtToken;
     }
