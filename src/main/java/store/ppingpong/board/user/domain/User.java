@@ -2,6 +2,7 @@ package store.ppingpong.board.user.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import store.ppingpong.board.common.handler.exception.ResourceInactiveException;
 import store.ppingpong.board.common.service.port.ClockHolder;
 import store.ppingpong.board.user.infrastructure.UserEntity;
 
@@ -39,6 +40,7 @@ public class User {
                 .id(userEntity.getId())
                 .userInfo(userEntity.getUserInfo())
                 .loginInfo(userEntity.getLoginInfo())
+                .userStatus(userEntity.getUserStatus())
                 .createdAt(userEntity.getCreatedAt())
                 .lastLoginAt(userEntity.getLastLoginAt())
                 .build();
@@ -81,5 +83,9 @@ public class User {
                 .createdAt(createdAt)
                 .lastLoginAt(clockHolder.mills())
                 .build();
+    }
+
+    public void isActive() {
+        if (userStatus!=UserStatus.ACTIVE) throw new ResourceInactiveException("User는 현재 비활성화 되었습니다.");
     }
 }
