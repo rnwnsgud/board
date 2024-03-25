@@ -23,7 +23,8 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Builder
-@RestController("/api/forums")
+@RestController
+@RequestMapping("/api/forums")
 public class ForumController {
 
     private final ForumService forumService;
@@ -35,7 +36,6 @@ public class ForumController {
     public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, BindingResult bindingResult,
                                                              @AuthenticationPrincipal LoginUser loginUser) {
         User user = loginUser.getUser();
-        if (!userRepository.existById(user.getId())) throw new ResourceNotFoundException("Users", user.getId());
         Forum forum = forumService.create(forumCreate, user);
         return new ResponseEntity<>(ResponseDto.of(1, "포럼의 생성 성공", ForumResponse.from(forum)), HttpStatus.CREATED);
     }

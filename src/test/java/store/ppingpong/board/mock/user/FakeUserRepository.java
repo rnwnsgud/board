@@ -75,7 +75,7 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean existById(Long id) {
-        return false;
+    public boolean existsById(Long id) {
+        return true;
     }
 }

@@ -49,9 +49,14 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), FORBIDDEN);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ResponseDto<?>> requestDtoBindingException(HttpMessageNotReadableException e) {
-        return new ResponseEntity<>(ResponseDto.of(-1,"요청 본문이 잘못되었거나, DTO로 변환할 수 없습니다."), BAD_REQUEST);
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    public ResponseEntity<ResponseDto<?>> requestDtoBindingException(HttpMessageNotReadableException e) {
+//        return new ResponseEntity<>(ResponseDto.of(-1,"요청 본문이 잘못되었거나, DTO로 변환할 수 없습니다."), BAD_REQUEST);
+//    }
+
+    @ExceptionHandler(ResourceInactiveException.class)
+    public ResponseEntity<ResponseDto<?>> resourceInactiveException(ResourceInactiveException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), FORBIDDEN);
     }
 
 }

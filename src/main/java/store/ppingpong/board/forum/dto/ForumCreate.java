@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.yaml.snakeyaml.util.EnumUtils;
+import store.ppingpong.board.common.util.ValidEnum;
 import store.ppingpong.board.forum.domain.Category;
 
 @Getter
@@ -17,6 +18,7 @@ public class ForumCreate {
     private final String introduction;
     @Size(min = 2, max = 20)
     private final String forumId;
+    @ValidEnum(enumClass = Category.class)
     private final Category category;
 
     @Builder
