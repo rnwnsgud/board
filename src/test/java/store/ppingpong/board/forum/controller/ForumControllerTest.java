@@ -35,7 +35,7 @@ class ForumControllerTest {
                 .category(Category.GAME)
                 .build();
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserType.USER)
+                .userType(UserType.USER)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
@@ -71,7 +71,7 @@ class ForumControllerTest {
                 .category(Category.GAME)
                 .build();
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserType.ADMIN)
+                .userType(UserType.ADMIN)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
@@ -96,7 +96,7 @@ class ForumControllerTest {
     }
 
     @Test
-    void 사용자는_ACTIVE_상태인_포럼들만_가져올_수_있다() {
+    void 사용자는_ACTIVE_상태인_포럼들만_조회할_수_있다() {
         // given
         TestForumContainer testContainer = TestForumContainer.builder()
                 .clockLocalHolder(() -> LocalDateTime.MIN)
@@ -123,7 +123,29 @@ class ForumControllerTest {
         assertThat(response.getBody().getData().getForumDtoList().size()).isEqualTo(2);
         assertThat(response.getBody().getData().getForumDtoList().get(0).getForumId()).startsWith("ACTIVE");
 
+    }
 
+    @Test
+    void 사용자는_특정한_포럼을_조회할_수_있다() {
+        // given
+        TestForumContainer testContainer = TestForumContainer.builder()
+                .clockLocalHolder(() -> LocalDateTime.MIN)
+                .build();
+        testContainer.forumRepository.create(Forum.builder()
+                .forumId("PENDING")
+                .forumStatus(ForumStatus.PENDING)
+                .build()
+        );
+        testContainer.forumRepository.create(Forum.builder()
+                .forumId("ACTIVE1")
+                .forumStatus(ForumStatus.ACTIVE)
+                .build()
+        );
+        testContainer.forumRepository.create(Forum.builder()
+                .forumId("ACTIVE2")
+                .forumStatus(ForumStatus.ACTIVE)
+                .build()
+        );
     }
 
 }

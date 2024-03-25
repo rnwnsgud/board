@@ -79,7 +79,7 @@ class ForumServiceTest {
                 .build();
 
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserType.USER)
+                .userType(UserType.USER)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
@@ -119,7 +119,7 @@ class ForumServiceTest {
                 .build();
 
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserType.ADMIN)
+                .userType(UserType.ADMIN)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
@@ -160,7 +160,7 @@ class ForumServiceTest {
                 .build();
 
         UserInfo userInfo = UserInfo.builder()
-                .userEnum(UserType.ADMIN)
+                .userType(UserType.ADMIN)
                 .email("cos@google.com")
                 .nickname("코스")
                 .build();
