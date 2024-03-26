@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.common.service.port.ClockLocalHolder;
+import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.service.port.PostRepository;
@@ -17,13 +18,11 @@ import store.ppingpong.board.user.service.port.UserRepository;
 @Service
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final ForumManagerRepository forumManagerRepository;
     private final ClockLocalHolder clockLocalHolder;
 
     public Post create(PostCreate postCreate, Long userId, String forumId) {
-        User user = userRepository.getById(userId);
-        user.isActive();
-        Post post = Post.of(postCreate, userId, forumId, clockLocalHolder);
-        return postRepository.create(post);
+        forumManagerRepository.findForumUserOrCreate(forumId, userId).isAccessible();
+        return postRepository.create(Post.of(postCreate, userId, forumId, clockLocalHolder));
     }
 }

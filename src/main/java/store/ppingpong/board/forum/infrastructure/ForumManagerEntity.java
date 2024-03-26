@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import store.ppingpong.board.forum.domain.ForumAccessStatus;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
 
@@ -19,12 +20,15 @@ public class ForumManagerEntity {
     private Long userId;
     @Enumerated(value = EnumType.STRING)
     private ForumManagerLevel forumManagerLevel;
+    @Enumerated(value = EnumType.STRING)
+    private ForumAccessStatus forumAccessStatus;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ForumManagerEntity(String forumId, Long userId, ForumManagerLevel forumManagerLevel) {
+    private ForumManagerEntity(String forumId, Long userId, ForumManagerLevel forumManagerLevel, ForumAccessStatus forumAccessStatus) {
         this.forumId = forumId;
         this.userId = userId;
         this.forumManagerLevel = forumManagerLevel;
+        this.forumAccessStatus = forumAccessStatus;
     }
 
     public static ForumManagerEntity from(ForumManager forumManager) {
@@ -32,6 +36,7 @@ public class ForumManagerEntity {
                 .forumId(forumManager.getForumId())
                 .userId(forumManager.getUserId())
                 .forumManagerLevel(forumManager.getForumManagerLevel())
+                .forumAccessStatus(forumManager.getForumAccessStatus())
                 .build();
     }
 

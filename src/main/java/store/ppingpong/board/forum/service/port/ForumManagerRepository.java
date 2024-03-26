@@ -6,4 +6,5 @@ public interface ForumManagerRepository {
     ForumManager save(ForumManager forumManager);
     ForumManager findManagerByForumId(String forumId);
     void deleteByUserId(String forumId, Long userId);
+    ForumManager findForumUserOrCreate(String forumId, Long userId);
 }

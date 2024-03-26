@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ForumManagerJpaRepository extends JpaRepository<ForumManagerEntity, Long> {
     List<ForumManagerEntity> findByForumId(@Param("forumId") String forumId);
@@ -15,5 +16,7 @@ public interface ForumManagerJpaRepository extends JpaRepository<ForumManagerEnt
     ForumManagerEntity findMangerByForumId(@Param("forumId") String forumId);
 
     void deleteByForumIdAndUserId(String forumId, long userId);
+
+    Optional<ForumManagerEntity> findByForumIdAndUserId(String forumId, Long userId);
 
 }

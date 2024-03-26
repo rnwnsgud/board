@@ -42,4 +42,9 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
     public void deleteByUserId(String forumId, Long userId) {
 
     }
+
+    @Override
+    public ForumManager findForumUserOrCreate(String forumId, Long userId) {
+        return null;
+    }
 }

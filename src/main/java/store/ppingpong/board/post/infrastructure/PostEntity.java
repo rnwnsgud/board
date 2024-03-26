@@ -23,7 +23,7 @@ public class PostEntity {
     private Long id;
     private String title;
     private String content;
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private PostType postType;
     private Long userId;
     private String forumId;
