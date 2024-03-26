@@ -24,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Builder
 @RestController
-@RequestMapping("/api/forums")
 public class ForumController {
 
     private final ForumService forumService;
@@ -32,7 +31,7 @@ public class ForumController {
     private final UserRepository userRepository;
     private final ClockLocalHolder clockLocalHolder;
 
-    @PostMapping
+    @PostMapping("/api/s/forums")
     public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, BindingResult bindingResult,
                                                              @AuthenticationPrincipal LoginUser loginUser) {
         User user = loginUser.getUser();
@@ -40,13 +39,13 @@ public class ForumController {
         return new ResponseEntity<>(ResponseDto.of(1, "포럼의 생성 성공", ForumResponse.from(forum)), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/api/forums")
     public ResponseEntity<ResponseDto<ForumListResponse>> getActiveList() {
         List<Forum> forums = forumService.getActiveList();
         return new ResponseEntity<>(ResponseDto.of(1, "ACTIVE 상태인 포럼 리스트 가져오기 성공", ForumListResponse.from(forums)), HttpStatus.OK);
     }
 
-    @GetMapping("/{forumId}") // TODO : 포스팅 기능 추가 후 responseDto 변경
+    @GetMapping("/api/forums/{forumId}") // TODO : 포스팅 기능 추가 후 responseDto 변경
     public ResponseEntity<ResponseDto<ForumDetailResponse>> get(@PathVariable("forumId") String forumId) {
         Forum forum = forumService.findById(forumId);
         User forumManager = userRepository.findForumManager(forumId);
@@ -54,7 +53,7 @@ public class ForumController {
         return new ResponseEntity<>(ResponseDto.of(1, "해당 포럼 상세정보 가져오기 성공", ForumDetailResponse.of(forum, forumManager, forumAssistant)), HttpStatus.OK);
     }
     // TODO : 이미지 기능 추가 후 변경(메서드 명 및 기능)
-    @PatchMapping("/{forumId}")
+    @PatchMapping("/api/s/forums/{forumId}")
     public ResponseEntity<ResponseDto<ForumUpdateResponse>> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,
                                     BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
         User authorizedUser = userRepository.findManagerOrAssistant(forumId, loginUser.getUser().getId());
