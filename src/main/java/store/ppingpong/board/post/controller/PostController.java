@@ -14,8 +14,6 @@ import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.dto.PostResponse;
 import store.ppingpong.board.post.service.PostService;
-import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.service.port.UserRepository;
 
 @RequiredArgsConstructor
 @Builder
@@ -24,7 +22,6 @@ import store.ppingpong.board.user.service.port.UserRepository;
 public class PostController {
 
     private final PostService postService;
-    private final UserRepository userRepository;
 
     @PostMapping("/{forumId}")
     public ResponseEntity<ResponseDto<PostResponse>> create(@RequestBody @Valid PostCreate postCreate, BindingResult bindingResult,

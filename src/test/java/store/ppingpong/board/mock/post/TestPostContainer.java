@@ -17,7 +17,6 @@ public class TestPostContainer {
         this.userRepository = new FakeUserRepository();
         PostService postService = PostService.builder()
                 .postRepository(postRepository)
-                .userRepository(userRepository)
                 .clockLocalHolder(clockLocalHolder)
                 .build();
         this.postController = PostController.builder()

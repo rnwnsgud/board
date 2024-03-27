@@ -33,19 +33,9 @@ public class SecurityConfig {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    // 생성자주입으로 가져오려니 다음 순환참조가 생김
-    // jwtAuthenticatiorFilter -> AuthenticationManager(AuthConfig) -> SecurityConfig
-
-    // 빈등록순서때문에 발생하는거로 짐작해서, filterChain 파라미터에 선언해서 빈이 등록된걸 가져오도록 바꿈
-
-    // JwtAuthenticationFilter 정상동작
-
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter,
                                            JwtAuthorizationFilter jwtAuthorizationFilter) throws Exception {
-        log.debug("filterChain 등록");
         http.headers((headerConfig) ->
                 headerConfig.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
         );
@@ -58,8 +48,6 @@ public class SecurityConfig {
 
         http.addFilterBefore(jwtAuthorizationFilter, BasicAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-
 
         http.exceptionHandling((exception) -> exception.authenticationEntryPoint((request, response, e) -> {
             log.error("error : " + e.getMessage());

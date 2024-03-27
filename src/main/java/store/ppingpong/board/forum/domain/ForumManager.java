@@ -48,7 +48,6 @@ public class ForumManager {
     }
 
     public void isAccessible() {
-        System.out.println("포럼 상태 : " + this.forumAccessStatus);
         if(forumAccessStatus != ForumAccessStatus.ACTIVE) throw new ResourceInactiveException("해당 유저는 게시글을 생성할 권한이 없습니다.", userId);
     }
 

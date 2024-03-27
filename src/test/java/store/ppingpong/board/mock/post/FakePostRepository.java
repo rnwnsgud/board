@@ -1,5 +1,7 @@
 package store.ppingpong.board.mock.post;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.service.port.PostRepository;
 
@@ -33,5 +35,13 @@ public class FakePostRepository implements PostRepository {
         }
 
     }
+
+    @Override
+    public Page<Post> findByForumId(String forumId, Integer listNum, Pageable pageable) {
+        return null;
+    }
+
+
+
 
 }
