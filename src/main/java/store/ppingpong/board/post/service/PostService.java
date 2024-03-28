@@ -10,6 +10,7 @@ import store.ppingpong.board.common.service.port.ClockLocalHolder;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostCreate;
+import store.ppingpong.board.post.dto.PostWithWriter;
 import store.ppingpong.board.post.service.port.PostRepository;
 
 
@@ -27,7 +28,7 @@ public class PostService {
         return postRepository.create(Post.of(postCreate, userId, forumId, clockLocalHolder));
     }
 
-    public Page<Post> getList(String forumId, int listNum, Pageable pageable) {
+    public Page<PostWithWriter> getList(String forumId, int listNum, Pageable pageable) {
         return postRepository.findByForumId(forumId, listNum, pageable);
     }
 

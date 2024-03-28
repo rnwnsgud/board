@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import store.ppingpong.board.post.domain.Post;
+import store.ppingpong.board.post.dto.PostWithWriter;
 import store.ppingpong.board.post.service.port.PostRepository;
 
 import java.util.Objects;
@@ -21,16 +22,13 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Page<Post> findByForumId(String forumId, Integer listNum, Pageable pageable) {
+    public Page<PostWithWriter> findByForumId(String forumId, Integer listNum, Pageable pageable) {
         int pageSize;
         if (listNum == null || listNum >= 10) pageSize = 10;
         else pageSize = listNum;
         int pageNumber = pageable.getPageNumber();
         if (pageNumber <=0) pageNumber = 0;
-
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "id"));
-        Page<PostEntity> postEntityPage = postJpaRepository.findByForumId(forumId, pageRequest);
-        return postEntityPage.map(Post::from);
-
+        return postJpaRepository.findByForumId(forumId, pageRequest);
     }
 }
