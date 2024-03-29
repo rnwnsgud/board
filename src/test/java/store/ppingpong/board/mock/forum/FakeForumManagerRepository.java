@@ -1,6 +1,7 @@
 package store.ppingpong.board.mock.forum;
 
 import store.ppingpong.board.forum.domain.ForumManager;
+import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
 import java.util.ArrayList;
@@ -45,6 +46,10 @@ public class FakeForumManagerRepository implements ForumManagerRepository {
 
     @Override
     public ForumManager findForumUserOrCreate(String forumId, Long userId) {
-        return null;
+        return data.stream()
+                .filter(forumManager -> forumManager.getForumId().equals(forumId))
+                .filter(forumManager -> forumManager.getUserId().longValue() == userId)
+                .findFirst()
+                .orElse(save(ForumManager.of(forumId, userId, ForumManagerLevel.USER)));
     }
 }
