@@ -10,8 +10,6 @@ import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostWithWriter;
 import store.ppingpong.board.post.service.port.PostRepository;
 
-import java.util.Objects;
-
 @Repository
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
@@ -29,6 +27,6 @@ public class PostRepositoryImpl implements PostRepository {
         int pageNumber = pageable.getPageNumber();
         if (pageNumber <=0) pageNumber = 0;
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.DESC, "id"));
-        return postJpaRepository.findByForumId(forumId, pageRequest);
+        return postJpaRepository.findPostAndUsernameByForumId(forumId, pageRequest);
     }
 }

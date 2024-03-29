@@ -12,5 +12,5 @@ public interface PostJpaRepository extends JpaRepository<PostEntity, Long> {
             "from PostEntity p " +
             "join UserEntity u on p.userId = u.id " +
             "where p.forumId = :forumId", countQuery = "select count(p) from PostEntity p where p.forumId = :forumId")
-    Page<PostWithWriter> findByForumId(@Param("forumId") String forumId, Pageable pageable);
+    Page<PostWithWriter> findPostAndUsernameByForumId(@Param("forumId") String forumId, Pageable pageable);
 }
