@@ -12,6 +12,7 @@ import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostCreate;
+import store.ppingpong.board.post.dto.PostDetailResponse;
 import store.ppingpong.board.post.dto.PostResponse;
 import store.ppingpong.board.post.service.PostService;
 
@@ -29,5 +30,12 @@ public class PostController {
         Long userId = loginUser.getUser().getId();
         Post post = postService.create(postCreate, userId, forumId);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 생성 성공", PostResponse.from(post)), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDto<PostDetailResponse>> get(@PathVariable("id") long id, @AuthenticationPrincipal LoginUser loginUser) {
+        Long userId = loginUser.getUser().getId();
+        Post post = postService.findById(id, userId);
+        return new ResponseEntity<>(ResponseDto.of(1, "게시글 조회 성공", PostDetailResponse.from(post)), HttpStatus.OK);
     }
 }
