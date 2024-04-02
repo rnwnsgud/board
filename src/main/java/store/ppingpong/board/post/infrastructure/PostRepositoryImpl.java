@@ -42,8 +42,6 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public void inquiry(Post post) {
-        log.debug("PostRepositoryImpl id = {}", post.getId());
-        log.debug("PostRepositoryImpl visitCnt = {}", post.getVisitCount());
         postJpaRepository.inquiry(post.getId(), post.getVisitCount());
     }
 }

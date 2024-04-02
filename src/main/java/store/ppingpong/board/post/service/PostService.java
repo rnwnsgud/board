@@ -37,11 +37,9 @@ public class PostService {
         return postRepository.findByForumId(forumId, listNum, pageable);
     }
 
-    public Post findById(long id, Long userId) {
+    public Post findById(long id, Long visitorId) {
         Post post = postRepository.findById(id);
-        post = post.visit(userId);
-        log.debug("findById id = {}", post.getId());
-        log.debug("findById visitCnt = {}", post.getVisitCount());
+        post = post.visit(visitorId);
         postRepository.inquiry(post);
         return post;
     }

@@ -32,4 +32,34 @@ public class PostTest {
         assertThat(post.getLastModifiedAt()).isNull();
 
     }
+
+    @Test
+    void 타인의_Post_방문시_조회수가_증가한다() {
+        // given
+        long myId = 1L;
+        long visitId = 2L;
+        Post beforePost = Post.builder()
+                .userId(myId)
+                .visitCount(0)
+                .build();
+        // when
+        Post afterPost = beforePost.visit(visitId);
+        // then
+        assertThat(afterPost.getVisitCount()).isEqualTo(1L);
+    }
+
+    @Test
+    void 본인의_Post_방문시_조회수가_증가하지_않는다() {
+        // given
+        long myId = 1L;
+        long visitId = 1L;
+        Post beforePost = Post.builder()
+                .userId(myId)
+                .visitCount(0)
+                .build();
+        // when
+        Post afterPost = beforePost.visit(visitId);
+        // then
+        assertThat(afterPost.getVisitCount()).isEqualTo(0);
+    }
 }

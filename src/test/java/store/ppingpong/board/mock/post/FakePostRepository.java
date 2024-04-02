@@ -40,10 +40,28 @@ public class FakePostRepository implements PostRepository {
 
     @Override
     public Page<PostWithWriter> findByForumId(String forumId, Integer listNum, Pageable pageable) {
+        List<Post> list = data.stream()
+                .filter(post -> post.getForumId().equals(forumId))
+                .toList();
+        FakePage<Post> posts = new FakePage<>(list, pageable.getPageNumber(), pageable.getPageSize(), list.size());
+//        posts.stream()
+//                .map()
         return null;
     }
 
+    @Override
+    public Post findById(long id) {
+        Post post = data.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .get();
+        return post;
+    }
 
+    @Override
+    public void inquiry(Post post) {
+
+    }
 
 
 }
