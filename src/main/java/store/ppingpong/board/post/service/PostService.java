@@ -25,6 +25,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final ForumManagerRepository forumManagerRepository;
     private final ClockLocalHolder clockLocalHolder;
+    private final ReadPostService readPostService;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     public Post create(PostCreate postCreate, Long userId, String forumId) {
@@ -41,6 +42,7 @@ public class PostService {
         Post post = postRepository.findById(id);
         post = post.visit(visitorId);
         postRepository.inquiry(post);
+        readPostService.firstReadThenCreate(visitorId, post.getId());
         return post;
     }
 

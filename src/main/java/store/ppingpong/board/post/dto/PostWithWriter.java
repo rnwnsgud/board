@@ -12,12 +12,14 @@ public class PostWithWriter {
     private final PostType postType;
     private final String writer;
     private final LocalDateTime createdAt;
+    private final boolean visited;
 
-    public PostWithWriter(long id, String title, PostType postType, String writer, LocalDateTime createdAt) {
+    public PostWithWriter(long id, String title, PostType postType, String writer, LocalDateTime createdAt, boolean visited) {
         this.id = id;
         this.title = title;
         this.postType = postType;
         this.writer = writer;
         this.createdAt = createdAt;
+        this.visited = visited;
     }
 }

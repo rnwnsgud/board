@@ -85,7 +85,4 @@ public class User {
                 .build();
     }
 
-    public void isActive() {
-        if (userStatus!=UserStatus.ACTIVE) throw new ResourceInactiveException("해당 User는 현재 비활성화 되었습니다 UserId : ", id);
-    }
 }
