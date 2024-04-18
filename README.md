@@ -9,6 +9,7 @@
 ---
 
 [Board API 명세서](https://thundering-vulture-ff9.notion.site/Board-b3768219329e43d78ac304eef4d3a71a)
+[Board 기능 체크리스트](https://thundering-vulture-ff9.notion.site/Board-e0896265eb8f41c29775f8b418d2e9fb?pvs=4)
 
 # **📝**규칙
 
