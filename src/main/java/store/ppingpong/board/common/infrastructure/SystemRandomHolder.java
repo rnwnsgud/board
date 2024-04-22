@@ -1,7 +1,7 @@
 package store.ppingpong.board.common.infrastructure;
 
 import org.springframework.stereotype.Component;
-import store.ppingpong.board.common.service.port.RandomHolder;
+import store.ppingpong.board.common.domain.RandomHolder;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package store.ppingpong.board.user.service;
+package store.ppingpong.board.user.application;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
-import store.ppingpong.board.common.service.port.ClockHolder;
-import store.ppingpong.board.common.service.port.InMemoryService;
-import store.ppingpong.board.common.service.port.RandomHolder;
+import store.ppingpong.board.common.domain.ClockHolder;
+import store.ppingpong.board.common.domain.InMemoryService;
+import store.ppingpong.board.common.domain.RandomHolder;
 import store.ppingpong.board.user.domain.LoginInfo;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.domain.UserInfo;
 import store.ppingpong.board.user.dto.UserCreate;
-import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
-import store.ppingpong.board.user.service.port.UserRepository;
+import store.ppingpong.board.user.application.port.CustomPasswordEncoder;
+import store.ppingpong.board.user.application.port.UserRepository;
 
 import java.util.Optional;
 

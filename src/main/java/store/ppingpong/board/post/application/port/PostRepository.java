@@ -1,4 +1,4 @@
-package store.ppingpong.board.post.service.port;
+package store.ppingpong.board.post.application.port;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

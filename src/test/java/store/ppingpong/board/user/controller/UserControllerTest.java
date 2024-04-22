@@ -3,9 +3,8 @@ package store.ppingpong.board.user.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
-import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
+import store.ppingpong.board.common.handler.exception.EmailNotSupportedException;
 import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
 import store.ppingpong.board.mock.user.TestClockHolder;
 import store.ppingpong.board.mock.user.TestUserContainer;
@@ -67,7 +66,7 @@ class UserControllerTest {
         // then
         assertThatThrownBy(() -> {
             testContainer.userController.sendEmail(userCreate, null);
-        }).isInstanceOf(EmailNotSupportException.class);
+        }).isInstanceOf(EmailNotSupportedException.class);
     }
 
     @Test

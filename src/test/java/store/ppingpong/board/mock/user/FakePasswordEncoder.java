@@ -1,6 +1,6 @@
 package store.ppingpong.board.mock.user;
 
-import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
+import store.ppingpong.board.user.application.port.CustomPasswordEncoder;
 
 public class FakePasswordEncoder implements CustomPasswordEncoder {
     @Override

@@ -3,7 +3,7 @@ package store.ppingpong.board.post.infrastructure;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import store.ppingpong.board.post.domain.ReadPost;
-import store.ppingpong.board.post.service.port.ReadPostRepository;
+import store.ppingpong.board.post.application.port.ReadPostRepository;
 
 import java.util.Optional;
 

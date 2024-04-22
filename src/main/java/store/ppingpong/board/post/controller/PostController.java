@@ -8,13 +8,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.dto.PostDetailResponse;
 import store.ppingpong.board.post.dto.PostResponse;
-import store.ppingpong.board.post.service.PostService;
+import store.ppingpong.board.post.application.PostService;
+
+import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Builder
@@ -25,10 +29,11 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/{forumId}")
-    public ResponseEntity<ResponseDto<PostResponse>> create(@RequestBody @Valid PostCreate postCreate, BindingResult bindingResult,
-                                    @PathVariable("forumId") String forumId, @AuthenticationPrincipal LoginUser loginUser) {
+    public ResponseEntity<ResponseDto<PostResponse>> create(@RequestPart @Valid PostCreate postCreate, BindingResult bindingResult,
+                                                            @RequestPart List<MultipartFile> images, @PathVariable("forumId") String forumId,
+                                                            @AuthenticationPrincipal LoginUser loginUser) throws IOException {
         Long userId = loginUser.getUser().getId();
-        Post post = postService.create(postCreate, userId, forumId);
+        Post post = postService.create(postCreate, userId, forumId, images);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 생성 성공", PostResponse.from(post)), HttpStatus.CREATED);
     }
 

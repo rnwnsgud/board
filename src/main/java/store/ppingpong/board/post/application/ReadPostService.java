@@ -1,11 +1,11 @@
-package store.ppingpong.board.post.service;
+package store.ppingpong.board.post.application;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.post.domain.ReadPost;
-import store.ppingpong.board.post.service.port.ReadPostRepository;
+import store.ppingpong.board.post.application.port.ReadPostRepository;
 
 import java.util.Optional;
 

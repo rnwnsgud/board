@@ -1,4 +1,4 @@
-package store.ppingpong.board.user.service.port;
+package store.ppingpong.board.user.application.port;
 
 import store.ppingpong.board.user.domain.User;
 

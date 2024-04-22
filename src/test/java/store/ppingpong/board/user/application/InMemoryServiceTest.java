@@ -1,7 +1,7 @@
-package store.ppingpong.board.user.service;
+package store.ppingpong.board.user.application;
 
 import org.junit.jupiter.api.Test;
-import store.ppingpong.board.common.service.port.InMemoryService;
+import store.ppingpong.board.common.domain.InMemoryService;
 import store.ppingpong.board.mock.user.FakeRedisService;
 
 import static org.assertj.core.api.Assertions.*;

@@ -1,6 +1,6 @@
 package store.ppingpong.board.mock.user;
 
-import store.ppingpong.board.user.service.port.EmailSender;
+import store.ppingpong.board.user.application.port.EmailSender;
 
 public class FakeEmailSender implements EmailSender {
 

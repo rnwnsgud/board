@@ -1,7 +1,7 @@
 package store.ppingpong.board.mock.forum;
 
 import lombok.RequiredArgsConstructor;
-import store.ppingpong.board.common.service.port.ClockLocalHolder;
+import store.ppingpong.board.common.domain.ClockLocalHolder;
 
 import java.time.LocalDateTime;
 

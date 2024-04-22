@@ -2,8 +2,7 @@ package store.ppingpong.board.user.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import store.ppingpong.board.common.handler.exception.ResourceInactiveException;
-import store.ppingpong.board.common.service.port.ClockHolder;
+import store.ppingpong.board.common.domain.ClockHolder;
 import store.ppingpong.board.user.infrastructure.UserEntity;
 
 @Getter

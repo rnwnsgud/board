@@ -13,7 +13,7 @@ import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.user.dto.UserResponse;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.dto.UserCreate;
-import store.ppingpong.board.user.service.UserService;
+import store.ppingpong.board.user.application.UserService;
 
 import java.util.Collection;
 

@@ -1,4 +1,4 @@
-package store.ppingpong.board.post.service;
+package store.ppingpong.board.post.application;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -8,13 +8,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import store.ppingpong.board.common.service.port.ClockLocalHolder;
+import org.springframework.web.multipart.MultipartFile;
+import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
+import store.ppingpong.board.image.domain.Image;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.dto.PostWithWriter;
-import store.ppingpong.board.post.service.port.PostRepository;
+import store.ppingpong.board.post.application.port.PostRepository;
+import store.ppingpong.board.image.application.port.Uploader;
 
+import java.io.IOException;
+import java.util.List;
 
 
 @Builder
@@ -26,11 +31,17 @@ public class PostService {
     private final ForumManagerRepository forumManagerRepository;
     private final ClockLocalHolder clockLocalHolder;
     private final ReadPostService readPostService;
+    private final Uploader uploader;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public Post create(PostCreate postCreate, Long userId, String forumId) {
+    public Post create(PostCreate postCreate, Long userId, String forumId, List<MultipartFile> multipartFiles) throws IOException {
         forumManagerRepository.findForumUserOrCreate(forumId, userId).isAccessible();
-        return postRepository.create(Post.of(postCreate, userId, forumId, clockLocalHolder));
+        Post post = postRepository.create(Post.of(postCreate, userId, forumId, clockLocalHolder));
+        if (!multipartFiles.isEmpty()) {
+            List<Image> images = uploader.upload(multipartFiles, post.getId());
+
+        }
+        return post;
     }
 
     @Transactional(readOnly = true)

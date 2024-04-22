@@ -1,4 +1,4 @@
-package store.ppingpong.board.post.service;
+package store.ppingpong.board.post.application;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;

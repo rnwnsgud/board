@@ -5,7 +5,7 @@ import store.ppingpong.board.forum.controller.ForumManagerController;
 import store.ppingpong.board.forum.service.ForumManagerService;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 import store.ppingpong.board.mock.user.FakeUserRepository;
-import store.ppingpong.board.user.service.port.UserRepository;
+import store.ppingpong.board.user.application.port.UserRepository;
 
 public class TestForumManagerContainer {
 

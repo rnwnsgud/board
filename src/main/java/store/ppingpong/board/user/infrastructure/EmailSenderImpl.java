@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import store.ppingpong.board.user.service.port.EmailSender;
+import store.ppingpong.board.user.application.port.EmailSender;
 
 @Component
 @RequiredArgsConstructor

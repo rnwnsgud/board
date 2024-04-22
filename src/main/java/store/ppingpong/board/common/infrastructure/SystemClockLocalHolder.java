@@ -1,9 +1,8 @@
 package store.ppingpong.board.common.infrastructure;
 
 import org.springframework.stereotype.Component;
-import store.ppingpong.board.common.service.port.ClockLocalHolder;
+import store.ppingpong.board.common.domain.ClockLocalHolder;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 
 @Component

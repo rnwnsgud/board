@@ -7,10 +7,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import store.ppingpong.board.common.handler.exception.EmailNotSupportException;
-import store.ppingpong.board.common.handler.exception.ValidationException;
+import store.ppingpong.board.common.handler.exception.EmailNotSupportedException;
 import store.ppingpong.board.user.dto.UserCreate;
-import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
+import store.ppingpong.board.user.application.port.CustomPasswordEncoder;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -47,7 +46,7 @@ public class LoginInfo {
             return LoginType.NAVER;
         } else if ("gmail.com".equals(domain)) {
             return LoginType.GOOGLE;
-        } else throw new EmailNotSupportException("지원하지 않는 이메일 형식입니다.");
+        } else throw new EmailNotSupportedException("지원하지 않는 이메일 형식입니다.");
     }
 
 

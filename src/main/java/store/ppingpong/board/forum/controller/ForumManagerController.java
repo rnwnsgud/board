@@ -12,9 +12,8 @@ import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.dto.ForumAssistantResponse;
 import store.ppingpong.board.forum.service.ForumManagerService;
-import store.ppingpong.board.forum.service.ForumService;
 import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.service.port.UserRepository;
+import store.ppingpong.board.user.application.port.UserRepository;
 
 
 @RequestMapping("/api/forums/management")

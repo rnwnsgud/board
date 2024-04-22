@@ -4,13 +4,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.dto.PostWithWriter;
-import store.ppingpong.board.post.service.port.PostRepository;
+import store.ppingpong.board.post.application.port.PostRepository;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class FakePostRepository implements PostRepository {
 

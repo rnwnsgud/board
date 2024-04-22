@@ -3,7 +3,7 @@ package store.ppingpong.board.post.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import store.ppingpong.board.common.service.port.ClockLocalHolder;
+import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.infrastructure.PostEntity;
 

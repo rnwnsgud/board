@@ -1,4 +1,4 @@
-package store.ppingpong.board.common.service.port;
+package store.ppingpong.board.common.domain;
 
 import java.time.LocalDateTime;
 

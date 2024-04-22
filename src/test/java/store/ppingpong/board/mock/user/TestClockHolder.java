@@ -1,9 +1,7 @@
 package store.ppingpong.board.mock.user;
 
 import lombok.RequiredArgsConstructor;
-import store.ppingpong.board.common.service.port.ClockHolder;
-
-import java.time.LocalDateTime;
+import store.ppingpong.board.common.domain.ClockHolder;
 
 @RequiredArgsConstructor
 public class TestClockHolder implements ClockHolder {

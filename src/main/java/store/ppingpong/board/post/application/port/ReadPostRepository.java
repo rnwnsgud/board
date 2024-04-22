@@ -1,4 +1,4 @@
-package store.ppingpong.board.post.service.port;
+package store.ppingpong.board.post.application.port;
 
 
 import store.ppingpong.board.post.domain.ReadPost;

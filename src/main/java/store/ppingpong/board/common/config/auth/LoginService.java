@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.service.port.UserRepository;
+import store.ppingpong.board.user.application.port.UserRepository;
 
 @RequiredArgsConstructor
 @Service

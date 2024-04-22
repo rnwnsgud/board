@@ -1,15 +1,15 @@
 package store.ppingpong.board.mock.user;
 
 import lombok.Builder;
-import store.ppingpong.board.common.service.port.ClockHolder;
-import store.ppingpong.board.common.service.port.InMemoryService;
-import store.ppingpong.board.common.service.port.RandomHolder;
+import store.ppingpong.board.common.domain.ClockHolder;
+import store.ppingpong.board.common.domain.InMemoryService;
+import store.ppingpong.board.common.domain.RandomHolder;
 import store.ppingpong.board.user.controller.UserAccountController;
-import store.ppingpong.board.user.service.CertificationService;
-import store.ppingpong.board.user.service.UserService;
-import store.ppingpong.board.user.service.port.CustomPasswordEncoder;
-import store.ppingpong.board.user.service.port.EmailSender;
-import store.ppingpong.board.user.service.port.UserRepository;
+import store.ppingpong.board.user.application.CertificationService;
+import store.ppingpong.board.user.application.UserService;
+import store.ppingpong.board.user.application.port.CustomPasswordEncoder;
+import store.ppingpong.board.user.application.port.EmailSender;
+import store.ppingpong.board.user.application.port.UserRepository;
 
 public class TestUserContainer {
 

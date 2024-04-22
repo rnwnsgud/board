@@ -2,7 +2,7 @@ package store.ppingpong.board.forum.domain;
 
 import lombok.Builder;
 import lombok.Getter;
-import store.ppingpong.board.common.service.port.ClockLocalHolder;
+import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.forum.dto.ForumUpdate;
 import store.ppingpong.board.forum.infrastructure.ForumEntity;

@@ -1,4 +1,4 @@
-package store.ppingpong.board.user.service;
+package store.ppingpong.board.user.application;
 
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.mock.user.FakeEmailSender;

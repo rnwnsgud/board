@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
-import store.ppingpong.board.common.service.port.ClockLocalHolder;
+import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;

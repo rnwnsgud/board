@@ -1,8 +1,8 @@
-package store.ppingpong.board.user.service;
+package store.ppingpong.board.user.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import store.ppingpong.board.user.service.port.EmailSender;
+import store.ppingpong.board.user.application.port.EmailSender;
 
 @Service
 @RequiredArgsConstructor

@@ -2,7 +2,7 @@ package store.ppingpong.board.mock.user;
 
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.user.domain.User;
-import store.ppingpong.board.user.service.port.UserRepository;
+import store.ppingpong.board.user.application.port.UserRepository;
 
 import java.util.*;
 
