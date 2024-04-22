@@ -18,7 +18,7 @@ import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.dto.*;
 import store.ppingpong.board.forum.service.ForumManagerService;
 import store.ppingpong.board.forum.service.ForumService;
-import store.ppingpong.board.post.dto.PostWithWriter;
+import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.PostService;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.application.port.UserRepository;

@@ -3,7 +3,7 @@ package store.ppingpong.board.mock.post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import store.ppingpong.board.post.domain.Post;
-import store.ppingpong.board.post.dto.PostWithWriter;
+import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.port.PostRepository;
 
 import java.util.ArrayList;

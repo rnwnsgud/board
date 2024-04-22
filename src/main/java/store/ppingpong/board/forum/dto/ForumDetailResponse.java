@@ -1,12 +1,9 @@
 package store.ppingpong.board.forum.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import store.ppingpong.board.forum.domain.Forum;
-import store.ppingpong.board.post.domain.Post;
-import store.ppingpong.board.post.domain.PostType;
-import store.ppingpong.board.post.dto.PostWithWriter;
+import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.user.domain.User;
 
 import java.util.List;

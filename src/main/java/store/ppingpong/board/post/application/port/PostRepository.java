@@ -3,7 +3,7 @@ package store.ppingpong.board.post.application.port;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import store.ppingpong.board.post.domain.Post;
-import store.ppingpong.board.post.dto.PostWithWriter;
+import store.ppingpong.board.post.domain.PostWithWriter;
 
 public interface PostRepository {
     Post create(Post post);

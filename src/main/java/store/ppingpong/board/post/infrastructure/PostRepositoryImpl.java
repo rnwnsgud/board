@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.post.domain.Post;
-import store.ppingpong.board.post.dto.PostWithWriter;
+import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.port.PostRepository;
 
 @Repository
