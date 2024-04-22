@@ -1,19 +1,8 @@
 package store.ppingpong.board.common.handler;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.handler.exception.*;
 
@@ -29,8 +18,8 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(ResponseDto.of(-1, e.getMessage()), NOT_FOUND);
     }
 
-    @ExceptionHandler(EmailNotSupportException.class)
-    public ResponseEntity<ResponseDto<?>> emailNotSupportException(EmailNotSupportException e) {
+    @ExceptionHandler(EmailNotSupportedException.class)
+    public ResponseEntity<ResponseDto<?>> emailNotSupportException(EmailNotSupportedException e) {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
@@ -57,6 +46,21 @@ public class CustomExceptionHandler {
     @ExceptionHandler(ResourceInactiveException.class)
     public ResponseEntity<ResponseDto<?>> resourceInactiveException(ResourceInactiveException e) {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), FORBIDDEN);
+    }
+
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity<ResponseDto<?>> fileUploadException(FileUploadException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileNotDeletedException.class)
+    public ResponseEntity<ResponseDto<?>> fileNotDeletedException(FileNotDeletedException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileNotSupportedException.class)
+    public ResponseEntity<ResponseDto<?>> fileNotSupportedException(FileNotSupportedException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
 }
