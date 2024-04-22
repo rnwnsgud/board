@@ -1,4 +1,4 @@
-package store.ppingpong.board.post.dto;
+package store.ppingpong.board.post.domain;
 
 import lombok.Getter;
 import store.ppingpong.board.post.domain.PostType;

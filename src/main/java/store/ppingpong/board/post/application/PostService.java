@@ -13,12 +13,14 @@ import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 import store.ppingpong.board.image.domain.Image;
 import store.ppingpong.board.post.domain.Post;
+import store.ppingpong.board.post.domain.PostWithImages;
 import store.ppingpong.board.post.dto.PostCreate;
-import store.ppingpong.board.post.dto.PostWithWriter;
+import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.port.PostRepository;
 import store.ppingpong.board.image.application.port.Uploader;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,14 +36,12 @@ public class PostService {
     private final Uploader uploader;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public Post create(PostCreate postCreate, Long userId, String forumId, List<MultipartFile> multipartFiles) throws IOException {
+    public PostWithImages create(PostCreate postCreate, Long userId, String forumId, List<MultipartFile> multipartFiles) throws IOException {
         forumManagerRepository.findForumUserOrCreate(forumId, userId).isAccessible();
         Post post = postRepository.create(Post.of(postCreate, userId, forumId, clockLocalHolder));
-        if (!multipartFiles.isEmpty()) {
-            List<Image> images = uploader.upload(multipartFiles, post.getId());
-
-        }
-        return post;
+        List<Image> images = new ArrayList<>();
+        if (!multipartFiles.isEmpty()) images = uploader.upload(multipartFiles, post.getId());
+        return PostWithImages.of(post, images);
     }
 
     @Transactional(readOnly = true)
