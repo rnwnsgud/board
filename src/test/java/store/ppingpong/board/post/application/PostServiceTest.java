@@ -7,10 +7,13 @@ import org.junit.jupiter.api.Test;
 import store.ppingpong.board.mock.forum.FakeForumManagerRepository;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
 import store.ppingpong.board.mock.post.FakePostRepository;
+import store.ppingpong.board.mock.post.FakeReadPostRepository;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.domain.PostType;
+import store.ppingpong.board.post.domain.PostWithImages;
 import store.ppingpong.board.post.dto.PostCreate;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
@@ -20,22 +23,24 @@ public class PostServiceTest {
 
     private PostService postService;
     private FakeForumManagerRepository fakeForumManagerRepository;
-
+    private FakeReadPostRepository fakeReadPostRepository;
 
     @BeforeEach
     void init() {
         FakePostRepository fakePostRepository = new FakePostRepository();
         fakeForumManagerRepository = new FakeForumManagerRepository();
+        fakeReadPostRepository = new FakeReadPostRepository();
         TestClockLocalHolder testClockLocalHolder = new TestClockLocalHolder(LocalDateTime.MIN);
         postService = PostService.builder()
                 .postRepository(fakePostRepository)
                 .forumManagerRepository(fakeForumManagerRepository)
+                .readPostService(new ReadPostService(fakeReadPostRepository))
                 .clockLocalHolder(testClockLocalHolder)
                 .build();
     }
 
-    @Test // TODO Image 테스트추가
-    void PostCreate로_Post를_생성할_수_있다() {
+    @Test
+    void PostCreate로_Post를_생성할_수_있다() throws IOException {
         // given
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
@@ -43,19 +48,18 @@ public class PostServiceTest {
                 .postType(PostType.COMMON)
                 .build();
         // when
-//        Post post = postService.create(postCreate, 1L, "reverse1999");
-//
-//        // then
-//        assertThat(post.getId()).isEqualTo(1L);
-//        assertThat(post.getForumId()).isEqualTo("reverse1999");
-//        assertThat(post.getTitle()).isEqualTo("title");
-//        assertThat(post.getPostType()).isEqualTo(PostType.COMMON);
-//        assertThat(post.getCreatedAt()).isEqualTo(LocalDateTime.MIN);
-//        assertThat(post.getLastModifiedAt()).isNull();
+        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
+
+        // then
+//        assertThat(postWithImages.getPostId()).isEqualTo(1L);
+        assertThat(postWithImages.getForumId()).isEqualTo("reverse1999");
+        assertThat(postWithImages.getTitle()).isEqualTo("title");
+        assertThat(postWithImages.getPostType()).isEqualTo(PostType.COMMON);
+        assertThat(postWithImages.getCreatedAt()).isEqualTo(LocalDateTime.MIN);
     }
 
-    @Test // TODO Image 테스트추가
-    void Post생성시_유저가_포럼매니저가_아니라면_포럼매니저를_생성한다() {
+    @Test
+    void Post생성시_유저가_포럼매니저가_아니라면_포럼매니저를_생성한다() throws IOException {
         // given
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
@@ -63,38 +67,37 @@ public class PostServiceTest {
                 .postType(PostType.COMMON)
                 .build();
         // when
-//        postService.create(postCreate, 1L, "reverse1999");
-//        // then
-//        assertThat(fakeForumManagerRepository.findManagerByForumId("reverse1999")).isNotNull();
+        postService.create(postCreate, 1L, "reverse1999", null);
+        // then
+        assertThat(fakeForumManagerRepository.findManagerByForumId("reverse1999")).isNotNull();
 
     }
 
-    @Test // TODO Image 테스트추가
-    void Id로_Post를_조회할_수_있고_조회수를_증가시킨다() {
+    @Test
+    void Id로_Post를_조회할_수_있고_조회수를_증가시킨다() throws IOException {
         // given
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("conetent")
                 .postType(PostType.COMMON)
                 .build();
-//        postService.create(postCreate, 1L, "reverse1999");
-
+        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
         // when
-        Post post = postService.findById(1L, 2L);
+        Post post = postService.findById(postWithImages.getPostId(), 2L);
 
         // then
         assertThat(post.getVisitCount()).isEqualTo(1);
     }
 
-    @Test // TODO Image 테스트추가
-    void Id로_Post를_조회할_수_있지만_본인의것이면_조회수가_증가하지_않는다() {
+    @Test
+    void Id로_Post를_조회할_수_있지만_본인의것이면_조회수가_증가하지_않는다() throws IOException {
         // given
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("conetent")
                 .postType(PostType.COMMON)
                 .build();
-//        postService.create(postCreate, 1L, "reverse1999");
+        postService.create(postCreate, 1L, "reverse1999", null);
 
         // when
         Post post = postService.findById(1L, 1L);
@@ -102,22 +105,6 @@ public class PostServiceTest {
         // then
         assertThat(post.getVisitCount()).isEqualTo(0);
     }
-
-//    @Test
-//    void Forum조회시_연관된_Post를_조회할_수_있다() {
-//        // given
-//        PostCreate postCreate = PostCreate.builder()
-//                .title("title")
-//                .content("conetent")
-//                .postType(PostType.COMMON)
-//                .build();
-//
-//        postService.create(postCreate, 1L, "reverse1999");
-//        when()
-//        mockPostRepository.findByForumId("reverse1999")
-//    }
-
-
 
 
 }

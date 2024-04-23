@@ -40,7 +40,7 @@ public class PostService {
         forumManagerRepository.findForumUserOrCreate(forumId, userId).isAccessible();
         Post post = postRepository.create(Post.of(postCreate, userId, forumId, clockLocalHolder));
         List<Image> images = new ArrayList<>();
-        if (!multipartFiles.isEmpty()) images = uploader.upload(multipartFiles, post.getId());
+        if (multipartFiles != null) images = uploader.upload(multipartFiles, post.getId());
         return PostWithImages.of(post, images);
     }
 
