@@ -31,7 +31,7 @@ public class PostController {
 
     @PostMapping("/{forumId}")
     public ResponseEntity<ResponseDto<PostResponse>> create(@RequestPart(value = "postCreate") @Valid PostCreate postCreate, BindingResult bindingResult,
-                                                            @RequestPart(value = "images") List<MultipartFile> images, @PathVariable("forumId") String forumId,
+                                                            @RequestPart(value = "images", required = false) List<MultipartFile> images, @PathVariable("forumId") String forumId,
                                                             @AuthenticationPrincipal LoginUser loginUser) throws IOException {
         Long userId = loginUser.getUser().getId();
         PostWithImages postWithImages = postService.create(postCreate, userId, forumId, images);
