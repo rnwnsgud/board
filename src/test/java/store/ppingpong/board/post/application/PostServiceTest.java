@@ -1,11 +1,16 @@
 package store.ppingpong.board.post.application;
 
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
+import store.ppingpong.board.image.domain.FileExtension;
+import store.ppingpong.board.image.domain.Image;
 import store.ppingpong.board.mock.forum.FakeForumManagerRepository;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
+import store.ppingpong.board.mock.image.FakeUploader;
 import store.ppingpong.board.mock.post.FakePostRepository;
 import store.ppingpong.board.mock.post.FakeReadPostRepository;
 import store.ppingpong.board.post.domain.Post;
@@ -15,10 +20,11 @@ import store.ppingpong.board.post.dto.PostCreate;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
-@RequiredArgsConstructor
 public class PostServiceTest {
 
     private PostService postService;
@@ -35,6 +41,7 @@ public class PostServiceTest {
                 .postRepository(fakePostRepository)
                 .forumManagerRepository(fakeForumManagerRepository)
                 .readPostService(new ReadPostService(fakeReadPostRepository))
+                .uploader(new FakeUploader())
                 .clockLocalHolder(testClockLocalHolder)
                 .build();
     }
@@ -97,13 +104,44 @@ public class PostServiceTest {
                 .content("conetent")
                 .postType(PostType.COMMON)
                 .build();
-        postService.create(postCreate, 1L, "reverse1999", null);
+        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
 
         // when
-        Post post = postService.findById(1L, 1L);
+        Post post = postService.findById(postWithImages.getPostId(), 1L);
 
         // then
         assertThat(post.getVisitCount()).isEqualTo(0);
+    }
+
+    @Test
+    void Post생성시_이미지도_첨부할_수_있다() throws IOException {
+        String fileName = "이미지1";
+        String contentType = "png";
+        List<MultipartFile> multipartFiles = new ArrayList<>();
+        MockMultipartFile multipartFile = new MockMultipartFile(
+                "images",
+                fileName+"."+contentType,
+                contentType,
+                "image".getBytes()
+                );
+        MockMultipartFile multipartFile2 = new MockMultipartFile(
+                "images",
+                fileName+"."+contentType,
+                contentType,
+                "image".getBytes()
+        );
+        multipartFiles.add(multipartFile);
+        multipartFiles.add(multipartFile2);
+        PostCreate postCreate = PostCreate.builder()
+                .title("title")
+                .content("conetent")
+                .postType(PostType.COMMON)
+                .build();
+        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", multipartFiles);
+        List<Image> images = postWithImages.getImages();
+        assertThat(images.size()).isEqualTo(2);
+        assertThat(images.get(0).getOriginalName()).isEqualTo(fileName+"."+contentType);
+        assertThat(images.get(0).getFileExtension()).isEqualTo(FileExtension.png);
     }
 
 
