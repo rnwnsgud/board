@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import store.ppingpong.board.common.domain.RandomHolder;
 import store.ppingpong.board.common.handler.exception.FileNotDeletedException;
 import store.ppingpong.board.common.handler.exception.FileNotSupportedException;
 import store.ppingpong.board.common.handler.exception.FileUploadException;
@@ -18,16 +19,16 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class FileConverter {
+public class FileTransmitter {
 
     public List<Image> storeFiles(List<MultipartFile> multipartFiles, Long postId,
-                                  AmazonS3Client amazonS3Client,
+                                  AmazonS3Client amazonS3Client, RandomHolder randomHolder,
                                   String localDirectoryLocation, String bucket) throws IOException {
         List<Image> images = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             String originalName = multipartFile.getOriginalFilename();
             if (originalName==null || originalName.isBlank()) throw new FileUploadException();
-            String storedFileName = createStoreFileName(originalName);
+            String storedFileName = createStoreFileName(originalName, randomHolder);
             File localFile = saveFileInLocal(localDirectoryLocation, storedFileName, multipartFile);
             uploadToS3(amazonS3Client, bucket, storedFileName, localFile);
             removeNewFile(localFile);
@@ -56,7 +57,7 @@ public class FileConverter {
         }
     }
 
-    private static String createStoreFileName(String fileName) {
+    private static String createStoreFileName(String fileName, RandomHolder randomHolder) {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName).toString());
     }
 
