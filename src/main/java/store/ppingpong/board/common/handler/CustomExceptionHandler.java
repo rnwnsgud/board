@@ -63,4 +63,9 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
+    @ExceptionHandler(ResourceNotOwnerException.class)
+    public ResponseEntity<ResponseDto<?>> resourceNotOwnerException(ResourceNotOwnerException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
+    }
+
 }

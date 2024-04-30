@@ -20,4 +20,8 @@ public class ReadPostService {
         Optional<ReadPost> readPostOptional = readPostRepository.get(userId, postId);
         if (readPostOptional.isEmpty()) readPostRepository.create(ReadPost.of(userId, postId));
     }
+
+    public void deleteByPostId(long postId) {
+        readPostRepository.delete(postId);
+    }
 }

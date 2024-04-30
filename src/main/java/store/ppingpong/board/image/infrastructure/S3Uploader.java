@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import store.ppingpong.board.common.domain.RandomHolder;
 import store.ppingpong.board.image.domain.Image;
 import store.ppingpong.board.image.domain.service.FileTransmitter;
 import store.ppingpong.board.image.application.port.ImageRepository;
@@ -22,9 +21,7 @@ import java.util.List;
 public class S3Uploader implements Uploader {
 
     private final AmazonS3Client amazonS3Client;
-    private final FileTransmitter fileTransmitter;
     private final ImageRepository imageRepository;
-    private final RandomHolder randomHolder;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -33,8 +30,15 @@ public class S3Uploader implements Uploader {
 
     @Override
     public List<Image> upload(List<MultipartFile> images, Long postId) throws IOException {
-        List<Image> uploadImages = fileTransmitter.storeFiles(images, postId, amazonS3Client, randomHolder, dir, bucket);
+        List<Image> uploadImages = FileTransmitter.storeFiles(images, postId, amazonS3Client, dir, bucket);
         return imageRepository.saveList(uploadImages);
+    }
+
+    @Override
+    public void delete(List<Image> imageList) {
+        for (Image image : imageList) {
+            amazonS3Client.deleteObject(bucket, image.getStoredName());
+        }
     }
 
 }

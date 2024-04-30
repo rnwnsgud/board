@@ -116,7 +116,7 @@ public class PostServiceTest {
     @Test
     void Post생성시_이미지도_첨부할_수_있다() throws IOException {
         String fileName = "이미지1";
-        String contentType = "png";
+        String contentType = "image/png";
         List<MultipartFile> multipartFiles = new ArrayList<>();
         MockMultipartFile multipartFile = new MockMultipartFile(
                 "images",

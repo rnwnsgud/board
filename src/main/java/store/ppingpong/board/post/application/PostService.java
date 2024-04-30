@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
+import store.ppingpong.board.image.application.port.ImageRepository;
 import store.ppingpong.board.image.domain.Image;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.domain.PostWithImages;
@@ -18,6 +19,7 @@ import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.port.PostRepository;
 import store.ppingpong.board.image.application.port.Uploader;
+import store.ppingpong.board.post.dto.PostDeleteResponseDto;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class PostService {
     private final ForumManagerRepository forumManagerRepository;
     private final ClockLocalHolder clockLocalHolder;
     private final ReadPostService readPostService;
+    private final ImageRepository imageRepository;
     private final Uploader uploader;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -55,6 +58,17 @@ public class PostService {
         postRepository.inquiry(post);
         readPostService.firstReadThenCreate(visitorId, post.getId());
         return post;
+    }
+
+    public PostDeleteResponseDto delete(long id, Long userId) {
+        Post post = postRepository.findById(id);
+        post.checkPostOwner(userId);
+        int status = postRepository.delete(id);
+        readPostService.deleteByPostId(post.getId());
+        List<Image> imageList = imageRepository.findByPostId(post.getId());
+        int deletedImageCount = imageRepository.delete(post.getId());
+        uploader.delete(imageList);
+        return new PostDeleteResponseDto(status, deletedImageCount);
     }
 
 

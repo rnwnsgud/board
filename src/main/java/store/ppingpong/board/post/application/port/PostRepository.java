@@ -10,5 +10,6 @@ public interface PostRepository {
     Page<PostWithWriter> findByForumId(String forumId, Integer listNum, Pageable pageable);
     Post findById(long id);
     void inquiry(Post post);
+    int delete(long id);
 
 }

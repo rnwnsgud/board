@@ -4,6 +4,7 @@ package store.ppingpong.board.post.domain;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
+import store.ppingpong.board.common.handler.exception.ResourceNotOwnerException;
 import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.infrastructure.PostEntity;
 
@@ -70,5 +71,9 @@ public class Post {
                 .createdAt(createdAt)
                 .lastModifiedAt(lastModifiedAt)
                 .build();
+    }
+
+    public void checkPostOwner(Long userId) {
+        if (this.userId.longValue() != userId.longValue()) throw new ResourceNotOwnerException("Post", userId);
     }
 }

@@ -44,4 +44,10 @@ public class PostRepositoryImpl implements PostRepository {
     public void inquiry(Post post) {
         postJpaRepository.inquiry(post.getId(), post.getVisitCount());
     }
+
+    @Override
+    public int delete(long id) {
+        return postJpaRepository.deleteById(id);
+    }
+
 }

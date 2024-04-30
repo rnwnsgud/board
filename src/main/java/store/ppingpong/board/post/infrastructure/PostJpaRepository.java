@@ -21,4 +21,8 @@ public interface PostJpaRepository extends JpaRepository<PostEntity, Long> {
             "set p.visitCount = :visitCount " +
             "where p.id = :id")
     void inquiry(@Param("id") long id, @Param("visitCount") long visitCount);
+
+    @Modifying(clearAutomatically=true)
+    @Query("delete from PostEntity p where p.id = :id")
+    int deleteById(@Param("id") long id);
 }

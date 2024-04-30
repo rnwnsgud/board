@@ -26,4 +26,9 @@ public class FakeUploader implements Uploader {
         }
         return images;
     }
+
+    @Override
+    public void delete(List<Image> imageList) {
+
+    }
 }

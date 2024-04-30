@@ -18,4 +18,18 @@ public class ImageRepositoryImpl implements ImageRepository {
         List<ImageEntity> imageEntities = images.stream().map(ImageEntity::from).collect(Collectors.toList());
         return imageJpaRepository.saveAll(imageEntities).stream().map(Image::from).collect(Collectors.toList());
     }
+
+    @Override
+    public List<Image> findByPostId(long postId) {
+        return imageJpaRepository.findByPostId(postId).stream().map(Image::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public int delete(long postId) {
+        return imageJpaRepository.deleteByPostId(postId);
+    }
+
+
+
+
 }

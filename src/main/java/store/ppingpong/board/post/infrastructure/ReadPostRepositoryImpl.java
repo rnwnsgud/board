@@ -22,4 +22,9 @@ public class ReadPostRepositoryImpl implements ReadPostRepository {
     public Optional<ReadPost> get(long userId, long postId) {
         return readPostJpaRepository.findByUserIdAndPostId(userId, postId).map(ReadPostEntity::toModel);
     }
+
+    @Override
+    public void delete(long postId) {
+        readPostJpaRepository.deleteByPostId(postId);
+    }
 }

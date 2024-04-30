@@ -21,6 +21,7 @@ public class ImageEntity {
     private String originalName;
     private String storedName;
     private String imgUrl;
+    @Enumerated(value = EnumType.STRING)
     private FileExtension fileExtension;
 
     @Builder(access = AccessLevel.PRIVATE)
@@ -34,6 +35,7 @@ public class ImageEntity {
 
     public static ImageEntity from(Image image) {
         return ImageEntity.builder()
+                .postId(image.getPostId())
                 .originalName(image.getOriginalName())
                 .storedName(image.getStoredName())
                 .imgUrl(image.getImgUrl())
