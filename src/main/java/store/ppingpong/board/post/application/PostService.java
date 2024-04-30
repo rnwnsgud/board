@@ -52,12 +52,13 @@ public class PostService {
         return postRepository.findByForumId(forumId, listNum, pageable);
     }
 
-    public Post findById(long id, Long visitorId) {
+    public PostWithImages findById(long id, Long visitorId) {
         Post post = postRepository.findById(id);
+        List<Image> imageList = imageRepository.findByPostId(post.getId());
         post = post.visit(visitorId);
         postRepository.inquiry(post);
         readPostService.firstReadThenCreate(visitorId, post.getId());
-        return post;
+        return PostWithImages.of(post, imageList);
     }
 
     public PostDeleteResponseDto delete(long id, Long userId) {

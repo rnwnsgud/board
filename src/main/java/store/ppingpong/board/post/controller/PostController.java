@@ -43,8 +43,8 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<ResponseDto<PostDetailResponse>> get(@PathVariable("id") long id, @AuthenticationPrincipal LoginUser loginUser) {
         Long userId = getUserId(loginUser);
-        Post post = postService.findById(id, userId);
-        return new ResponseEntity<>(ResponseDto.of(1, "게시글 조회 성공", PostDetailResponse.from(post)), HttpStatus.OK);
+        PostWithImages postWithImages = postService.findById(id, userId);
+        return new ResponseEntity<>(ResponseDto.of(1, "게시글 조회 성공", PostDetailResponse.from(postWithImages)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -54,7 +54,7 @@ public class PostController {
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 삭제 성공", postDeleteResponseDto), HttpStatus.OK);
     }
 
-    private static Long getUserId(LoginUser loginUser) {
+    private Long getUserId(LoginUser loginUser) {
         return loginUser.getUser().getId();
     }
 }
