@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import store.ppingpong.board.post.domain.PostWithWriter;
 
 public interface PostJpaRepository extends JpaRepository<PostEntity, Long> {
-    @Query(value = "select new store.ppingpong.board.post.domain.PostWithWriter(p.id, p.title, p.postType, u.userInfo.nickname, p.createdAt, "+
+    @Query(value = "select new store.ppingpong.board.post.domain.PostWithWriter(p.id, p.title, p.postTypeId, u.userInfo.nickname, p.createdAt, "+
             "case when (select count(rp) from ReadPostEntity rp where rp.postId = p.id and rp.userId = u.id) > 0 then true else false end) " +
             "from PostEntity p " +
             "join UserEntity u on p.userId = u.id " +

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import store.ppingpong.board.post.domain.Post;
-import store.ppingpong.board.post.domain.PostType;
 
 import java.time.LocalDateTime;
 
@@ -23,8 +22,7 @@ public class PostEntity {
     private Long id;
     private String title;
     private String content;
-    @Enumerated(value = EnumType.STRING)
-    private PostType postType;
+    private Long postTypeId;
     private Long userId;
     private String forumId;
     private long visitCount;
@@ -33,10 +31,10 @@ public class PostEntity {
     private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private PostEntity(String title, String content, PostType postType, Long userId, String forumId, long visitCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private PostEntity(String title, String content, Long postTypeId, Long userId, String forumId, long visitCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.title = title;
         this.content = content;
-        this.postType = postType;
+        this.postTypeId = postTypeId;
         this.userId = userId;
         this.forumId = forumId;
         this.visitCount = visitCount;
@@ -48,7 +46,7 @@ public class PostEntity {
         return PostEntity.builder()
                 .title(post.getTitle())
                 .content(post.getContent())
-                .postType(post.getPostType())
+                .postTypeId(post.getPostTypeId())
                 .userId(post.getUserId())
                 .forumId(post.getForumId())
                 .visitCount(post.getVisitCount())

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.common.handler.exception.ResourceNotOwnerException;
+import store.ppingpong.board.forum.domain.PostType;
 import store.ppingpong.board.post.dto.PostCreate;
 import store.ppingpong.board.post.infrastructure.PostEntity;
 
@@ -14,7 +15,7 @@ public class Post {
     private final Long id;
     private final String title;
     private final String content;
-    private final PostType postType;
+    private final Long postTypeId;
     private final Long userId;
     private final String forumId;
     private final long visitCount;
@@ -22,11 +23,11 @@ public class Post {
     private final LocalDateTime lastModifiedAt;
 
     @Builder
-    private Post(Long id, String title, String content, PostType postType, Long userId, String forumId, long visitCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, long visitCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.postType = postType;
+        this.postTypeId = postTypeId;
         this.userId = userId;
         this.forumId = forumId;
         this.visitCount = visitCount;
@@ -37,7 +38,7 @@ public class Post {
         return Post.builder()
                 .title(postCreate.getTitle())
                 .content(postCreate.getContent())
-                .postType(postCreate.getPostType())
+                .postTypeId(postCreate.getPostTypeId())
                 .userId(userId)
                 .forumId(forumId)
                 .createdAt(clockLocalHolder.localMills())
@@ -48,7 +49,7 @@ public class Post {
                 .id(postEntity.getId())
                 .title(postEntity.getTitle())
                 .content(postEntity.getContent())
-                .postType(postEntity.getPostType())
+                .postTypeId(postEntity.getPostTypeId())
                 .userId(postEntity.getUserId())
                 .forumId(postEntity.getForumId())
                 .visitCount(postEntity.getVisitCount())
@@ -64,7 +65,7 @@ public class Post {
                 .id(id)
                 .title(title)
                 .content(content)
-                .postType(postType)
+                .postTypeId(postTypeId)
                 .userId(userId)
                 .forumId(forumId)
                 .visitCount(cnt)

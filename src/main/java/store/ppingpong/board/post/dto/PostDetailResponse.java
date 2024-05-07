@@ -3,8 +3,6 @@ package store.ppingpong.board.post.dto;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.image.domain.Image;
-import store.ppingpong.board.post.domain.Post;
-import store.ppingpong.board.post.domain.PostType;
 import store.ppingpong.board.post.domain.PostWithImages;
 
 import java.time.LocalDateTime;
@@ -19,7 +17,7 @@ public class PostDetailResponse {
     private String title;
     private String content;
     private List<String> imageUrls;
-    private PostType postType;
+    private Long postTypeId;
     private long userId;
     private String forumId;
     private long visitCount;
@@ -31,7 +29,7 @@ public class PostDetailResponse {
                 .title(postWithImages.getTitle())
                 .content(postWithImages.getContent())
                 .imageUrls(postWithImages.getImages().stream().map(Image::getImgUrl).collect(Collectors.toList()))
-                .postType(postWithImages.getPostType())
+                .postTypeId(postWithImages.getPostTypeId())
                 .userId(postWithImages.getUserId())
                 .forumId(postWithImages.getForumId())
                 .visitCount(postWithImages.getVisitCount())

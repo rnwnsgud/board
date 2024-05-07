@@ -13,19 +13,19 @@ public class PostWithImages {
     private final String title;
     private final String content;
     private final List<Image> images;
-    private final PostType postType;
+    private final Long postTypeId;
     private final Long userId;
     private final String forumId;
     private final Long visitCount;
     private final LocalDateTime createdAt;
 
     @Builder
-    private PostWithImages(Long postId, String title, String content, List<Image> images, PostType postType, Long userId, String forumId, Long visitCount, LocalDateTime createdAt) {
+    private PostWithImages(Long postId, String title, String content, List<Image> images, Long postTypeId, Long userId, String forumId, Long visitCount, LocalDateTime createdAt) {
         this.postId = postId;
         this.title = title;
         this.content = content;
         this.images = images;
-        this.postType = postType;
+        this.postTypeId = postTypeId;
         this.userId = userId;
         this.forumId = forumId;
         this.visitCount = visitCount;
@@ -38,7 +38,7 @@ public class PostWithImages {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .images(images)
-                .postType(post.getPostType())
+                .postTypeId(post.getPostTypeId())
                 .userId(post.getUserId())
                 .forumId(post.getForumId())
                 .forumId(post.getForumId())
