@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
 import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.domain.Forum;
@@ -17,6 +18,7 @@ import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 import store.ppingpong.board.user.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Builder
@@ -30,10 +32,16 @@ public class ForumService {
     private final EntityManager em;
 
     public Forum create(ForumCreate forumCreate, User user) {
+        checkExistence(forumCreate);
         Forum forum = forumRepository.create(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserType()));
         ForumManager forumUser = ForumManager.of(forum.getForumId(), user.getId(), ForumManagerLevel.MANAGER);
         forumManagerRepository.save(forumUser);
         return forum;
+    }
+
+    private void checkExistence(ForumCreate forumCreate) {
+        Optional<Forum> forumOptional = forumRepository.findById(forumCreate.getForumId());
+        if (forumOptional.isPresent()) throw new ResourceAlreadyExistException("이미 존재하는 Forum");
     }
 
     @Transactional(readOnly = true)
