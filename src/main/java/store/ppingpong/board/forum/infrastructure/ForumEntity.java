@@ -11,8 +11,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import store.ppingpong.board.forum.domain.Category;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumStatus;
+import store.ppingpong.board.forum.domain.PostType;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter
@@ -26,33 +28,37 @@ public class ForumEntity implements Persistable<String> {
     private String forumId;
     private String name;
     private String introduction;
-
     @Enumerated(value = EnumType.STRING)
     private Category category;
     @Enumerated(value = EnumType.STRING)
     private ForumStatus forumStatus;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostTypeEntity> postTypes;
     @CreatedDate
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private ForumEntity(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, List<PostTypeEntity> postTypes, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.forumId = forumId;
         this.name = name;
         this.introduction = introduction;
         this.category = category;
         this.forumStatus = forumStatus;
+        this.postTypes = postTypes;
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
 
     public static ForumEntity from(Forum forum) {
+
         return ForumEntity.builder()
                 .forumId(forum.getForumId())
                 .name(forum.getName())
                 .introduction(forum.getIntroduction())
                 .category(forum.getCategory())
                 .forumStatus(forum.getForumStatus())
+                .postTypes(forum.getPostTypes().stream().map(postType -> new PostTypeEntity(postType.getName())).toList())
                 .createdAt(forum.getCreatedAt())
                 .lastModifiedAt(forum.getLastModifiedAt())
                 .build();

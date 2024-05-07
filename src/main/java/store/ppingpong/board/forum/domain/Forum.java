@@ -9,6 +9,7 @@ import store.ppingpong.board.forum.infrastructure.ForumEntity;
 import store.ppingpong.board.user.domain.UserType;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class Forum {
@@ -18,16 +19,18 @@ public class Forum {
     private final String introduction;
     private final Category category;
     private final ForumStatus forumStatus;
+    private final List<PostType> postTypes;
     private final LocalDateTime createdAt;
     private final LocalDateTime lastModifiedAt;
 
     @Builder
-    private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, List<PostType> postTypes, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.forumId = forumId;
         this.name = name;
         this.introduction = introduction;
         this.category = category;
         this.forumStatus = forumStatus;
+        this.postTypes = postTypes;
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
@@ -67,5 +70,9 @@ public class Forum {
                 .createdAt(createdAt)
                 .lastModifiedAt(clockLocalHolder.localMills())
                 .build();
+    }
+
+    public void addPostTypes(List<PostType> postTypes) {
+        this.postTypes.addAll(postTypes);
     }
 }
