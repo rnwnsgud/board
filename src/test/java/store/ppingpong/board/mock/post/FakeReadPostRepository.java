@@ -20,4 +20,9 @@ public class FakeReadPostRepository implements ReadPostRepository {
     public Optional<ReadPost> get(long userId, long postId) {
         return Optional.empty();
     }
+
+    @Override
+    public void delete(long postId) {
+
+    }
 }

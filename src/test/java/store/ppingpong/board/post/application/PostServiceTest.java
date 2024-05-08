@@ -3,18 +3,17 @@ package store.ppingpong.board.post.application;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import store.ppingpong.board.image.domain.FileExtension;
 import store.ppingpong.board.image.domain.Image;
 import store.ppingpong.board.mock.forum.FakeForumManagerRepository;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
+import store.ppingpong.board.mock.image.FakeImageRepository;
 import store.ppingpong.board.mock.image.FakeUploader;
 import store.ppingpong.board.mock.post.FakePostRepository;
 import store.ppingpong.board.mock.post.FakeReadPostRepository;
 import store.ppingpong.board.post.domain.Post;
-import store.ppingpong.board.post.domain.PostType;
 import store.ppingpong.board.post.domain.PostWithImages;
 import store.ppingpong.board.post.dto.PostCreate;
 
@@ -41,6 +40,7 @@ public class PostServiceTest {
                 .postRepository(fakePostRepository)
                 .forumManagerRepository(fakeForumManagerRepository)
                 .readPostService(new ReadPostService(fakeReadPostRepository))
+                .imageRepository(new FakeImageRepository())
                 .uploader(new FakeUploader())
                 .clockLocalHolder(testClockLocalHolder)
                 .build();
@@ -52,7 +52,7 @@ public class PostServiceTest {
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("conetent")
-                .postType(PostType.COMMON)
+                .postTypeId(1L)
                 .build();
         // when
         PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
@@ -61,7 +61,7 @@ public class PostServiceTest {
 //        assertThat(postWithImages.getPostId()).isEqualTo(1L);
         assertThat(postWithImages.getForumId()).isEqualTo("reverse1999");
         assertThat(postWithImages.getTitle()).isEqualTo("title");
-        assertThat(postWithImages.getPostType()).isEqualTo(PostType.COMMON);
+        assertThat(postWithImages.getPostTypeId()).isEqualTo(1L);
         assertThat(postWithImages.getCreatedAt()).isEqualTo(LocalDateTime.MIN);
     }
 
@@ -71,7 +71,7 @@ public class PostServiceTest {
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("conetent")
-                .postType(PostType.COMMON)
+                .postTypeId(1L)
                 .build();
         // when
         postService.create(postCreate, 1L, "reverse1999", null);
@@ -86,14 +86,14 @@ public class PostServiceTest {
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("conetent")
-                .postType(PostType.COMMON)
+                .postTypeId(1L)
                 .build();
         PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
         // when
-        Post post = postService.findById(postWithImages.getPostId(), 2L);
+        PostWithImages postWithImages1 = postService.findById(postWithImages.getPostId(), 2L);
 
         // then
-        assertThat(post.getVisitCount()).isEqualTo(1);
+        assertThat(postWithImages1.getVisitCount()).isEqualTo(1);
     }
 
     @Test
@@ -102,15 +102,15 @@ public class PostServiceTest {
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("conetent")
-                .postType(PostType.COMMON)
+                .postTypeId(1L)
                 .build();
         PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
 
         // when
-        Post post = postService.findById(postWithImages.getPostId(), 1L);
+        PostWithImages postWithImages1 = postService.findById(postWithImages.getPostId(), 1L);
 
         // then
-        assertThat(post.getVisitCount()).isEqualTo(0);
+        assertThat(postWithImages1.getVisitCount()).isEqualTo(0);
     }
 
     @Test
@@ -120,13 +120,13 @@ public class PostServiceTest {
         List<MultipartFile> multipartFiles = new ArrayList<>();
         MockMultipartFile multipartFile = new MockMultipartFile(
                 "images",
-                fileName+"."+contentType,
+                fileName+"."+"png",
                 contentType,
                 "image".getBytes()
                 );
         MockMultipartFile multipartFile2 = new MockMultipartFile(
                 "images",
-                fileName+"."+contentType,
+                fileName+"."+"png",
                 contentType,
                 "image".getBytes()
         );
@@ -135,13 +135,13 @@ public class PostServiceTest {
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("conetent")
-                .postType(PostType.COMMON)
+                .postTypeId(1L)
                 .build();
         PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", multipartFiles);
         List<Image> images = postWithImages.getImages();
         assertThat(images.size()).isEqualTo(2);
-        assertThat(images.get(0).getOriginalName()).isEqualTo(fileName+"."+contentType);
-        assertThat(images.get(0).getFileExtension()).isEqualTo(FileExtension.png);
+        assertThat(images.get(0).getOriginalName()).isEqualTo(fileName+"."+"png");
+        assertThat(images.get(0).getFileExtension()).isEqualTo(FileExtension.PNG);
     }
 
 

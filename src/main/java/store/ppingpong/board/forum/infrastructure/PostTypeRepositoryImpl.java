@@ -15,7 +15,7 @@ public class PostTypeRepositoryImpl implements PostTypeRepository{
     private final PostTypeJpaRepository postTypeJpaRepository;
     @Override
     public List<PostType> findByNameInAndCreate(String[] postTypeNames, Forum forum) {
-        List<PostTypeEntity> existingPostTypes = postTypeJpaRepository.findByNameInAndCreate(postTypeNames);
+        List<PostTypeEntity> existingPostTypes = postTypeJpaRepository.findByNameIn(postTypeNames);
         List<PostTypeEntity> nonExistingPostTypes = Arrays.stream(postTypeNames)
                 .filter(name -> existingPostTypes.stream().noneMatch(type -> type.getName().equals(name)))
                 .map(PostTypeEntity::new)

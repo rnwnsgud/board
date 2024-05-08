@@ -23,7 +23,7 @@ public class FakePostRepository implements PostRepository {
                     .content(post.getContent())
                     .userId(post.getUserId())
                     .forumId(post.getForumId())
-                    .postType(post.getPostType())
+                    .postTypeId(post.getPostTypeId())
                     .createdAt(post.getCreatedAt())
                     .build();
             data.add(mockPost);
@@ -59,6 +59,11 @@ public class FakePostRepository implements PostRepository {
     @Override
     public void inquiry(Post post) {
 
+    }
+
+    @Override
+    public int delete(long id) {
+        return 0;
     }
 
 

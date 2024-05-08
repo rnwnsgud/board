@@ -17,7 +17,7 @@ public class PostTest {
         PostCreate postCreate = PostCreate.builder()
                 .title("title")
                 .content("content")
-                .postType(PostType.COMMON)
+                .postTypeId(1L)
                 .build();
         // when
         Post post = Post.of(postCreate, 1L, "reverse1999", new TestClockLocalHolder(LocalDateTime.MIN));
@@ -25,7 +25,7 @@ public class PostTest {
         assertThat(post.getId()).isNull();
         assertThat(post.getTitle()).isEqualTo("title");
         assertThat(post.getContent()).isEqualTo("content");
-        assertThat(post.getPostType()).isEqualTo(PostType.COMMON);
+        assertThat(post.getPostTypeId()).isEqualTo(1L);
         assertThat(post.getCreatedAt()).isEqualTo(LocalDateTime.MIN);
         assertThat(post.getUserId()).isEqualTo(1L);
         assertThat(post.getForumId()).isEqualTo("reverse1999");

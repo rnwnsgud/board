@@ -16,11 +16,18 @@ public class FakeUploader implements Uploader {
     @Override
     public List<Image> upload(List<MultipartFile> multipartFiles, Long postId) throws IOException {
         for (MultipartFile multipartFile : multipartFiles) {
+            String originalFilename = multipartFile.getOriginalFilename();
+            assert originalFilename != null;
+            String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+            FileExtension fileExtension = FileExtension.JPEG;
+            for (FileExtension x : FileExtension.values()) {
+                if (x.name().compareToIgnoreCase(extension) == 0) fileExtension = x;
+            }
             Image image = Image.builder()
                     .postId(postId)
                     .originalName(multipartFile.getOriginalFilename())
                     .storedName(UUID.randomUUID().toString())
-                    .fileExtension(FileExtension.png)
+                    .fileExtension(fileExtension)
                     .build();
             images.add(image);
         }
