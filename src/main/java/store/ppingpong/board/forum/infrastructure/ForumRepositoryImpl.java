@@ -15,10 +15,15 @@ import java.util.stream.Collectors;
 public class ForumRepositoryImpl implements ForumRepository {
 
     private final ForumJpaRepository forumJpaRepository;
+    private final PostTypeRepository postTypeRepository;
 
     @Override
     public Forum create(Forum forum) {
-        return forumJpaRepository.save(ForumEntity.from(forum)).toModel();
+        ForumEntity forumEntity = forumJpaRepository.save(ForumEntity.create(forum));
+        PostTypeEntity postTypeEntity = new PostTypeEntity(1L, "일반");
+        postTypeRepository.save(postTypeEntity);
+        forumEntity.addPostType(postTypeEntity);
+        return forumJpaRepository.save(ForumEntity.create(forum)).toModel();
     }
 
     @Override

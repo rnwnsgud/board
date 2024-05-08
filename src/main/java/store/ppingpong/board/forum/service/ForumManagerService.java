@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumManager;
-import store.ppingpong.board.forum.domain.PostType;
 import store.ppingpong.board.forum.dto.ForumPostTypeResponse;
+import store.ppingpong.board.forum.infrastructure.ForumEntity;
+import store.ppingpong.board.forum.infrastructure.PostTypeEntity;
 import store.ppingpong.board.forum.infrastructure.PostTypeRepository;
 import store.ppingpong.board.forum.service.port.ForumManagerRepository;
 
@@ -37,9 +38,10 @@ public class ForumManagerService {
     }
 
     public ForumPostTypeResponse createPostType(String[] postTypes, Forum forum) {
-        List<PostType> createdTypes = postTypeRepository.findByNameInAndCreate(postTypes, forum);
-        forum.addPostTypes(createdTypes);
-        return new ForumPostTypeResponse(forum.getPostTypes().stream().map(PostType::getName).collect(Collectors.toList()));
+        List<PostTypeEntity> createdPostTypes = postTypeRepository.findByNameInAndCreate(postTypes, forum);
+        ForumEntity forumEntity = ForumEntity.from(forum);
+        forumEntity.addPostTypes(createdPostTypes);
+        return new ForumPostTypeResponse(forumEntity.getPostTypes());
     }
 
 }

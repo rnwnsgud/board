@@ -2,10 +2,8 @@ package store.ppingpong.board.forum.infrastructure;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import store.ppingpong.board.forum.domain.PostType;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,7 +16,11 @@ public class PostTypeEntity {
     private Long id;
     private String name;
 
-    @Builder
+    public PostTypeEntity(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public PostTypeEntity(String name) {
         this.name = name;
     }
