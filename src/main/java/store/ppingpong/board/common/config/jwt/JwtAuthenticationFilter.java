@@ -72,4 +72,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserLoginResp userLoginResp = new UserLoginResp(user.getId(), user.getLoginInfo().getLoginId(), createdAt, accessToken);
         success(response, userLoginResp);
     }
+
+    //TODO : 스프링 기본 예외 응답이 출력되는거 바로잡기 https://sh-hyun.tistory.com/121
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        super.unsuccessfulAuthentication(request, response, failed);
+    }
 }

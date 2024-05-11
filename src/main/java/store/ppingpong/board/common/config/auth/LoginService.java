@@ -17,6 +17,7 @@ public class LoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
         User user = userRepository.findByLoginId(loginId).orElseThrow(() -> new InternalAuthenticationServiceException("인증실패"));
+        user.isVerified();
         return new LoginUser(user);
     }
 }

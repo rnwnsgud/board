@@ -11,10 +11,7 @@ import store.ppingpong.board.common.handler.exception.file.FileNotSupportedExcep
 import store.ppingpong.board.common.handler.exception.file.FileUploadException;
 import store.ppingpong.board.common.handler.exception.join.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.join.EmailNotSupportedException;
-import store.ppingpong.board.common.handler.exception.resource.ResourceAlreadyExistException;
-import store.ppingpong.board.common.handler.exception.resource.ResourceInactiveException;
-import store.ppingpong.board.common.handler.exception.resource.ResourceNotFoundException;
-import store.ppingpong.board.common.handler.exception.resource.ResourceNotOwnerException;
+import store.ppingpong.board.common.handler.exception.resource.*;
 
 
 import static org.springframework.http.HttpStatus.*;
@@ -76,6 +73,11 @@ public class CustomExceptionHandler {
     @ExceptionHandler(ResourceNotOwnerException.class)
     public ResponseEntity<ResponseDto<?>> resourceNotOwnerException(ResourceNotOwnerException e) {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResourceNotVerifiedException.class)
+    public ResponseEntity<ResponseDto<?>> resourceNotVerifiedException(ResourceNotVerifiedException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), UNAUTHORIZED);
     }
 
 }

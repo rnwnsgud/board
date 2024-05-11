@@ -3,6 +3,7 @@ package store.ppingpong.board.user.domain;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockHolder;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotVerifiedException;
 import store.ppingpong.board.user.infrastructure.UserEntity;
 
 @Getter
@@ -82,6 +83,10 @@ public class User {
                 .createdAt(createdAt)
                 .lastLoginAt(clockHolder.mills())
                 .build();
+    }
+
+    public void isVerified() {
+        if (!userStatus.equals(UserStatus.ACTIVE)) throw new ResourceNotVerifiedException("인증되지 않은 유저입니다.");
     }
 
 }
