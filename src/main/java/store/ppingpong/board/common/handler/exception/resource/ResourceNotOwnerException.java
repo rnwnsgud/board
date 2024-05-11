@@ -1,4 +1,4 @@
-package store.ppingpong.board.common.handler.exception;
+package store.ppingpong.board.common.handler.exception.resource;
 
 public class ResourceNotOwnerException extends RuntimeException{
     public ResourceNotOwnerException(String datasource, long userId) {

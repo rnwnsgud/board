@@ -1,4 +1,4 @@
-package store.ppingpong.board.common.handler.exception;
+package store.ppingpong.board.common.handler.exception.resource;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String datasource, long id) {

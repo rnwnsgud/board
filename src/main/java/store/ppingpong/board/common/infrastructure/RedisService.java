@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
-import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
+import store.ppingpong.board.common.handler.exception.join.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.domain.InMemoryService;
 
 import java.time.Duration;

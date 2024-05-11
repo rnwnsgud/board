@@ -1,4 +1,4 @@
-package store.ppingpong.board.common.handler.exception;
+package store.ppingpong.board.common.handler.exception.join;
 
 public class CertificationCodeNotMatchedException extends RuntimeException{
 

@@ -1,4 +1,4 @@
-package store.ppingpong.board.common.handler.exception;
+package store.ppingpong.board.common.handler.exception.file;
 
 public class FileNotSupportedException extends IllegalArgumentException {
     public FileNotSupportedException() {

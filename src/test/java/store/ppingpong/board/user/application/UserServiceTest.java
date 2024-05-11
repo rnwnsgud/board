@@ -2,7 +2,7 @@ package store.ppingpong.board.user.application;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import store.ppingpong.board.common.handler.exception.ResourceAlreadyExistException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceAlreadyExistException;
 import store.ppingpong.board.mock.user.TestClockHolder;
 import store.ppingpong.board.mock.user.*;
 import store.ppingpong.board.user.domain.*;

@@ -2,7 +2,7 @@ package store.ppingpong.board.user.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import store.ppingpong.board.common.handler.exception.ResourceNotFoundException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotFoundException;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.application.port.UserRepository;
 

@@ -1,6 +1,6 @@
 package store.ppingpong.board.mock.user;
 
-import store.ppingpong.board.common.handler.exception.CertificationCodeNotMatchedException;
+import store.ppingpong.board.common.handler.exception.join.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.domain.InMemoryService;
 
 import java.util.HashMap;

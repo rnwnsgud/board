@@ -4,9 +4,9 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.web.multipart.MultipartFile;
-import store.ppingpong.board.common.handler.exception.FileNotDeletedException;
-import store.ppingpong.board.common.handler.exception.FileNotSupportedException;
-import store.ppingpong.board.common.handler.exception.FileUploadException;
+import store.ppingpong.board.common.handler.exception.file.FileNotDeletedException;
+import store.ppingpong.board.common.handler.exception.file.FileNotSupportedException;
+import store.ppingpong.board.common.handler.exception.file.FileUploadException;
 import store.ppingpong.board.image.domain.FileExtension;
 import store.ppingpong.board.image.domain.Image;
 

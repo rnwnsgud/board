@@ -13,8 +13,9 @@ public interface PostJpaRepository extends JpaRepository<PostEntity, Long> {
             "case when (select count(rp) from ReadPostEntity rp where rp.postId = p.id and rp.userId = u.id) > 0 then true else false end) " +
             "from PostEntity p " +
             "join UserEntity u on p.userId = u.id " +
-            "where p.forumId = :forumId", countQuery = "select count(p) from PostEntity p where p.forumId = :forumId")
-    Page<PostWithWriter> findPostAndUsernameByForumId(@Param("forumId") String forumId, Pageable pageable);
+            "where p.forumId = :forumId " +
+            "and (:searchHead is null or p.postTypeId = :searchHead)", countQuery = "select count(p) from PostEntity p where p.forumId = :forumId")
+    Page<PostWithWriter> findPostAndUsernameByForumId(@Param("forumId") String forumId, @Param("searchHead") Long searchHead, Pageable pageable);
 
     @Modifying(clearAutomatically = true)
     @Query("update PostEntity p " +

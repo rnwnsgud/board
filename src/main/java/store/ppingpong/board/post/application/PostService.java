@@ -48,8 +48,8 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PostWithWriter> getList(String forumId, int listNum, Pageable pageable) {
-        return postRepository.findByForumId(forumId, listNum, pageable);
+    public Page<PostWithWriter> getList(String forumId, int listNum, Long search_head, Pageable pageable) {
+        return postRepository.findByForumId(forumId, listNum, search_head, pageable);
     }
 
     public PostWithImages findById(long id, Long visitorId) {

@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import store.ppingpong.board.common.handler.exception.EmailNotSupportedException;
+import store.ppingpong.board.common.handler.exception.join.EmailNotSupportedException;
 import store.ppingpong.board.user.dto.UserCreate;
 import store.ppingpong.board.user.application.port.CustomPasswordEncoder;
 

@@ -7,7 +7,7 @@ import store.ppingpong.board.post.domain.PostWithWriter;
 
 public interface PostRepository {
     Post create(Post post);
-    Page<PostWithWriter> findByForumId(String forumId, Integer listNum, Pageable pageable);
+    Page<PostWithWriter> findByForumId(String forumId, Integer listNum, Long search_head, Pageable pageable);
     Post findById(long id);
     void inquiry(Post post);
     int delete(long id);

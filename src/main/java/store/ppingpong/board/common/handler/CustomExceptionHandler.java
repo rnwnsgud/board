@@ -1,10 +1,20 @@
 package store.ppingpong.board.common.handler;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.handler.exception.*;
+import store.ppingpong.board.common.handler.exception.file.FileNotDeletedException;
+import store.ppingpong.board.common.handler.exception.file.FileNotSupportedException;
+import store.ppingpong.board.common.handler.exception.file.FileUploadException;
+import store.ppingpong.board.common.handler.exception.join.CertificationCodeNotMatchedException;
+import store.ppingpong.board.common.handler.exception.join.EmailNotSupportedException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceAlreadyExistException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceInactiveException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotFoundException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotOwnerException;
 
 
 import static org.springframework.http.HttpStatus.*;
@@ -38,10 +48,10 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), FORBIDDEN);
     }
 
-//    @ExceptionHandler(HttpMessageNotReadableException.class)
-//    public ResponseEntity<ResponseDto<?>> requestDtoBindingException(HttpMessageNotReadableException e) {
-//        return new ResponseEntity<>(ResponseDto.of(-1,"요청 본문이 잘못되었거나, DTO로 변환할 수 없습니다."), BAD_REQUEST);
-//    }
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ResponseDto<?>> requestDtoBindingException(HttpMessageNotReadableException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,"요청 본문이 잘못되었거나, DTO로 변환할 수 없습니다."), BAD_REQUEST);
+    }
 
     @ExceptionHandler(ResourceInactiveException.class)
     public ResponseEntity<ResponseDto<?>> resourceInactiveException(ResourceInactiveException e) {

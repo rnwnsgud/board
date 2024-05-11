@@ -1,8 +1,8 @@
 package store.ppingpong.board.forum.domain;
 
 import lombok.*;
-import store.ppingpong.board.common.handler.exception.ResourceInactiveException;
-import store.ppingpong.board.common.handler.exception.ResourceNotSameException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceInactiveException;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotSameException;
 import store.ppingpong.board.forum.infrastructure.ForumManagerEntity;
 import store.ppingpong.board.user.domain.User;
 
