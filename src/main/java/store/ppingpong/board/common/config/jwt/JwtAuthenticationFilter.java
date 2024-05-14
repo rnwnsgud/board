@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.dto.UserLoginReq;
@@ -23,8 +24,10 @@ import store.ppingpong.board.user.application.UserService;
 
 import java.io.IOException;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static store.ppingpong.board.common.util.CustomDateUtil.convertToStringForHuman;
-import static store.ppingpong.board.common.util.CustomResponseUtil.success;
+import static store.ppingpong.board.common.util.CustomResponseUtil.fail;
+import static store.ppingpong.board.common.util.CustomResponseUtil.response;
 
 
 @Component
@@ -56,7 +59,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             return authenticationManager.authenticate(authenticationToken);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new InternalAuthenticationServiceException(e.getMessage());
         }
     }
@@ -70,12 +73,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         userService.login(user.getId());
         String createdAt = convertToStringForHuman(user.getCreatedAt(), "yyyy-MM-dd HH:mm:ss");
         UserLoginResp userLoginResp = new UserLoginResp(user.getId(), user.getLoginInfo().getLoginId(), createdAt, accessToken);
-        success(response, userLoginResp);
+        response(response, userLoginResp, 200);
     }
 
-    //TODO : 스프링 기본 예외 응답이 출력되는거 바로잡기(이메일 비인증 후 로그인, 잘못된 말머리 형식 등록 등...) https://sh-hyun.tistory.com/121
     @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        super.unsuccessfulAuthentication(request, response, failed);
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
+        response(response, ResponseDto.of(-1, failed.getMessage()), 401);
     }
 }

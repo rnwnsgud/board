@@ -20,13 +20,13 @@ public class CustomResponseUtil {
 
     }
 
-    public static void success(HttpServletResponse response, Object dto) {
+    public static void response(HttpServletResponse response, Object dto, int status) {
 
         try {
             ObjectMapper om = new ObjectMapper();
             String responseBody = om.writeValueAsString(dto);
             response.setContentType("application/json; charset=utf-8");
-            response.setStatus(200);
+            response.setStatus(status);
             response.getWriter().println(responseBody);
         } catch (Exception e) {
             log.error("서버 파싱 에러");
