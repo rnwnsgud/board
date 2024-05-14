@@ -1,4 +1,4 @@
-package store.ppingpong.board.forum.service;
+package store.ppingpong.board.forum.application;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

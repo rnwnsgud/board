@@ -2,7 +2,7 @@ package store.ppingpong.board.mock.forum;
 
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
-import store.ppingpong.board.forum.service.port.ForumManagerRepository;
+import store.ppingpong.board.forum.application.port.ForumManagerRepository;
 
 import java.util.ArrayList;
 import java.util.List;

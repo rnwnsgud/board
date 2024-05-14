@@ -16,8 +16,8 @@ import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.dto.ForumAssistantResponse;
 import store.ppingpong.board.forum.dto.ForumPostTypeCreate;
 import store.ppingpong.board.forum.dto.ForumPostTypeResponse;
-import store.ppingpong.board.forum.service.ForumManagerService;
-import store.ppingpong.board.forum.service.ForumService;
+import store.ppingpong.board.forum.application.ForumManagerService;
+import store.ppingpong.board.forum.application.ForumService;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.application.port.UserRepository;
 

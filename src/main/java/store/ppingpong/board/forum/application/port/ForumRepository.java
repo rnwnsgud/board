@@ -1,4 +1,4 @@
-package store.ppingpong.board.forum.service.port;
+package store.ppingpong.board.forum.application.port;
 
 import store.ppingpong.board.forum.domain.Forum;
 

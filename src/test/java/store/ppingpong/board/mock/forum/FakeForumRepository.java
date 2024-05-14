@@ -2,7 +2,7 @@ package store.ppingpong.board.mock.forum;
 
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumStatus;
-import store.ppingpong.board.forum.service.port.ForumRepository;
+import store.ppingpong.board.forum.application.port.ForumRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

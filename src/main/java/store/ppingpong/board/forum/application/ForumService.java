@@ -1,4 +1,4 @@
-package store.ppingpong.board.forum.service;
+package store.ppingpong.board.forum.application;
 
 import jakarta.persistence.EntityManager;
 import lombok.Builder;
@@ -13,8 +13,8 @@ import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.forum.dto.ForumUpdate;
-import store.ppingpong.board.forum.service.port.ForumRepository;
-import store.ppingpong.board.forum.service.port.ForumManagerRepository;
+import store.ppingpong.board.forum.application.port.ForumRepository;
+import store.ppingpong.board.forum.application.port.ForumManagerRepository;
 import store.ppingpong.board.user.domain.User;
 
 import java.util.List;

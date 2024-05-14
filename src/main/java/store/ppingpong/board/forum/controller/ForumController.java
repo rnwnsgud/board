@@ -16,15 +16,14 @@ import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.dto.*;
-import store.ppingpong.board.forum.service.ForumManagerService;
-import store.ppingpong.board.forum.service.ForumService;
+import store.ppingpong.board.forum.application.ForumManagerService;
+import store.ppingpong.board.forum.application.ForumService;
 import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.PostService;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.application.port.UserRepository;
 
 import java.util.List;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @Builder

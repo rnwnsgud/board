@@ -1,4 +1,4 @@
-package store.ppingpong.board.forum.service;
+package store.ppingpong.board.forum.application;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -10,10 +10,9 @@ import store.ppingpong.board.forum.dto.ForumPostTypeResponse;
 import store.ppingpong.board.forum.infrastructure.ForumEntity;
 import store.ppingpong.board.forum.infrastructure.PostTypeEntity;
 import store.ppingpong.board.forum.infrastructure.PostTypeRepository;
-import store.ppingpong.board.forum.service.port.ForumManagerRepository;
+import store.ppingpong.board.forum.application.port.ForumManagerRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @RequiredArgsConstructor

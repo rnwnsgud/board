@@ -2,8 +2,8 @@ package store.ppingpong.board.mock.forum;
 
 import lombok.Builder;
 import store.ppingpong.board.forum.controller.ForumManagerController;
-import store.ppingpong.board.forum.service.ForumManagerService;
-import store.ppingpong.board.forum.service.port.ForumManagerRepository;
+import store.ppingpong.board.forum.application.ForumManagerService;
+import store.ppingpong.board.forum.application.port.ForumManagerRepository;
 import store.ppingpong.board.mock.user.FakeUserRepository;
 import store.ppingpong.board.user.application.port.UserRepository;
 

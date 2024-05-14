@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumStatus;
-import store.ppingpong.board.forum.service.port.ForumRepository;
+import store.ppingpong.board.forum.application.port.ForumRepository;
 
 import java.util.List;
 import java.util.Optional;

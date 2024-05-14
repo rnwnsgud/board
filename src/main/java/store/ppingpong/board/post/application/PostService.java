@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
-import store.ppingpong.board.forum.service.port.ForumManagerRepository;
+import store.ppingpong.board.forum.application.port.ForumManagerRepository;
 import store.ppingpong.board.image.application.port.ImageRepository;
 import store.ppingpong.board.image.domain.Image;
 import store.ppingpong.board.post.domain.Post;

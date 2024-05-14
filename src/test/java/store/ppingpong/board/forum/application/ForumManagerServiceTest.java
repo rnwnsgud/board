@@ -1,4 +1,4 @@
-package store.ppingpong.board.forum.service;
+package store.ppingpong.board.forum.application;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
