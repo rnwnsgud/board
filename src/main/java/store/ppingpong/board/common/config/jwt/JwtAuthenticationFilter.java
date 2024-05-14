@@ -73,7 +73,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         success(response, userLoginResp);
     }
 
-    //TODO : 스프링 기본 예외 응답이 출력되는거 바로잡기 https://sh-hyun.tistory.com/121
+    //TODO : 스프링 기본 예외 응답이 출력되는거 바로잡기(이메일 비인증 후 로그인, 잘못된 말머리 형식 등록 등...) https://sh-hyun.tistory.com/121
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         super.unsuccessfulAuthentication(request, response, failed);

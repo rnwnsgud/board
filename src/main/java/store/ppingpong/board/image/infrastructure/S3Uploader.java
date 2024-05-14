@@ -41,4 +41,10 @@ public class S3Uploader implements Uploader {
         }
     }
 
+    @Override
+    public String generatePreSignUrl(String fileName) {
+        return null;
+    }
+
+
 }

@@ -9,4 +9,6 @@ import java.util.List;
 public interface Uploader {
     List<Image> upload(List<MultipartFile> multipartFile, Long postId) throws IOException;
     void delete(List<Image> imageList);
+    String generatePreSignUrl(String fileName);
+
 }

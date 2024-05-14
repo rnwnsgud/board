@@ -28,7 +28,7 @@ public class PostDetailResponse {
                 .id(postWithImages.getPostId())
                 .title(postWithImages.getTitle())
                 .content(postWithImages.getContent())
-                .imageUrls(postWithImages.getImages().stream().map(Image::getImgUrl).collect(Collectors.toList()))
+                .imageUrls(postWithImages.getImages().stream().map(Image::getImageUrl).collect(Collectors.toList()))
                 .postTypeId(postWithImages.getPostTypeId())
                 .userId(postWithImages.getUserId())
                 .forumId(postWithImages.getForumId())

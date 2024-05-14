@@ -20,16 +20,16 @@ public class ImageEntity {
     private Long postId;
     private String originalName;
     private String storedName;
-    private String imgUrl;
+    private String imageUrl;
     @Enumerated(value = EnumType.STRING)
     private FileExtension fileExtension;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private ImageEntity(Long postId, String originalName, String storedName, String imgUrl, FileExtension fileExtension) {
+    private ImageEntity(Long postId, String originalName, String storedName, String imageUrl, FileExtension fileExtension) {
         this.postId = postId;
         this.originalName = originalName;
         this.storedName = storedName;
-        this.imgUrl = imgUrl;
+        this.imageUrl = imageUrl;
         this.fileExtension = fileExtension;
     }
 
@@ -38,7 +38,7 @@ public class ImageEntity {
                 .postId(image.getPostId())
                 .originalName(image.getOriginalName())
                 .storedName(image.getStoredName())
-                .imgUrl(image.getImgUrl())
+                .imageUrl(image.getImageUrl())
                 .fileExtension(image.getFileExtension())
                 .build();
     }

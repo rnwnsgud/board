@@ -54,11 +54,11 @@ public class PostService {
 
     public PostWithImages findById(long id, Long visitorId) {
         Post post = postRepository.findById(id);
-        List<Image> imageList = imageRepository.findByPostId(post.getId());
+        List<Image> images = imageRepository.findByPostId(post.getId());
         post = post.visit(visitorId);
         postRepository.inquiry(post);
         readPostService.firstReadThenCreate(visitorId, post.getId());
-        return PostWithImages.of(post, imageList);
+        return PostWithImages.of(post, images);
     }
 
     public PostDeleteResponseDto delete(long id, Long userId) {
