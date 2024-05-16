@@ -57,9 +57,8 @@ public class Post {
                 .build();
     }
 
-    public Post visit(long userId) {
-        long cnt = visitCount;
-        if (this.userId != userId) cnt ++;
+    public Post visit() {
+
         return Post.builder()
                 .id(id)
                 .title(title)
@@ -67,7 +66,7 @@ public class Post {
                 .postTypeId(postTypeId)
                 .userId(userId)
                 .forumId(forumId)
-                .visitCount(cnt)
+                .visitCount(visitCount+1)
                 .createdAt(createdAt)
                 .lastModifiedAt(lastModifiedAt)
                 .build();

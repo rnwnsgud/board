@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.application.port.ForumManagerRepository;
 import store.ppingpong.board.image.application.port.ImageRepository;
@@ -52,12 +53,12 @@ public class PostService {
         return postRepository.findByForumId(forumId, listNum, search_head, pageable);
     }
 
-    public PostWithImages findById(long id, Long visitorId) {
+    public PostWithImages findById(long id, LoginUser loginUser) {
         Post post = postRepository.findById(id);
         List<Image> images = imageRepository.findByPostId(post.getId());
-        post = post.visit(visitorId);
+        post = post.visit();
         postRepository.inquiry(post);
-        readPostService.firstReadThenCreate(visitorId, post.getId());
+        readPostService.firstReadThenCreate(loginUser, post.getId());
         return PostWithImages.of(post, images);
     }
 
