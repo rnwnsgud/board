@@ -6,7 +6,6 @@ import store.ppingpong.board.image.infrastructure.ImageEntity;
 
 @Getter
 public class Image {
-    private final Long id;
     private final Long postId;
     private final String originalName;
     private final String storedName;
@@ -14,8 +13,7 @@ public class Image {
     private final FileExtension fileExtension;
 
     @Builder
-    private Image(Long id, Long postId, String originalName, String storedName, String imageUrl, FileExtension fileExtension) {
-        this.id = id;
+    private Image(Long postId, String originalName, String storedName, String imageUrl, FileExtension fileExtension) {
         this.postId = postId;
         this.originalName = originalName;
         this.storedName = storedName;
@@ -25,7 +23,6 @@ public class Image {
 
     public static Image from(ImageEntity imageEntity) {
         return Image.builder()
-                .id(imageEntity.getId())
                 .postId(imageEntity.getPostId())
                 .originalName(imageEntity.getOriginalName())
                 .storedName(imageEntity.getStoredName())

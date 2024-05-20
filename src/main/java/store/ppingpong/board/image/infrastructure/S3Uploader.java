@@ -3,6 +3,7 @@ package store.ppingpong.board.image.infrastructure;
 import com.amazonaws.services.s3.AmazonS3Client;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,6 @@ import java.util.List;
 public class S3Uploader implements Uploader {
 
     private final AmazonS3Client amazonS3Client;
-    private final ImageRepository imageRepository;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -30,8 +30,9 @@ public class S3Uploader implements Uploader {
 
     @Override
     public List<Image> upload(List<MultipartFile> images, Long postId) throws IOException {
-        List<Image> uploadImages = FileTransmitter.storeFiles(images, postId, amazonS3Client, dir, bucket);
-        return imageRepository.saveList(uploadImages);
+        List<Image> imageList = FileTransmitter.storeFiles(images, postId, amazonS3Client, dir, bucket);
+        if (imageList.isEmpty()) throw new FileUploadException("파일이 정상적으로 업로드 되지 않았습니다.");
+        return imageList;
     }
 
     @Override

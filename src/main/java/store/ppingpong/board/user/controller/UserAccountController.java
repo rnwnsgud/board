@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.config.auth.LoginUser;
+import store.ppingpong.board.user.domain.service.UserRegister;
 import store.ppingpong.board.user.dto.UserResponse;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.dto.UserCreate;
@@ -25,10 +26,11 @@ import java.util.Collection;
 public class UserAccountController {
 
     private final UserService userService;
+    private final UserRegister userRegister;
 
     @PostMapping
     public ResponseEntity<UserResponse> sendEmail(@Valid @RequestBody UserCreate userCreate, BindingResult bindingResult) {
-        User user = userService.create(userCreate);
+        User user = userRegister.register(userCreate);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(UserResponse.from(user));

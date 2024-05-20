@@ -30,14 +30,13 @@ public class UserService {
     private final ClockHolder clockHolder;
     private final InMemoryService inMemoryService;
     private final CertificationService certificationService;
-    private final RandomHolder randomHolder;
 
-    public User create(UserCreate userCreate) {
+    public User create(UserCreate userCreate, String certificationCode) {
         checkUserExistence(userCreate);
         LoginInfo loginInfo = LoginInfo.of(userCreate, passwordEncoder);
         UserInfo userInfo = UserInfo.from(userCreate);
         User user = getByInfo(loginInfo, userInfo);
-        sendEmail(userInfo, user);
+        inMemoryService.setValueExpire(userInfo.getEmail(), certificationCode, 300L);
         return user;
     }
 
@@ -45,12 +44,6 @@ public class UserService {
         User user = User.of(loginInfo, userInfo, clockHolder);
         user = userRepository.save(user);
         return user;
-    }
-
-    private void sendEmail(UserInfo userInfo, User user) {
-        String certificationCode = randomHolder.sixDigit();
-        inMemoryService.setValueExpire(userInfo.getEmail(), certificationCode, 300L);
-        certificationService.send(userInfo.getEmail(), user.getId(), certificationCode);
     }
 
     private void checkUserExistence(UserCreate userCreate) {

@@ -29,7 +29,6 @@ public class TestUserContainer {
         this.inMemoryService = new FakeRedisService();
 
         UserService userService = UserService.builder()
-                .randomHolder(randomHolder)
                 .clockHolder(clockHolder)
                 .userRepository(userRepository)
                 .certificationService(certificationService)

@@ -43,7 +43,7 @@ public class PostTest {
                 .visitCount(0)
                 .build();
         // when
-        Post afterPost = beforePost.visit(visitId);
+        Post afterPost = beforePost.visit();
         // then
         assertThat(afterPost.getVisitCount()).isEqualTo(1L);
     }
@@ -58,7 +58,7 @@ public class PostTest {
                 .visitCount(0)
                 .build();
         // when
-        Post afterPost = beforePost.visit(visitId);
+        Post afterPost = beforePost.visit();
         // then
         assertThat(afterPost.getVisitCount()).isEqualTo(0);
     }

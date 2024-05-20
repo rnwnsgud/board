@@ -4,12 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import store.ppingpong.board.common.handler.exception.join.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.domain.InMemoryService;
 
 import java.time.Duration;
+import java.util.Objects;
 
 @RequiredArgsConstructor
+@Transactional
 @Service // 레디스에서 접근해서 값을 가져오는것이 어떤 객체에도 들어가기 애매한 로직이니 서비스로 명명
 public class RedisService implements InMemoryService {
 
@@ -38,6 +42,12 @@ public class RedisService implements InMemoryService {
     public Long getExpirationTime(String key) {
         return redisTemplate.getExpire(key);
     }
+
+    public void save(String key, String value) {
+        if (Objects.equals(value, "ex")) throw new RuntimeException();
+        else redisTemplate.opsForValue().set(key, value);
+    }
+
 
 
 }

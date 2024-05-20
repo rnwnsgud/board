@@ -38,4 +38,9 @@ public class FakeUploader implements Uploader {
     public void delete(List<Image> imageList) {
 
     }
+
+    @Override
+    public String generatePreSignUrl(String fileName) {
+        return null;
+    }
 }

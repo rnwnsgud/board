@@ -2,6 +2,7 @@ package store.ppingpong.board.forum.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.forum.domain.ForumManager;
 import store.ppingpong.board.forum.domain.ForumManagerLevel;
 import store.ppingpong.board.forum.application.port.ForumManagerRepository;
@@ -28,7 +29,6 @@ public class ForumManagerRepositoryImpl implements ForumManagerRepository {
     public void deleteByUserId(String forumId, Long userId) {
         forumManagerJpaRepository.deleteByForumIdAndUserId(forumId, userId);
     }
-
     @Override
     public ForumManager findForumUserOrCreate(String forumId, Long userId) {
         Optional<ForumManagerEntity> forumManagerOptional = forumManagerJpaRepository.findByForumIdAndUserId(forumId, userId);
