@@ -13,7 +13,6 @@ import java.time.Duration;
 import java.util.Objects;
 
 @RequiredArgsConstructor
-@Transactional
 @Service // 레디스에서 접근해서 값을 가져오는것이 어떤 객체에도 들어가기 애매한 로직이니 서비스로 명명
 public class RedisService implements InMemoryService {
 
@@ -34,7 +33,9 @@ public class RedisService implements InMemoryService {
 
     @Override
     public void verifyCode(String key, String certificationCode) {
+        System.out.println("인증코드 " + certificationCode);
         String value = getValue(key);
+        System.out.println("레디스 저장값 " + value);
         if (!certificationCode.equals(value)) throw new CertificationCodeNotMatchedException();
     }
 
@@ -42,12 +43,5 @@ public class RedisService implements InMemoryService {
     public Long getExpirationTime(String key) {
         return redisTemplate.getExpire(key);
     }
-
-    public void save(String key, String value) {
-        if (Objects.equals(value, "ex")) throw new RuntimeException();
-        else redisTemplate.opsForValue().set(key, value);
-    }
-
-
 
 }
