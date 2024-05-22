@@ -9,6 +9,8 @@
 ---
 
 [Board API 명세서](https://thundering-vulture-ff9.notion.site/Board-b3768219329e43d78ac304eef4d3a71a)
+
+---
 [Board 기능 체크리스트](https://thundering-vulture-ff9.notion.site/Board-e0896265eb8f41c29775f8b418d2e9fb?pvs=4)
 
 # **📝**규칙
@@ -24,12 +26,3 @@
 - `**엔티티에서 인스턴스 반환 시, 정적 팩토리 메서드 사용**`
     - 테스트코드를 제외한 외부에서 빌더 및 생성자 제한
     - JPA 엔티티에 @Builder(access = AccessLevel.PRIVATE)
-    
-- `**UPDATE @Query 사용 규칙**`
-    - Service → Repository 호출에서 도메인 객체 전달
-    
-    ![serviceToRepository](mdPicture/serviceToRepository.png)
-    
-    - Repository → JpaRepository 호출에서 도메인 파라미터 전달
-    
-    ![repositoryToJpa](mdPicture/repositoryToJpa.png)
