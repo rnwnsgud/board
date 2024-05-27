@@ -3,7 +3,6 @@ package store.ppingpong.board.post.dto;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.image.domain.Image;
-import store.ppingpong.board.post.domain.PostWithImages;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,15 +18,15 @@ public class PostResponse {
     private final String forumId;
     private final LocalDateTime createdAt;
 
-    public static PostResponse from(PostWithImages postWithImages) {
+    public static PostResponse from(PostCreateResponse postCreateResponse) {
         return PostResponse.builder()
-                .title(postWithImages.getTitle())
-                .content(postWithImages.getContent())
-                .images(postWithImages.getImages())
-                .postType(postWithImages.getPostTypeId())
-                .userId(postWithImages.getUserId())
-                .forumId(postWithImages.getForumId())
-                .createdAt(postWithImages.getCreatedAt())
+                .title(postCreateResponse.getTitle())
+                .content(postCreateResponse.getContent())
+                .images(postCreateResponse.getImages())
+                .postType(postCreateResponse.getPostTypeId())
+                .userId(postCreateResponse.getUserId())
+                .forumId(postCreateResponse.getForumId())
+                .createdAt(postCreateResponse.getCreatedAt())
                 .build();
     }
 }

@@ -14,10 +14,7 @@ import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.forum.application.ForumService;
 import store.ppingpong.board.post.domain.PostWithImages;
-import store.ppingpong.board.post.dto.PostCreateRequest;
-import store.ppingpong.board.post.dto.PostDeleteResponseDto;
-import store.ppingpong.board.post.dto.PostDetailResponse;
-import store.ppingpong.board.post.dto.PostResponse;
+import store.ppingpong.board.post.dto.*;
 import store.ppingpong.board.post.application.PostService;
 import store.ppingpong.board.reaction.application.ReactionService;
 import store.ppingpong.board.reaction.domain.ReactionType;
@@ -41,8 +38,8 @@ public class PostController {
                                                             @AuthenticationPrincipal LoginUser loginUser) throws IOException {
         forumService.findById(forumId);
         Long userId = getUserId(loginUser);
-        PostWithImages postWithImages = postService.create(postCreateRequest, userId, forumId, images);
-        return new ResponseEntity<>(ResponseDto.of(1, "게시글 생성 성공", PostResponse.from(postWithImages)), HttpStatus.CREATED);
+        PostCreateResponse postCreateResponse = postService.create(postCreateRequest, userId, forumId, images);
+        return new ResponseEntity<>(ResponseDto.of(1, "게시글 생성 성공", PostResponse.from(postCreateResponse)), HttpStatus.CREATED);
     }
 
     // TODO : 추천 수 추가
