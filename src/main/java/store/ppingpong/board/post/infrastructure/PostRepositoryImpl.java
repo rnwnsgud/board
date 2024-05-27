@@ -17,7 +17,6 @@ import store.ppingpong.board.post.application.port.PostRepository;
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
     private final PostJpaRepository postJpaRepository;
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
     public Post create(Post post) {

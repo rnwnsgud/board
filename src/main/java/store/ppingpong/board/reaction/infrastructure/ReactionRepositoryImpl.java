@@ -22,7 +22,7 @@ public class ReactionRepositoryImpl implements ReactionRepository{
 
     @Override
     public List<Reaction> findByTargetTypeAndId(TargetType targetType, long id) {
-        List<ReactionEntity> reactionEntities = reactionJpaRepository.findByTargetTypeAndTargetId(targetType.name(), id);
+        List<ReactionEntity> reactionEntities = reactionJpaRepository.findByTargetTypeAndTargetId(targetType, id);
         return reactionEntities.stream().map(Reaction::from).toList();
     }
 

@@ -45,7 +45,7 @@ public class PostController {
     // TODO : 추천 수 추가
     @GetMapping("/api/post/{id}")
     public ResponseEntity<ResponseDto<PostDetailResponse>> get(@PathVariable("id") long id, @AuthenticationPrincipal LoginUser loginUser) {
-        PostWithImages postWithImages = postService.findById(id);
+        PostWithImages postWithImages = postService.findById(id, loginUser);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 조회 성공", PostDetailResponse.from(postWithImages)), HttpStatus.OK);
     }
 

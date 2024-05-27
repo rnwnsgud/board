@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface ReactionJpaRepository extends JpaRepository<ReactionEntity, Long> {
     Optional<ReactionEntity> findByUserIdAndTargetIdAndTargetTypeAndReactionType(long userId, long targetId, TargetType targetType, ReactionType reactionType);
-    List<ReactionEntity> findByTargetTypeAndTargetId(String targetType, long targetId);
+    List<ReactionEntity> findByTargetTypeAndTargetId(TargetType targetType, long targetId);
 }

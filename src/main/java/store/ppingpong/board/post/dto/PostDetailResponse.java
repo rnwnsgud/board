@@ -21,6 +21,8 @@ public class PostDetailResponse {
     private long userId;
     private String forumId;
     private long visitCount;
+    private int likeCount;
+    private int dislikeCount;
     private LocalDateTime createdAt;
 
     public static PostDetailResponse from(PostWithImages postWithImages) {
@@ -33,6 +35,8 @@ public class PostDetailResponse {
                 .userId(postWithImages.getUserId())
                 .forumId(postWithImages.getForumId())
                 .visitCount(postWithImages.getVisitCount())
+                .likeCount(postWithImages.getLikeCount())
+                .dislikeCount(postWithImages.getDislikeCount())
                 .createdAt(postWithImages.getCreatedAt())
                 .build();
 

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.application.port.ForumManagerRepository;
 import store.ppingpong.board.image.application.port.ImageRepository;
@@ -41,6 +42,7 @@ public class PostService {
     private final ClockLocalHolder clockLocalHolder;
     private final ImageRepository imageRepository;
     private final Uploader uploader;
+    private final ReadPostService readPostService;
     private final ReactionService reactionService;
     private final ReactionRepository reactionRepository;
 
@@ -56,9 +58,10 @@ public class PostService {
         return postRepository.findByForumId(forumId, listNum, search_head, pageable);
     }
     @Transactional
-    public PostWithImages findById(long id) {
+    public PostWithImages findById(long id, LoginUser loginUser) {
         Post post = postRepository.findById(id);
         List<Image> images = imageRepository.findByPostId(post.getId());
+        readPostService.firstReadThenCreate(loginUser, post.getId());
         List<Reaction> reactions = reactionRepository.findByTargetTypeAndId(TargetType.POST, id);
         post = post.visit();
         postRepository.inquiry(post);
@@ -73,6 +76,7 @@ public class PostService {
         List<Image> imageList = imageRepository.findByPostId(post.getId());
         int deletedImageCount = imageRepository.delete(post.getId());
         uploader.delete(imageList);
+        readPostService.deleteByPostId(post.getId());
         return new PostDeleteResponseDto(status, deletedImageCount);
     }
 
