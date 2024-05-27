@@ -50,7 +50,7 @@ public class ForumController {
         return new ResponseEntity<>(ResponseDto.of(1, "ACTIVE 상태인 포럼 리스트 가져오기 성공", ForumListResponse.from(forums)), HttpStatus.OK);
     }
 
-    @GetMapping("/api/forums/{forumId}") // TODO : ForumDetailResponse 조회 수 ,추천 수 추가
+    @GetMapping("/api/forums/{forumId}")
     public ResponseEntity<ResponseDto<ForumDetailResponse>> get(@PathVariable("forumId") String forumId, @RequestParam(value = "listNum", required = false) Integer listNum,
                                                                 @RequestParam(value = "search_head", required = false) Long searchHead,@PageableDefault(page = 1) Pageable pageable) {
         Forum forum = forumService.findById(forumId);
@@ -59,7 +59,6 @@ public class ForumController {
         List<User> forumAssistant = userRepository.findForumAssistant(forumId);
         return new ResponseEntity<>(ResponseDto.of(1, "해당 포럼 상세정보 가져오기 성공", ForumDetailResponse.of(forum, forumManager, forumAssistant, postWithWriters)), HttpStatus.OK);
     }
-    // TODO : 이미지 기능 추가 후 변경(메서드 명 및 기능)
     @PatchMapping("/api/s/forums/{forumId}")
     public ResponseEntity<ResponseDto<ForumUpdateResponse>> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,
                                     BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {

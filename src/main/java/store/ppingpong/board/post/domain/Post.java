@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.common.handler.exception.resource.ResourceNotOwnerException;
-import store.ppingpong.board.post.dto.PostCreate;
+import store.ppingpong.board.post.dto.PostCreateRequest;
 import store.ppingpong.board.post.infrastructure.PostEntity;
 
 import java.time.LocalDateTime;
@@ -33,11 +33,11 @@ public class Post {
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
-    public static Post of(PostCreate postCreate, Long userId, String forumId, ClockLocalHolder clockLocalHolder) {
+    public static Post of(PostCreateRequest postCreateRequest, Long userId, String forumId, ClockLocalHolder clockLocalHolder) {
         return Post.builder()
-                .title(postCreate.getTitle())
-                .content(postCreate.getContent())
-                .postTypeId(postCreate.getPostTypeId())
+                .title(postCreateRequest.getTitle())
+                .content(postCreateRequest.getContent())
+                .postTypeId(postCreateRequest.getPostTypeId())
                 .userId(userId)
                 .forumId(forumId)
                 .createdAt(clockLocalHolder.localMills())

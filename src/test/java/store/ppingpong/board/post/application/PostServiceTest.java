@@ -12,10 +12,8 @@ import store.ppingpong.board.mock.forum.TestClockLocalHolder;
 import store.ppingpong.board.mock.image.FakeImageRepository;
 import store.ppingpong.board.mock.image.FakeUploader;
 import store.ppingpong.board.mock.post.FakePostRepository;
-import store.ppingpong.board.mock.post.FakeReadPostRepository;
-import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.domain.PostWithImages;
-import store.ppingpong.board.post.dto.PostCreate;
+import store.ppingpong.board.post.dto.PostCreateRequest;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -49,13 +47,13 @@ public class PostServiceTest {
     @Test
     void PostCreate로_Post를_생성할_수_있다() throws IOException {
         // given
-        PostCreate postCreate = PostCreate.builder()
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
                 .title("title")
                 .content("conetent")
                 .postTypeId(1L)
                 .build();
         // when
-        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
+        PostWithImages postWithImages = postService.create(postCreateRequest, 1L, "reverse1999", null);
 
         // then
 //        assertThat(postWithImages.getPostId()).isEqualTo(1L);
@@ -68,13 +66,13 @@ public class PostServiceTest {
     @Test
     void Post생성시_유저가_포럼매니저가_아니라면_포럼매니저를_생성한다() throws IOException {
         // given
-        PostCreate postCreate = PostCreate.builder()
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
                 .title("title")
                 .content("conetent")
                 .postTypeId(1L)
                 .build();
         // when
-        postService.create(postCreate, 1L, "reverse1999", null);
+        postService.create(postCreateRequest, 1L, "reverse1999", null);
         // then
         assertThat(fakeForumManagerRepository.findManagerByForumId("reverse1999")).isNotNull();
 
@@ -83,12 +81,12 @@ public class PostServiceTest {
     @Test
     void Id로_Post를_조회할_수_있고_조회수를_증가시킨다() throws IOException {
         // given
-        PostCreate postCreate = PostCreate.builder()
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
                 .title("title")
                 .content("conetent")
                 .postTypeId(1L)
                 .build();
-        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
+        PostWithImages postWithImages = postService.create(postCreateRequest, 1L, "reverse1999", null);
         // when
 //        PostWithImages postWithImages1 = postService.findById(postWithImages.getPostId(), 2L);
 //
@@ -99,12 +97,12 @@ public class PostServiceTest {
     @Test
     void Id로_Post를_조회할_수_있지만_본인의것이면_조회수가_증가하지_않는다() throws IOException {
         // given
-        PostCreate postCreate = PostCreate.builder()
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
                 .title("title")
                 .content("conetent")
                 .postTypeId(1L)
                 .build();
-        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", null);
+        PostWithImages postWithImages = postService.create(postCreateRequest, 1L, "reverse1999", null);
 
         // when
 //        PostWithImages postWithImages1 = postService.findById(postWithImages.getPostId(), 1L);
@@ -132,12 +130,12 @@ public class PostServiceTest {
         );
         multipartFiles.add(multipartFile);
         multipartFiles.add(multipartFile2);
-        PostCreate postCreate = PostCreate.builder()
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
                 .title("title")
                 .content("conetent")
                 .postTypeId(1L)
                 .build();
-        PostWithImages postWithImages = postService.create(postCreate, 1L, "reverse1999", multipartFiles);
+        PostWithImages postWithImages = postService.create(postCreateRequest, 1L, "reverse1999", multipartFiles);
         List<Image> images = postWithImages.getImages();
         assertThat(images.size()).isEqualTo(2);
         assertThat(images.get(0).getOriginalName()).isEqualTo(fileName+"."+"png");

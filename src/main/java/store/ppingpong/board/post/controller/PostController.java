@@ -14,7 +14,7 @@ import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.forum.application.ForumService;
 import store.ppingpong.board.post.domain.PostWithImages;
-import store.ppingpong.board.post.dto.PostCreate;
+import store.ppingpong.board.post.dto.PostCreateRequest;
 import store.ppingpong.board.post.dto.PostDeleteResponseDto;
 import store.ppingpong.board.post.dto.PostDetailResponse;
 import store.ppingpong.board.post.dto.PostResponse;
@@ -36,18 +36,19 @@ public class PostController {
     private final ReactionService reactionService;
 
     @PostMapping(value = "/api/s/post/{forumId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ResponseDto<PostResponse>> create(@RequestPart(value = "postCreate") @Valid PostCreate postCreate, BindingResult bindingResult,
+    public ResponseEntity<ResponseDto<PostResponse>> create(@RequestPart(value = "postCreate") @Valid PostCreateRequest postCreateRequest, BindingResult bindingResult,
                                                             @RequestPart(value = "images", required = false) List<MultipartFile> images, @PathVariable("forumId") String forumId,
                                                             @AuthenticationPrincipal LoginUser loginUser) throws IOException {
         forumService.findById(forumId);
         Long userId = getUserId(loginUser);
-        PostWithImages postWithImages = postService.create(postCreate, userId, forumId, images);
+        PostWithImages postWithImages = postService.create(postCreateRequest, userId, forumId, images);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 생성 성공", PostResponse.from(postWithImages)), HttpStatus.CREATED);
     }
 
+    // TODO : 추천 수 추가
     @GetMapping("/api/post/{id}")
     public ResponseEntity<ResponseDto<PostDetailResponse>> get(@PathVariable("id") long id, @AuthenticationPrincipal LoginUser loginUser) {
-        PostWithImages postWithImages = postService.findById(id, loginUser);
+        PostWithImages postWithImages = postService.findById(id);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 조회 성공", PostDetailResponse.from(postWithImages)), HttpStatus.OK);
     }
 

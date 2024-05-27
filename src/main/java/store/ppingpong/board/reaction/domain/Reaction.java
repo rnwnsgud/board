@@ -3,6 +3,7 @@ package store.ppingpong.board.reaction.domain;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import store.ppingpong.board.reaction.infrastructure.ReactionEntity;
 
 @Getter
 public class Reaction {
@@ -27,6 +28,16 @@ public class Reaction {
                 .reactionType(reactionType)
                 .targetType(targetType)
                 .build();
+    }
+
+    public static Reaction from(ReactionEntity reactionEntity) {
+        return Reaction.builder()
+                .userId(reactionEntity.getUserId())
+                .targetId(reactionEntity.getTargetId())
+                .reactionType(reactionEntity.getReactionType())
+                .targetType(reactionEntity.getTargetType())
+                .build();
+
     }
 
 

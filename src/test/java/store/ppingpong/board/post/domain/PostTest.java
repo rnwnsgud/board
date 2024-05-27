@@ -1,9 +1,8 @@
 package store.ppingpong.board.post.domain;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
-import store.ppingpong.board.post.dto.PostCreate;
+import store.ppingpong.board.post.dto.PostCreateRequest;
 
 import java.time.LocalDateTime;
 
@@ -14,13 +13,13 @@ public class PostTest {
     @Test
     void PostCreate으로_Post를_생성할_수_있다() {
         // given
-        PostCreate postCreate = PostCreate.builder()
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
                 .title("title")
                 .content("content")
                 .postTypeId(1L)
                 .build();
         // when
-        Post post = Post.of(postCreate, 1L, "reverse1999", new TestClockLocalHolder(LocalDateTime.MIN));
+        Post post = Post.of(postCreateRequest, 1L, "reverse1999", new TestClockLocalHolder(LocalDateTime.MIN));
 
         assertThat(post.getId()).isNull();
         assertThat(post.getTitle()).isEqualTo("title");

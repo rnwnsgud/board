@@ -1,17 +1,16 @@
-package store.ppingpong.board.post.domain;
+package store.ppingpong.board.post.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.image.domain.Image;
+import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.reaction.domain.Reaction;
-import store.ppingpong.board.reaction.domain.ReactionType;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
-public class PostWithImages {
+public class PostCreateResponse {
     private final Long postId;
     private final String title;
     private final String content;
@@ -20,12 +19,11 @@ public class PostWithImages {
     private final Long userId;
     private final String forumId;
     private final Long visitCount;
-    private final int likeCount;
-    private final int dislikeCount;
+
     private final LocalDateTime createdAt;
 
     @Builder
-    private PostWithImages(Long postId, String title, String content, List<Image> images, Long postTypeId, Long userId, String forumId, Long visitCount, int likeCount, int dislikeCount, LocalDateTime createdAt) {
+    private PostCreateResponse(Long postId, String title, String content, List<Image> images, Long postTypeId, Long userId, String forumId, Long visitCount, LocalDateTime createdAt) {
         this.postId = postId;
         this.title = title;
         this.content = content;
@@ -34,16 +32,12 @@ public class PostWithImages {
         this.userId = userId;
         this.forumId = forumId;
         this.visitCount = visitCount;
-        this.likeCount = likeCount;
-        this.dislikeCount = dislikeCount;
         this.createdAt = createdAt;
     }
 
-    public static PostWithImages of(Post post, List<Image> images, List<Reaction> reactions) {
-        int likeCount = reactions.stream().filter(reaction -> reaction.getReactionType().equals(ReactionType.LIKE)).toList().size();
-        int dislikeCount = reactions.stream().filter(reaction -> reaction.getReactionType().equals(ReactionType.DISLIKE)).toList().size();
+    public static PostCreateResponse of(Post post, List<Image> images) {
 
-        return PostWithImages.builder()
+        return PostCreateResponse.builder()
                 .postId(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
@@ -53,8 +47,6 @@ public class PostWithImages {
                 .forumId(post.getForumId())
                 .forumId(post.getForumId())
                 .visitCount(post.getVisitCount())
-                .likeCount(likeCount)
-                .dislikeCount(dislikeCount)
                 .createdAt(post.getCreatedAt())
                 .build();
     }
