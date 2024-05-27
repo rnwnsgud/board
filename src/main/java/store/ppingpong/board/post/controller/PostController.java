@@ -37,7 +37,7 @@ public class PostController {
                                                             @RequestPart(value = "images", required = false) List<MultipartFile> images, @PathVariable("forumId") String forumId,
                                                             @AuthenticationPrincipal LoginUser loginUser) throws IOException {
         forumService.findById(forumId);
-        Long userId = getUserId(loginUser);
+        Long userId = loginUser.getUserId();
         PostCreateResponse postCreateResponse = postService.create(postCreateRequest, userId, forumId, images);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 생성 성공", PostResponse.from(postCreateResponse)), HttpStatus.CREATED);
     }
@@ -51,7 +51,7 @@ public class PostController {
 
     @DeleteMapping("/api/s/post/{id}")
     public ResponseEntity<ResponseDto<PostDeleteResponseDto>> delete(@PathVariable("id") long id, @AuthenticationPrincipal LoginUser loginUser) {
-        Long userId = getUserId(loginUser);
+        Long userId = loginUser.getUserId();
         PostDeleteResponseDto postDeleteResponseDto = postService.delete(id, userId);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 삭제 성공", postDeleteResponseDto), HttpStatus.OK);
     }
@@ -59,12 +59,9 @@ public class PostController {
     @PostMapping("/api/s/post/{id}")
     public ResponseEntity<?> react(@PathVariable("id") long id, @RequestParam("type") ReactionType reactionType,
                                    @AuthenticationPrincipal LoginUser loginUser) {
-        Long userId = getUserId(loginUser);
+        Long userId = loginUser.getUserId();
         reactionService.create(userId, id, reactionType, TargetType.POST);
         return new ResponseEntity<>(ResponseDto.of(1,"게시글 리액션 반영 성공"), HttpStatus.OK);
     }
 
-    private Long getUserId(LoginUser loginUser) {
-        return loginUser.getUser().getId();
-    }
 }
