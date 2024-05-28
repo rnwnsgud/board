@@ -21,8 +21,7 @@ import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.port.PostRepository;
 import store.ppingpong.board.image.application.port.Uploader;
 import store.ppingpong.board.post.dto.PostCreateResponse;
-import store.ppingpong.board.post.dto.PostDeleteResponseDto;
-import store.ppingpong.board.reaction.application.ReactionService;
+import store.ppingpong.board.post.dto.PostDeleteResponse;
 import store.ppingpong.board.reaction.domain.Reaction;
 import store.ppingpong.board.reaction.domain.TargetType;
 import store.ppingpong.board.reaction.infrastructure.ReactionRepository;
@@ -43,13 +42,13 @@ public class PostService {
     private final ImageRepository imageRepository;
     private final Uploader uploader;
     private final ReadPostService readPostService;
-    private final ReactionService reactionService;
     private final ReactionRepository reactionRepository;
 
     public PostCreateResponse create(PostCreateRequest postCreateRequest, Long userId, String forumId, List<MultipartFile> multipartFiles) throws IOException {
         Post post = postCreator.create(postCreateRequest, userId, forumId);
         List<Image> images = new ArrayList<>();
         if (multipartFiles != null) images = uploader.upload(multipartFiles, post.getId());
+        images = imageRepository.saveList(images);
         return PostCreateResponse.of(post, images);
     }
 
@@ -69,7 +68,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostDeleteResponseDto delete(long id, Long userId) {
+    public PostDeleteResponse delete(long id, Long userId) {
         Post post = postRepository.findById(id);
         post.checkPostOwner(userId);
         int status = postRepository.delete(id);
@@ -77,7 +76,7 @@ public class PostService {
         int deletedImageCount = imageRepository.delete(post.getId());
         uploader.delete(imageList);
         readPostService.deleteByPostId(post.getId());
-        return new PostDeleteResponseDto(status, deletedImageCount);
+        return new PostDeleteResponse(status, deletedImageCount);
     }
 
 

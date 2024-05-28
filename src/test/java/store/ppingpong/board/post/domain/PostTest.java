@@ -33,10 +33,9 @@ public class PostTest {
     }
 
     @Test
-    void 타인의_Post_방문시_조회수가_증가한다() {
+    void Post_방문시_조회수가_증가한다() {
         // given
         long myId = 1L;
-        long visitId = 2L;
         Post beforePost = Post.builder()
                 .userId(myId)
                 .visitCount(0)
@@ -48,17 +47,15 @@ public class PostTest {
     }
 
     @Test
-    void 본인의_Post_방문시_조회수가_증가하지_않는다() {
+    void Post_소유자를_가려낼_수_있다() {
         // given
-        long myId = 1L;
-        long visitId = 1L;
-        Post beforePost = Post.builder()
-                .userId(myId)
-                .visitCount(0)
+        Post post = Post.builder()
+                .id(1L)
+                .userId(1L)
                 .build();
         // when
-        Post afterPost = beforePost.visit();
-        // then
-        assertThat(afterPost.getVisitCount()).isEqualTo(0);
+        post.checkPostOwner(1L);
     }
+
+
 }

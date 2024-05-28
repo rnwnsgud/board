@@ -49,21 +49,23 @@ public class FakePostRepository implements PostRepository {
 
     @Override
     public Post findById(long id) {
-        Post post = data.stream()
+        return data.stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
                 .get();
-        return post;
     }
 
     @Override
     public void inquiry(Post post) {
-
+        data.removeIf(post1 -> Objects.equals(post1.getId(), post.getId()));
+        data.add(post);
     }
 
     @Override
     public int delete(long id) {
-        return 0;
+        boolean removed = data.removeIf(post -> Objects.equals(post.getId(), id));
+        if (removed) return 1;
+        else return 0;
     }
 
 

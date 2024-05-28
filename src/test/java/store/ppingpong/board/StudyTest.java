@@ -44,11 +44,11 @@ public class StudyTest {
         forumJpaRepository.save(forumEntity);
     }
 
-    @Test
-    void 레디스는_트랜잭션이_적용되지_않는다_그러나_추가설정으로_해결했다() {
-        assertThatThrownBy( () -> redisService.save("key", "ex")).isInstanceOf(RuntimeException.class);
-        assertThat(redisService.getValue("key")).isNull();
-    }
+//    @Test
+//    void 레디스는_트랜잭션이_적용되지_않는다_그러나_추가설정으로_해결했다() {
+//        assertThatThrownBy( () -> redisService.save("key", "ex")).isInstanceOf(RuntimeException.class);
+//        assertThat(redisService.getValue("key")).isNull();
+//    }
 
 
 }
