@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.handler.exception.*;
+import store.ppingpong.board.common.handler.exception.comment.CommentDepthException;
 import store.ppingpong.board.common.handler.exception.file.FileNotDeletedException;
 import store.ppingpong.board.common.handler.exception.file.FileNotSupportedException;
 import store.ppingpong.board.common.handler.exception.file.FileUploadException;
@@ -72,6 +73,11 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(ResourceNotOwnerException.class)
     public ResponseEntity<ResponseDto<?>> resourceNotOwnerException(ResourceNotOwnerException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CommentDepthException.class)
+    public ResponseEntity<ResponseDto<?>> commentDepthException(ResourceNotOwnerException e) {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 

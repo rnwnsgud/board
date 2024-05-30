@@ -1,5 +1,6 @@
 package store.ppingpong.board.image.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.image.infrastructure.ImageEntity;
@@ -12,7 +13,7 @@ public class Image {
     private final String imageUrl;
     private final FileExtension fileExtension;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private Image(Long postId, String originalName, String storedName, String imageUrl, FileExtension fileExtension) {
         this.postId = postId;
         this.originalName = originalName;

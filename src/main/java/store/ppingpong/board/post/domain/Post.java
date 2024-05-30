@@ -1,6 +1,7 @@
 package store.ppingpong.board.post.domain;
 
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
@@ -21,7 +22,7 @@ public class Post {
     private final LocalDateTime createdAt;
     private final LocalDateTime lastModifiedAt;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, long visitCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.id = id;
         this.title = title;

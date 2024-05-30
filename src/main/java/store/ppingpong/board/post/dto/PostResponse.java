@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Builder
 public class PostResponse {
+    private final Long postId;
     private final String title;
     private final String content;
     private final List<Image> images;
@@ -20,6 +21,7 @@ public class PostResponse {
 
     public static PostResponse from(PostCreateResponse postCreateResponse) {
         return PostResponse.builder()
+                .postId(postCreateResponse.getPostId())
                 .title(postCreateResponse.getTitle())
                 .content(postCreateResponse.getContent())
                 .images(postCreateResponse.getImages())

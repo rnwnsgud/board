@@ -1,5 +1,6 @@
 package store.ppingpong.board.forum.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
@@ -24,7 +25,7 @@ public class Forum {
     private final LocalDateTime createdAt;
     private final LocalDateTime lastModifiedAt;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.forumId = forumId;
         this.name = name;

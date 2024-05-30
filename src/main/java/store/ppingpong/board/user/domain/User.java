@@ -1,5 +1,6 @@
 package store.ppingpong.board.user.domain;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockHolder;
@@ -16,7 +17,7 @@ public class User {
     private final Long createdAt;
     private final Long lastLoginAt;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private User(Long id, LoginInfo loginInfo, UserInfo userInfo, UserStatus userStatus, Long createdAt, Long lastLoginAt) {
         this.id = id;
         this.loginInfo = loginInfo;
