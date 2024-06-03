@@ -2,6 +2,7 @@ package store.ppingpong.board.forum.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotFoundException;
 import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.domain.ForumStatus;
 import store.ppingpong.board.forum.application.port.ForumRepository;
@@ -33,8 +34,15 @@ public class ForumRepositoryImpl implements ForumRepository {
     }
 
     @Override
-    public Optional<Forum> findById(String forumId) {
-        return forumJpaRepository.findByForumId(forumId).map(ForumEntity::toModel);
+    public Forum getById(String forumId) {
+        Optional<ForumEntity> forumEntityOptional = forumJpaRepository.findByForumId(forumId);
+        if (forumEntityOptional.isEmpty()) throw new ResourceNotFoundException("forum", forumId);
+        return forumEntityOptional.get().toModel();
+    }
+
+    @Override
+    public boolean existsById(String forumId) {
+        return forumJpaRepository.existsByForumId(forumId);
     }
 
     @Override

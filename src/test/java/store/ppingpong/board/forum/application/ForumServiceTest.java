@@ -195,7 +195,7 @@ class ForumServiceTest {
     @Test
     void findById로_forumId와_같은_포럼을_가져올_수_있다() {
         // when
-        Forum forum = forumService.findById("bg3");
+        Forum forum = forumService.getById("bg3");
 
         // then
         assertThat(forum.getForumId()).isEqualTo("bg3");

@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface ForumRepository {
     Forum create(Forum forum);
     List<Forum> getActiveList();
-    Optional<Forum> findById(String forumId);
+    Forum getById(String forumId);
+    boolean existsById(String forumId);
     void modify(Forum forum);
 }

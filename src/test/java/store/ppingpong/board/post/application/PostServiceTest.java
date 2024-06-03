@@ -15,7 +15,6 @@ import store.ppingpong.board.mock.image.FakeUploader;
 import store.ppingpong.board.mock.post.FakePostRepository;
 import store.ppingpong.board.mock.post.FakeReadPostRepository;
 import store.ppingpong.board.mock.reaction.FakeReactionRepository;
-import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.domain.PostWithImages;
 import store.ppingpong.board.post.domain.service.PostCreator;
 import store.ppingpong.board.post.dto.PostCreateRequest;
@@ -101,7 +100,7 @@ public class PostServiceTest {
 
         PostCreateResponse postCreateResponse = postService.create(postCreateRequest, 1L, "reverse1999", null);
         // when
-        PostWithImages postWithImages1 = postService.findById(postCreateResponse.getPostId(), loginUser);
+        PostWithImages postWithImages1 = postService.getById(postCreateResponse.getPostId(), loginUser);
 
         // then
         assertThat(postWithImages1.getVisitCount()).isEqualTo(1);
@@ -154,8 +153,8 @@ public class PostServiceTest {
                 .build();
         PostCreateResponse postCreateResponse = postService.create(postCreateRequest, 1L, "reverse1999", null);
         // when
-        postService.findById(postCreateResponse.getPostId(), loginUser);
-        PostWithImages postWithImages = postService.findById(postCreateResponse.getPostId(), loginUser2);
+        postService.getById(postCreateResponse.getPostId(), loginUser);
+        PostWithImages postWithImages = postService.getById(postCreateResponse.getPostId(), loginUser2);
 
         // then
         assertThat(postWithImages.getVisitCount()).isEqualTo(2);

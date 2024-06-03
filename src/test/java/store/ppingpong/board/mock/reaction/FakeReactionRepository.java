@@ -9,8 +9,9 @@ import java.util.List;
 
 public class FakeReactionRepository implements ReactionRepository {
     @Override
-    public void create(Reaction reaction) {
+    public boolean react(Reaction reaction) {
 
+        return false;
     }
 
     @Override

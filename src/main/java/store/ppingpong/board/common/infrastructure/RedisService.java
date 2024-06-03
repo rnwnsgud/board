@@ -33,9 +33,7 @@ public class RedisService implements InMemoryService {
 
     @Override
     public void verifyCode(String key, String certificationCode) {
-        System.out.println("인증코드 " + certificationCode);
         String value = getValue(key);
-        System.out.println("레디스 저장값 " + value);
         if (!certificationCode.equals(value)) throw new CertificationCodeNotMatchedException();
     }
 

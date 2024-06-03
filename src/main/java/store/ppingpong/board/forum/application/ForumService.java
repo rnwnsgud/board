@@ -32,17 +32,15 @@ public class ForumService {
     private final EntityManager em;
 
     public Forum create(ForumCreate forumCreate, User user) {
-        checkExistence(forumCreate);
+        String forumId = forumCreate.getForumId();
+        boolean exists = forumRepository.existsById(forumId);
+        if (exists) throw new ResourceAlreadyExistException("ForumId가 이미 사용중입니다.", forumId);
         Forum forum = forumRepository.create(Forum.of(forumCreate, clockLocalHolder, user.getUserInfo().getUserType()));
         ForumManager forumUser = ForumManager.of(forum.getForumId(), user.getId(), ForumManagerLevel.MANAGER);
         forumManagerRepository.save(forumUser);
         return forum;
     }
 
-    private void checkExistence(ForumCreate forumCreate) {
-        Optional<Forum> forumOptional = forumRepository.findById(forumCreate.getForumId());
-        if (forumOptional.isPresent()) throw new ResourceAlreadyExistException("이미 존재하는 Forum");
-    }
 
     @Transactional(readOnly = true)
     public List<Forum> getActiveList() {
@@ -50,11 +48,11 @@ public class ForumService {
     }
 
     @Transactional(readOnly = true)
-    public Forum findById(String forumId) {
-        return forumRepository.findById(forumId).orElseThrow(() -> new ResourceNotFoundException("Forums", forumId));
+    public Forum getById(String forumId) {
+        return forumRepository.getById(forumId);
     }
     public Forum modify(String forumId, ForumUpdate forumUpdate) {
-        Forum forum = findById(forumId);
+        Forum forum = getById(forumId);
         em.clear();
         forum = forum.managerModify(forumUpdate, clockLocalHolder);
         forumRepository.modify(forum);

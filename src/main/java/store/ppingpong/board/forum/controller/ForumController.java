@@ -53,7 +53,7 @@ public class ForumController {
     @GetMapping("/api/forums/{forumId}")
     public ResponseEntity<ResponseDto<ForumDetailResponse>> get(@PathVariable("forumId") String forumId, @RequestParam(value = "listNum", required = false) Integer listNum,
                                                                 @RequestParam(value = "search_head", required = false) Long searchHead,@PageableDefault(page = 1) Pageable pageable) {
-        Forum forum = forumService.findById(forumId);
+        Forum forum = forumService.getById(forumId);
         User forumManager = userRepository.findForumManager(forumId);
         Page<PostWithWriter> postWithWriters = postService.getList(forumId, listNum, searchHead, pageable);
         List<User> forumAssistant = userRepository.findForumAssistant(forumId);

@@ -35,7 +35,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post findById(long id) {
+    public Post getById(long id) {
         return postJpaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", id)).toModel();
     }
 

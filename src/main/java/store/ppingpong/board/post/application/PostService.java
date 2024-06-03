@@ -23,6 +23,7 @@ import store.ppingpong.board.image.application.port.Uploader;
 import store.ppingpong.board.post.dto.PostCreateResponse;
 import store.ppingpong.board.post.dto.PostDeleteResponse;
 import store.ppingpong.board.reaction.domain.Reaction;
+import store.ppingpong.board.reaction.domain.ReactionType;
 import store.ppingpong.board.reaction.domain.TargetType;
 import store.ppingpong.board.reaction.infrastructure.ReactionRepository;
 
@@ -56,9 +57,11 @@ public class PostService {
     public Page<PostWithWriter> getList(String forumId, int listNum, Long search_head, Pageable pageable) {
         return postRepository.findByForumId(forumId, listNum, search_head, pageable);
     }
+
+
     @Transactional
-    public PostWithImages findById(long id, LoginUser loginUser) {
-        Post post = postRepository.findById(id);
+    public PostWithImages getById(long id, LoginUser loginUser) {
+        Post post = postRepository.getById(id);
         List<Image> images = imageRepository.findByPostId(post.getId());
         readPostService.firstReadThenCreate(loginUser, post.getId());
         List<Reaction> reactions = reactionRepository.findByTargetTypeAndId(TargetType.POST, id);
@@ -69,7 +72,7 @@ public class PostService {
 
     @Transactional
     public PostDeleteResponse delete(long id, Long userId) {
-        Post post = postRepository.findById(id);
+        Post post = postRepository.getById(id);
         post.checkPostOwner(userId);
         int status = postRepository.delete(id);
         List<Image> imageList = imageRepository.findByPostId(post.getId());
@@ -80,4 +83,10 @@ public class PostService {
     }
 
 
+    public void react(boolean react, long id, ReactionType reactionType) {
+        if (!react) return;
+        Post post = postRepository.getById(id);
+        post = post.like(reactionType);
+        postRepository.create(post);
+    }
 }

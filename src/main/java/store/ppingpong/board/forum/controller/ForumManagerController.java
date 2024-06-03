@@ -52,7 +52,7 @@ public class ForumManagerController {
     public ResponseEntity<ResponseDto<ForumPostTypeResponse>> createPostType(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumPostTypeCreate forumPostTypeCreate,
                                             BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
         checkManager(forumId, loginUser);
-        Forum forum = forumService.findById(forumId);
+        Forum forum = forumService.getById(forumId);
         ForumPostTypeResponse forumPostTypeResponse = forumManagerService.createPostType(forumPostTypeCreate.getPostTypes(), forum);
         return new ResponseEntity<>(ResponseDto.of(1, "말머리 등록 성공", forumPostTypeResponse), HttpStatus.OK);
     }
