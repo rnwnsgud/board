@@ -13,8 +13,8 @@ public class ReactionService {
 
     private final ReactionRepository reactionRepository;
 
-    public void create(Long userId, long targetId, ReactionType reactionType, TargetType targetType) {
+    public boolean react(Long userId, long targetId, ReactionType reactionType, TargetType targetType) {
         Reaction reaction = Reaction.of(userId, targetId, reactionType, targetType);
-        reactionRepository.create(reaction);
+        return reactionRepository.react(reaction);
     }
 }

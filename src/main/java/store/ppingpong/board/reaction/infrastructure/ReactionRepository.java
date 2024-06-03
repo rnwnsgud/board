@@ -6,6 +6,6 @@ import store.ppingpong.board.reaction.domain.TargetType;
 import java.util.List;
 
 public interface ReactionRepository {
-    void create(Reaction reaction);
+    boolean react(Reaction reaction);
     List<Reaction> findByTargetTypeAndId(TargetType targetType, long id);
 }

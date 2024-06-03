@@ -8,6 +8,7 @@ import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.common.handler.exception.resource.ResourceNotOwnerException;
 import store.ppingpong.board.post.dto.PostCreateRequest;
 import store.ppingpong.board.post.infrastructure.PostEntity;
+import store.ppingpong.board.reaction.domain.ReactionType;
 
 import java.time.LocalDateTime;
 @Getter
@@ -18,12 +19,13 @@ public class Post {
     private final Long postTypeId;
     private final Long userId;
     private final String forumId;
-    private final long visitCount;
+    private final int visitCount;
+    private final int likeCount;
     private final LocalDateTime createdAt;
     private final LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, long visitCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -31,6 +33,7 @@ public class Post {
         this.userId = userId;
         this.forumId = forumId;
         this.visitCount = visitCount;
+        this.likeCount = likeCount;
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
@@ -53,13 +56,13 @@ public class Post {
                 .userId(postEntity.getUserId())
                 .forumId(postEntity.getForumId())
                 .visitCount(postEntity.getVisitCount())
+                .likeCount(postEntity.getLikeCount())
                 .createdAt(postEntity.getCreatedAt())
                 .lastModifiedAt(postEntity.getLastModifiedAt())
                 .build();
     }
 
     public Post visit() {
-
         return Post.builder()
                 .id(id)
                 .title(title)
@@ -68,6 +71,7 @@ public class Post {
                 .userId(userId)
                 .forumId(forumId)
                 .visitCount(visitCount+1)
+                .likeCount(likeCount)
                 .createdAt(createdAt)
                 .lastModifiedAt(lastModifiedAt)
                 .build();
@@ -75,5 +79,22 @@ public class Post {
 
     public void checkPostOwner(Long userId) {
         if (this.userId.longValue() != userId.longValue()) throw new ResourceNotOwnerException("Post", userId);
+    }
+
+    public Post like(ReactionType reactionType) {
+        int likeCount = this.likeCount;
+        if (reactionType == ReactionType.LIKE) likeCount++;
+        return Post.builder()
+                .id(id)
+                .title(title)
+                .content(content)
+                .postTypeId(postTypeId)
+                .userId(userId)
+                .forumId(forumId)
+                .visitCount(visitCount)
+                .likeCount(likeCount)
+                .createdAt(createdAt)
+                .lastModifiedAt(lastModifiedAt)
+                .build();
     }
 }

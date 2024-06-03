@@ -25,19 +25,21 @@ public class PostEntity {
     private Long postTypeId;
     private Long userId;
     private String forumId;
-    private long visitCount;
+    private int visitCount;
+    private int likeCount;
     @CreatedDate
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private PostEntity(String title, String content, Long postTypeId, Long userId, String forumId, long visitCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private PostEntity(String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.title = title;
         this.content = content;
         this.postTypeId = postTypeId;
         this.userId = userId;
         this.forumId = forumId;
         this.visitCount = visitCount;
+        this.likeCount = likeCount;
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
@@ -50,6 +52,7 @@ public class PostEntity {
                 .userId(post.getUserId())
                 .forumId(post.getForumId())
                 .visitCount(post.getVisitCount())
+                .likeCount(post.getLikeCount())
                 .createdAt(post.getCreatedAt())
                 .lastModifiedAt(post.getLastModifiedAt())
                 .build();

@@ -36,16 +36,15 @@ public class PostController {
     public ResponseEntity<ResponseDto<PostResponse>> create(@RequestPart(value = "postCreate") @Valid PostCreateRequest postCreateRequest, BindingResult bindingResult,
                                                             @RequestPart(value = "images", required = false) List<MultipartFile> images, @PathVariable("forumId") String forumId,
                                                             @AuthenticationPrincipal LoginUser loginUser) throws IOException {
-        forumService.findById(forumId);
+        forumService.getById(forumId);
         Long userId = loginUser.getUserId();
         PostCreateResponse postCreateResponse = postService.create(postCreateRequest, userId, forumId, images);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 생성 성공", PostResponse.from(postCreateResponse)), HttpStatus.CREATED);
     }
 
-    // TODO : 추천 수 추가
     @GetMapping("/api/post/{id}")
     public ResponseEntity<ResponseDto<PostDetailResponse>> get(@PathVariable("id") long id, @AuthenticationPrincipal LoginUser loginUser) {
-        PostWithImages postWithImages = postService.findById(id, loginUser);
+        PostWithImages postWithImages = postService.getById(id, loginUser);
         return new ResponseEntity<>(ResponseDto.of(1, "게시글 조회 성공", PostDetailResponse.from(postWithImages)), HttpStatus.OK);
     }
 
@@ -60,7 +59,8 @@ public class PostController {
     public ResponseEntity<?> react(@PathVariable("id") long id, @RequestParam("type") ReactionType reactionType,
                                    @AuthenticationPrincipal LoginUser loginUser) {
         Long userId = loginUser.getUserId();
-        reactionService.create(userId, id, reactionType, TargetType.POST);
+        boolean react = reactionService.react(userId, id, reactionType, TargetType.POST);
+        postService.react(react, id, reactionType);
         return new ResponseEntity<>(ResponseDto.of(1,"게시글 리액션 반영 성공"), HttpStatus.OK);
     }
 

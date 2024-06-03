@@ -15,9 +15,11 @@ public class ReactionRepositoryImpl implements ReactionRepository{
     private final ReactionJpaRepository reactionJpaRepository;
 
     @Override
-    public void create(Reaction reaction) {
-        Optional<ReactionEntity> reactionOptional = reactionJpaRepository.findByUserIdAndTargetIdAndTargetTypeAndReactionType(reaction.getUserId(), reaction.getTargetId(), reaction.getTargetType(), reaction.getReactionType());
-        if (reactionOptional.isEmpty()) reactionJpaRepository.save(ReactionEntity.from(reaction));
+    public boolean react(Reaction reaction) {
+        boolean exist = reactionJpaRepository.existsByUserIdAndTargetIdAndTargetTypeAndReactionType(reaction.getUserId(), reaction.getTargetId(), reaction.getTargetType(), reaction.getReactionType());
+        if (!exist) reactionJpaRepository.save(ReactionEntity.from(reaction));
+        else reactionJpaRepository.delete(ReactionEntity.from(reaction));
+        return exist;
     }
 
     @Override

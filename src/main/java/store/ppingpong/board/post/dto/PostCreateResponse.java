@@ -18,12 +18,12 @@ public class PostCreateResponse {
     private final Long postTypeId;
     private final Long userId;
     private final String forumId;
-    private final Long visitCount;
+    private final int visitCount;
 
     private final LocalDateTime createdAt;
 
     @Builder
-    private PostCreateResponse(Long postId, String title, String content, List<Image> images, Long postTypeId, Long userId, String forumId, Long visitCount, LocalDateTime createdAt) {
+    private PostCreateResponse(Long postId, String title, String content, List<Image> images, Long postTypeId, Long userId, String forumId, int visitCount, LocalDateTime createdAt) {
         this.postId = postId;
         this.title = title;
         this.content = content;

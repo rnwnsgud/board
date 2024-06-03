@@ -7,12 +7,10 @@ import store.ppingpong.board.common.domain.ClockLocalHolder;
 import store.ppingpong.board.forum.dto.ForumCreate;
 import store.ppingpong.board.forum.dto.ForumUpdate;
 import store.ppingpong.board.forum.infrastructure.ForumEntity;
-import store.ppingpong.board.forum.infrastructure.PostTypeEntity;
 import store.ppingpong.board.user.domain.UserType;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Getter
 public class Forum {
@@ -25,7 +23,7 @@ public class Forum {
     private final LocalDateTime createdAt;
     private final LocalDateTime lastModifiedAt;
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder
     private Forum(String forumId, String name, String introduction, Category category, ForumStatus forumStatus, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.forumId = forumId;
         this.name = name;
