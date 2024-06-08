@@ -1,6 +1,10 @@
 package store.ppingpong.board.common.handler.exception.resource;
 
 public class ResourceNotFoundException extends RuntimeException {
+
+    public ResourceNotFoundException(String datasource) {
+        super(datasource);
+    }
     public ResourceNotFoundException(String datasource, long id) {
         super(datasource + "에서 ID " + id + "를 찾을 수 없습니다.");
     }

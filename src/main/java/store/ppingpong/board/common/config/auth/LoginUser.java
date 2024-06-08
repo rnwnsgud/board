@@ -31,7 +31,7 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUserInfo().getNickname();
+        return user.getUserInfo().getEmail();
     }
 
     @Override

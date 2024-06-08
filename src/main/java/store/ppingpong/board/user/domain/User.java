@@ -87,7 +87,7 @@ public class User {
     }
 
     public void isVerified() {
-        if (!userStatus.equals(UserStatus.ACTIVE)) throw new ResourceNotVerifiedException("인증되지 않은 유저입니다.");
+        if (userStatus != UserStatus.ACTIVE) throw new ResourceNotVerifiedException("인증되지 않은 유저입니다. 이메일인증을 해주세요");
     }
 
 }

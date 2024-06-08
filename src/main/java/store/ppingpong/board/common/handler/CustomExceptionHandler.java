@@ -81,4 +81,11 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), BAD_REQUEST);
     }
 
+    @ExceptionHandler(ResourceNotVerifiedException.class)
+    public ResponseEntity<ResponseDto<?>> resourceNotVerifiedException(ResourceNotVerifiedException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), UNAUTHORIZED);
+    }
+
+
+
 }

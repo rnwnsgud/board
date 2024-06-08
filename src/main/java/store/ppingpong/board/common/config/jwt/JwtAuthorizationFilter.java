@@ -1,6 +1,6 @@
 package store.ppingpong.board.common.config.jwt;
 
-import com.auth0.jwt.exceptions.TokenExpiredException;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
+import store.ppingpong.board.common.util.CustomResponseUtil;
 
 import java.io.IOException;
 
@@ -38,16 +40,20 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        String requestURI = request.getRequestURI();
+        if (requestURI.equals("/api/users")) {
+            chain.doFilter(request, response);
+            return;
+        }
         if (isHeaderVerify(request, response)) {
             String accessToken = request.getHeader(ACCESS_HEADER).replace(TOKEN_PREFIX, "");
-
-            try {
-                LoginUser loginUser = jwtProvider.accessTokenVerify(accessToken);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (TokenExpiredException e) {
-                log.error(e.getMessage());
+            if (jwtProvider.isExpired(accessToken)) {
+                CustomResponseUtil.response(response, ResponseDto.of(-1, "Access Token이 만료되었습니다."), 401);
+                return;
             }
+            LoginUser loginUser = jwtProvider.verify(accessToken);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         chain.doFilter(request, response);
     }

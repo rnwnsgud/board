@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Component;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotVerifiedException;
+import store.ppingpong.board.common.infrastructure.RedisService;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.dto.UserLoginReq;
 import store.ppingpong.board.user.dto.UserLoginResp;
@@ -24,9 +27,7 @@ import store.ppingpong.board.user.application.UserService;
 
 import java.io.IOException;
 
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static store.ppingpong.board.common.util.CustomDateUtil.convertToStringForHuman;
-import static store.ppingpong.board.common.util.CustomResponseUtil.fail;
 import static store.ppingpong.board.common.util.CustomResponseUtil.response;
 
 
@@ -36,12 +37,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
     private final UserService userService;
-    @Value("${jwt.access_header}")
-    private String accessHeader;
+    private final RedisService redisService;
+
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager,
-    JwtProvider jwtProvider, UserService userService) {
+                                   JwtProvider jwtProvider, UserService userService, RedisService redisService) {
         super(authenticationManager);
+        this.redisService = redisService;
         setFilterProcessesUrl("/api/users/login");
         this.authenticationManager = authenticationManager;
         this.jwtProvider = jwtProvider;
@@ -58,7 +60,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                     userLogin.getLoginId(), userLogin.getRawPassword());
 
             return authenticationManager.authenticate(authenticationToken);
-
+        } catch (ResourceNotVerifiedException e) {
+            throw e;
         } catch (Exception e) {
             throw new InternalAuthenticationServiceException(e.getMessage());
         }
@@ -67,12 +70,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         LoginUser loginUser = (LoginUser) authResult.getPrincipal();
-        String accessToken = jwtProvider.accessTokenCreate(loginUser);
-        response.addHeader(accessHeader, accessToken);
+        String accessToken = jwtProvider.create("access",loginUser, 600000L);
+        String refreshToken =  jwtProvider.create("refresh", loginUser, 86400000L);
+        response.addCookie(jwtProvider.createCookie("refresh", refreshToken));
+//        response.addHeader();
+        redisService.setValueExpire(loginUser.getUsername(), refreshToken, 86400);
         User user = loginUser.getUser();
         userService.login(user.getId());
         String createdAt = convertToStringForHuman(user.getCreatedAt(), "yyyy-MM-dd HH:mm:ss");
-        UserLoginResp userLoginResp = new UserLoginResp(user.getId(), user.getLoginInfo().getLoginId(), createdAt, accessToken);
+        UserLoginResp userLoginResp = new UserLoginResp(user.getId(), user.getLoginInfo().getLoginId(), createdAt, accessToken, refreshToken);
         response(response, userLoginResp, 200);
     }
 
