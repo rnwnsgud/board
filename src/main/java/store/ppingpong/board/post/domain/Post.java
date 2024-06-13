@@ -21,11 +21,12 @@ public class Post {
     private final String forumId;
     private final int visitCount;
     private final int likeCount;
+    private final int dislikeCount;
     private final LocalDateTime createdAt;
     private final LocalDateTime lastModifiedAt;
 
-    @Builder(access = AccessLevel.PRIVATE)
-    private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    @Builder
+    private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, int dislikeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -34,6 +35,7 @@ public class Post {
         this.forumId = forumId;
         this.visitCount = visitCount;
         this.likeCount = likeCount;
+        this.dislikeCount = dislikeCount;
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
@@ -57,6 +59,7 @@ public class Post {
                 .forumId(postEntity.getForumId())
                 .visitCount(postEntity.getVisitCount())
                 .likeCount(postEntity.getLikeCount())
+                .dislikeCount(postEntity.getDislikeCount())
                 .createdAt(postEntity.getCreatedAt())
                 .lastModifiedAt(postEntity.getLastModifiedAt())
                 .build();
@@ -72,6 +75,7 @@ public class Post {
                 .forumId(forumId)
                 .visitCount(visitCount+1)
                 .likeCount(likeCount)
+                .dislikeCount(dislikeCount)
                 .createdAt(createdAt)
                 .lastModifiedAt(lastModifiedAt)
                 .build();
@@ -83,7 +87,9 @@ public class Post {
 
     public Post like(ReactionType reactionType) {
         int likeCount = this.likeCount;
+        int dislikeCount = this.dislikeCount;
         if (reactionType == ReactionType.LIKE) likeCount++;
+        else dislikeCount++;
         return Post.builder()
                 .id(id)
                 .title(title)
@@ -93,6 +99,7 @@ public class Post {
                 .forumId(forumId)
                 .visitCount(visitCount)
                 .likeCount(likeCount)
+                .dislikeCount(dislikeCount)
                 .createdAt(createdAt)
                 .lastModifiedAt(lastModifiedAt)
                 .build();

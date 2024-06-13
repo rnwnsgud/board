@@ -49,4 +49,9 @@ public class PostRepositoryImpl implements PostRepository {
         return postJpaRepository.deleteById(id);
     }
 
+    @Override
+    public Post modify(Post post) {
+        return postJpaRepository.save(PostEntity.modify(post)).toModel();
+    }
+
 }

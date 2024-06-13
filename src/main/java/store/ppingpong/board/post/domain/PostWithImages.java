@@ -59,4 +59,21 @@ public class PostWithImages {
                 .build();
     }
 
+    public static PostWithImages modify(Post post, List<Image> images) {
+        return PostWithImages.builder()
+                .postId(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .images(images)
+                .postTypeId(post.getPostTypeId())
+                .userId(post.getUserId())
+                .forumId(post.getForumId())
+                .forumId(post.getForumId())
+                .visitCount(post.getVisitCount())
+                .likeCount(post.getLikeCount())
+                .dislikeCount(post.getDislikeCount())
+                .createdAt(post.getCreatedAt())
+                .build();
+    }
+
 }

@@ -11,5 +11,6 @@ public interface PostRepository {
     Post getById(long id);
     void inquiry(Post post);
     int delete(long id);
+    Post modify(Post post);
 
 }

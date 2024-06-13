@@ -27,12 +27,14 @@ public class PostEntity {
     private String forumId;
     private int visitCount;
     private int likeCount;
+    private int dislikeCount;
     @CreatedDate
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private PostEntity(String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private PostEntity(Long id, String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, int dislikeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.postTypeId = postTypeId;
@@ -40,6 +42,7 @@ public class PostEntity {
         this.forumId = forumId;
         this.visitCount = visitCount;
         this.likeCount = likeCount;
+        this.dislikeCount = dislikeCount;
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
@@ -53,6 +56,23 @@ public class PostEntity {
                 .forumId(post.getForumId())
                 .visitCount(post.getVisitCount())
                 .likeCount(post.getLikeCount())
+                .dislikeCount(post.getDislikeCount())
+                .createdAt(post.getCreatedAt())
+                .lastModifiedAt(post.getLastModifiedAt())
+                .build();
+    }
+
+    public static PostEntity modify(Post post) {
+        return PostEntity.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .postTypeId(post.getPostTypeId())
+                .userId(post.getUserId())
+                .forumId(post.getForumId())
+                .visitCount(post.getVisitCount())
+                .likeCount(post.getLikeCount())
+                .dislikeCount(post.getDislikeCount())
                 .createdAt(post.getCreatedAt())
                 .lastModifiedAt(post.getLastModifiedAt())
                 .build();

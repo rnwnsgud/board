@@ -7,11 +7,11 @@ import lombok.Getter;
 public class PostDeleteResponse {
 
     private final int status;
-    private final int deletedImageCount;
+    private final int deletedCount;
 
     @Builder
-    public PostDeleteResponse(int status, int deletedImageCount) {
+    public PostDeleteResponse(int status, int deletedCount) {
         this.status = status;
-        this.deletedImageCount = deletedImageCount;
+        this.deletedCount = deletedCount;
     }
 }
