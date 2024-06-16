@@ -6,8 +6,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -72,7 +70,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         LoginUser loginUser = (LoginUser) authResult.getPrincipal();
         String accessToken = jwtProvider.create("access",loginUser, 600000L);
         String refreshToken =  jwtProvider.create("refresh", loginUser, 86400000L);
-        response.addCookie(jwtProvider.createCookie("refresh", refreshToken));
+        response.addCookie(jwtProvider.cookieWithRefreshToken("refresh", refreshToken));
 //        response.addHeader();
         redisService.setValueExpire(loginUser.getUsername(), refreshToken, 86400);
         User user = loginUser.getUser();

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
 import store.ppingpong.board.common.config.jwt.JwtProvider;
+import store.ppingpong.board.common.infrastructure.RedisService;
 import store.ppingpong.board.user.domain.service.UserRegister;
 import store.ppingpong.board.user.dto.UserResponse;
 import store.ppingpong.board.user.domain.User;
@@ -31,6 +32,7 @@ public class UserAccountController {
     private final UserService userService;
     private final UserRegister userRegister;
     private final JwtProvider jwtProvider;
+    private final RedisService redisService;
 
     @PostMapping
     public ResponseEntity<UserResponse> sendEmail(@Valid @RequestBody UserCreate userCreate, BindingResult bindingResult) {
@@ -49,11 +51,18 @@ public class UserAccountController {
                 .build();
     }
 
-    @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
-        String refreshToken = jwtProvider.findToken(request, "refresh");
-        String newAccessToken = jwtProvider.reissue(refreshToken, response);
+    @PostMapping("/reissueAccessToken")
+    public ResponseEntity<?> reissueAccessToken(@AuthenticationPrincipal LoginUser loginUser, HttpServletRequest request, HttpServletResponse response) {
+        String refreshToken = jwtProvider.findTokenInCookie(request, "refresh");
+        String newAccessToken = jwtProvider.reissue(loginUser, refreshToken, response);
         return new ResponseEntity<>(ResponseDto.of(1, "access 토큰 재발급", newAccessToken), HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response, @AuthenticationPrincipal LoginUser loginUser) {
+        redisService.delete(loginUser.getUsername());
+        jwtProvider.vacate("refresh", response);
+        return new ResponseEntity<>(ResponseDto.of(1, "로그아웃 성공"), HttpStatus.OK);
     }
 
     @GetMapping("/check")

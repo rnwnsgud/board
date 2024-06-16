@@ -12,6 +12,9 @@ import store.ppingpong.board.common.handler.exception.file.FileNotSupportedExcep
 import store.ppingpong.board.common.handler.exception.file.FileUploadException;
 import store.ppingpong.board.common.handler.exception.join.CertificationCodeNotMatchedException;
 import store.ppingpong.board.common.handler.exception.join.EmailNotSupportedException;
+import store.ppingpong.board.common.handler.exception.jwt.AccessTokenExpired;
+import store.ppingpong.board.common.handler.exception.jwt.RefreshTokenExpired;
+import store.ppingpong.board.common.handler.exception.jwt.TokenInvalidException;
 import store.ppingpong.board.common.handler.exception.resource.*;
 
 
@@ -83,6 +86,21 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(ResourceNotVerifiedException.class)
     public ResponseEntity<ResponseDto<?>> resourceNotVerifiedException(ResourceNotVerifiedException e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(RefreshTokenExpired.class)
+    public ResponseEntity<ResponseDto<?>> refreshTokenExpired(RefreshTokenExpired e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessTokenExpired.class)
+    public ResponseEntity<ResponseDto<?>> accessTokenExpired(AccessTokenExpired e) {
+        return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(TokenInvalidException.class)
+    public ResponseEntity<ResponseDto<?>> tokenInvalidException(TokenInvalidException e) {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), UNAUTHORIZED);
     }
 

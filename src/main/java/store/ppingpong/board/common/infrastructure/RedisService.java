@@ -42,4 +42,10 @@ public class RedisService implements InMemoryService {
         return redisTemplate.getExpire(key);
     }
 
+    @Override
+    public void delete(String key) {
+        redisTemplate.delete(key);
+    }
+
+
 }

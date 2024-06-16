@@ -7,11 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import store.ppingpong.board.common.ResponseDto;
 import store.ppingpong.board.common.config.auth.LoginUser;
+import store.ppingpong.board.common.handler.exception.jwt.RefreshTokenExpired;
+import store.ppingpong.board.common.handler.exception.jwt.TokenInvalidException;
 import store.ppingpong.board.common.handler.exception.resource.ResourceNotFoundException;
 import store.ppingpong.board.common.infrastructure.RedisService;
-import store.ppingpong.board.common.util.CustomResponseUtil;
 import store.ppingpong.board.user.domain.User;
 
 
@@ -28,7 +28,6 @@ public class JwtProvider {
     @Value("${jwt.token_prefix}")
     private String TOKEN_PREFIX;
     private final RedisService redisService;
-
     private final SecretKey secretKey;
 
     public JwtProvider(@Value("${jwt.secret}") String secret, RedisService redisService) {
@@ -45,7 +44,7 @@ public class JwtProvider {
                     .claim("email", loginUser.getUsername())
                     .claim("role", loginUser.getUser().getUserInfo().getUserType().name())
                     .issuedAt(new Date(System.currentTimeMillis()))
-                    .expiration(new Date(System.currentTimeMillis()+expiration)) // 현재시간에다 더해줘야함.
+                    .expiration(new Date(System.currentTimeMillis()+expiration))
                     .signWith(secretKey)
                     .compact();
         } else jwtToken = Jwts.builder()
@@ -54,6 +53,7 @@ public class JwtProvider {
                 .claim("role", loginUser.getUser().getUserInfo().getUserType().name())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis()+expiration))
+                .signWith(secretKey)
                 .compact();
 
         return TOKEN_PREFIX + jwtToken;
@@ -71,10 +71,15 @@ public class JwtProvider {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
     }
 
-    public LoginUser verify(String token) {
+    private String getEmail(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("email", String.class);
+    }
+
+    public LoginUser verifyAccessToken(String token) {
         Long id = getId(token);
         String role = getRole(token);
-        User user = User.valueOf(id, role);
+        String email = getEmail(token);
+        User user = User.valueOf(id, role, email);
         return new LoginUser(user);
     }
 
@@ -86,8 +91,7 @@ public class JwtProvider {
         }
     }
 
-    public String findToken(HttpServletRequest request, String name) {
-
+    public String findTokenInCookie(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(name)) {
@@ -97,30 +101,39 @@ public class JwtProvider {
         throw new ResourceNotFoundException("refresh token 이 존재하지 않습니다.");
     }
 
-    public Cookie createCookie(String key, String value) {
-        value = URLEncoder.encode(value, StandardCharsets.UTF_8);
-        Cookie cookie = new Cookie(key, value);
+    public Cookie cookieWithRefreshToken(String key, String value) {
+        String replacedValue = value.replace(TOKEN_PREFIX, "");
+        replacedValue = URLEncoder.encode(replacedValue, StandardCharsets.UTF_8);
+        Cookie cookie = new Cookie(key, replacedValue);
         cookie.setMaxAge(24*60*60);
+//        cookie.setSecure(true); https
+        cookie.setPath("/");
         cookie.setHttpOnly(true);
         return cookie;
     }
 
-    public String reissue(String token, HttpServletResponse response) {
-        try {
-            isExpired(token);
-        } catch (ExpiredJwtException e) {
-            CustomResponseUtil.response(response, ResponseDto.of(-1, "토큰 기한이 만료되었습니다."), 401);
-        }
-        String category = getCategory(token);
-        if (!category.equals("refresh")) {
-            CustomResponseUtil.response(response, ResponseDto.of(-1, "refresh 토큰이 아닙니다."), 401);
-        }
-        LoginUser loginUser = verify(token);
+    public void vacate(String name, HttpServletResponse response) {
+        Cookie cookie = new Cookie(name, "");
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
+
+    public String reissue(LoginUser loginUser, String refreshToken, HttpServletResponse response) {
+        verifyRefreshToken(refreshToken, loginUser.getUserId());
         String accessToken = create("access",loginUser, 600000L);
-        String refreshToken =  create("refresh", loginUser, 86400000L);
-        redisService.setValueExpire(loginUser.getUsername(), refreshToken, 86400);
-        response.addCookie(createCookie("refresh", refreshToken));
+        String newRefreshToken =  create("refresh", loginUser, 86400000L);
+        redisService.setValueExpire(loginUser.getUsername(), newRefreshToken, 86400);
+        response.addCookie(cookieWithRefreshToken("refresh", newRefreshToken));
         return accessToken;
+    }
+
+    private void verifyRefreshToken(String refreshToken, Long userId) {
+        if (isExpired(refreshToken)) throw new RefreshTokenExpired();
+        String category = getCategory(refreshToken);
+        if (!category.equals("refresh")) throw new TokenInvalidException("토큰이 유효하지 않습니다.");
+        Long id = getId(refreshToken);
+        if (!id.equals(userId)) throw new TokenInvalidException("토큰이 유효하지 않습니다.");
     }
 
 

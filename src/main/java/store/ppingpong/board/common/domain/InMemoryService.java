@@ -10,5 +10,7 @@ public interface InMemoryService {
 
     Long getExpirationTime(String key);
 
+    void delete(String key);
+
 
 }

@@ -47,15 +47,15 @@ public class User {
                 .build();
     }
 
-    public static User valueOf(long id, String role) {
+    public static User valueOf(long id, String role, String email) {
         UserType userType = UserType.USER;
-        UserType[] userTypes = {UserType.USER,  UserType.ADMIN};
-
-        for (UserType tmp : userTypes) {
-            if (tmp.name().equals(role)) userType = tmp;
+        for (UserType value : UserType.values()) {
+            if (value.name().equals(role)) userType = value;
         }
+
         UserInfo userInfo = UserInfo.builder()
                 .userType(userType)
+                .email(email)
                 .build();
 
         return User.builder()
