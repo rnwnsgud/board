@@ -1,10 +1,7 @@
 package store.ppingpong.board.post.infrastructure;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import store.ppingpong.board.post.domain.Post;
@@ -14,6 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "post_tb")
 public class PostEntity {
@@ -31,21 +30,6 @@ public class PostEntity {
     @CreatedDate
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
-
-    @Builder(access = AccessLevel.PRIVATE)
-    private PostEntity(Long id, String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, int dislikeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.postTypeId = postTypeId;
-        this.userId = userId;
-        this.forumId = forumId;
-        this.visitCount = visitCount;
-        this.likeCount = likeCount;
-        this.dislikeCount = dislikeCount;
-        this.createdAt = createdAt;
-        this.lastModifiedAt = lastModifiedAt;
-    }
 
     public static PostEntity from(Post post) {
         return PostEntity.builder()

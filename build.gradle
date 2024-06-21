@@ -26,12 +26,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.auth0:java-jwt:4.0.0'
 
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.1'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.4'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.5'
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 
 	testImplementation 'org.projectlombok:lombok:1.18.28'
 

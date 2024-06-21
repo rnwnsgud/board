@@ -18,6 +18,8 @@ import store.ppingpong.board.forum.domain.Forum;
 import store.ppingpong.board.forum.dto.*;
 import store.ppingpong.board.forum.application.ForumManagerService;
 import store.ppingpong.board.forum.application.ForumService;
+import store.ppingpong.board.forum.infrastructure.ForumDocument;
+import store.ppingpong.board.forum.infrastructure.ForumDocumentRepository;
 import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.PostService;
 import store.ppingpong.board.user.domain.User;
@@ -35,12 +37,14 @@ public class ForumController {
     private final PostService postService;
     private final UserRepository userRepository;
     private final ClockLocalHolder clockLocalHolder;
+    private final ForumDocumentRepository forumDocumentRepository;
 
     @PostMapping("/api/s/forums")
     public ResponseEntity<ResponseDto<ForumResponse>> create(@RequestBody @Valid ForumCreate forumCreate, BindingResult bindingResult,
                                                              @AuthenticationPrincipal LoginUser loginUser) {
         User user = loginUser.getUser();
         Forum forum = forumService.create(forumCreate, user);
+        forumDocumentRepository.save(ForumDocument.from(forum));
         return new ResponseEntity<>(ResponseDto.of(1, "포럼의 생성 성공", ForumResponse.from(forum)), HttpStatus.CREATED);
     }
 
@@ -52,20 +56,27 @@ public class ForumController {
 
     @GetMapping("/api/forums/{forumId}")
     public ResponseEntity<ResponseDto<ForumDetailResponse>> get(@PathVariable("forumId") String forumId, @RequestParam(value = "listNum", required = false) Integer listNum,
-                                                                @RequestParam(value = "search_head", required = false) Long searchHead,@PageableDefault(page = 1) Pageable pageable) {
+                                                                @RequestParam(value = "search_head", required = false) Long searchHead, @PageableDefault(page = 1) Pageable pageable) {
         Forum forum = forumService.getById(forumId);
         User forumManager = userRepository.findForumManager(forumId);
         Page<PostWithWriter> postWithWriters = postService.getList(forumId, listNum, searchHead, pageable);
         List<User> forumAssistant = userRepository.findForumAssistant(forumId);
         return new ResponseEntity<>(ResponseDto.of(1, "해당 포럼 상세정보 가져오기 성공", ForumDetailResponse.of(forum, forumManager, forumAssistant, postWithWriters)), HttpStatus.OK);
     }
+
     @PatchMapping("/api/s/forums/{forumId}")
     public ResponseEntity<ResponseDto<ForumUpdateResponse>> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,
-                                    BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
+                                                                   BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser) {
         User authorizedUser = userRepository.findManagerOrAssistant(forumId, loginUser.getUser().getId());
         Forum forum = forumService.modify(forumId, forumUpdate);
         return new ResponseEntity<>(ResponseDto.of(1, "포럼 수정 성공", ForumUpdateResponse.of(forum, authorizedUser, clockLocalHolder)), HttpStatus.OK);
     }
 
-
+    @GetMapping("/api/forums/search")
+    public ResponseEntity<?> search(@RequestParam(value = "keyword") String keyword) {
+        List<ForumDocumentResponse> forumDocumentResponses = forumDocumentRepository.findByNameContainsIgnoreCase(keyword)
+                .stream().map((forumDocument) -> new ForumDocumentResponse(forumDocument.getName()))
+                .toList();
+        return new ResponseEntity<>(ResponseDto.of(1, "포럼 검색 성공", forumDocumentResponses), HttpStatus.OK);
+    }
 }
