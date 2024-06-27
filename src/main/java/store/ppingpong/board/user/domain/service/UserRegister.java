@@ -7,6 +7,7 @@ import store.ppingpong.board.common.domain.RandomHolder;
 import store.ppingpong.board.user.application.CertificationService;
 import store.ppingpong.board.user.application.UserService;
 import store.ppingpong.board.user.domain.User;
+import store.ppingpong.board.user.domain.UserStatus;
 import store.ppingpong.board.user.dto.UserCreate;
 
 @RequiredArgsConstructor
@@ -23,4 +24,10 @@ public class UserRegister {
         certificationService.send(userCreate.getEmail(), user.getId(), certificationCode);
         return user;
     }
+
+    public void cancel(Long userId) {
+        User user = userService.getById(userId);
+        if (user.getUserStatus() == UserStatus.PENDING) userService.deleteById(userId);
+    }
+
 }

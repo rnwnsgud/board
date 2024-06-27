@@ -28,7 +28,6 @@ import java.util.Collection;
 @Builder
 @RestController
 public class UserAccountController {
-
     private final UserService userService;
     private final UserRegister userRegister;
     private final JwtProvider jwtProvider;
@@ -42,12 +41,20 @@ public class UserAccountController {
                 .body(UserResponse.from(user));
     }
 
-    @GetMapping("/{id}/verify")
+    @GetMapping("/{id}")
     public ResponseEntity<Void> verifyEmail(
             @PathVariable("id") Long id,
             @RequestParam("certificationCode") String certificationCode) {
         userService.verifyEmail(id, certificationCode);
         return ResponseEntity.status(HttpStatus.OK)
+                .build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> cancelRegister(@PathVariable("id") Long id) {
+        userService.getById(id);
+        userRegister.cancel(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .build();
     }
 
@@ -77,4 +84,6 @@ public class UserAccountController {
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
     }
+
+
 }

@@ -2,6 +2,7 @@ package store.ppingpong.board.user.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import store.ppingpong.board.common.handler.exception.resource.ResourceNotFoundException;
 import store.ppingpong.board.user.domain.User;
 import store.ppingpong.board.user.application.port.UserRepository;
@@ -31,6 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
         return findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
+    @Transactional
     @Override
     public User save(User user) {
         return userJpaRepository.save(UserEntity.from(user)).toModel();
@@ -66,6 +68,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean existsById(Long id) {
         return userJpaRepository.existsById(id);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userJpaRepository.deleteById(id);
     }
 
 }

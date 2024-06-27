@@ -24,4 +24,6 @@ public interface UserRepository {
     void verify(User user);
 
     boolean existsById(Long id);
+
+    void deleteById(Long id);
 }

@@ -16,6 +16,6 @@ public class CertificationService {
     }
 
     private String generateCertificationUrl(Long userId, String certificationCode) {
-        return "http://localhost:8080/api/users/" + userId + "/verify?certificationCode=" + certificationCode;
+        return "http://localhost:8080/api/users/" + userId + "?certificationCode=" + certificationCode;
     }
 }
