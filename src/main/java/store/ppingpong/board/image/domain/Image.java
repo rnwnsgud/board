@@ -13,7 +13,7 @@ public class Image {
     private final String imageUrl;
     private final FileExtension fileExtension;
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder
     private Image(Long postId, String originalName, String storedName, String imageUrl, FileExtension fileExtension) {
         this.postId = postId;
         this.originalName = originalName;

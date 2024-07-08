@@ -13,6 +13,8 @@ import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.domain.PostWithWriter;
 import store.ppingpong.board.post.application.port.PostRepository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class PostRepositoryImpl implements PostRepository {
@@ -52,6 +54,11 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Post modify(Post post) {
         return postJpaRepository.save(PostEntity.modify(post)).toModel();
+    }
+
+    @Override
+    public List<PostWithWriter> getNotice(String forumId) {
+        return postJpaRepository.findByForumIdAndNoticeTrue(forumId);
     }
 
 }

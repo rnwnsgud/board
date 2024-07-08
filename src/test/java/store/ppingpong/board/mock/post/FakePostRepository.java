@@ -68,5 +68,15 @@ public class FakePostRepository implements PostRepository {
         else return 0;
     }
 
+    @Override
+    public Post modify(Post post) {
+        return null;
+    }
+
+    @Override
+    public List<PostWithWriter> getNotice(String forumId) {
+        return null;
+    }
+
 
 }

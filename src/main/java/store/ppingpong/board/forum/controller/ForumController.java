@@ -54,15 +54,16 @@ public class ForumController {
         return new ResponseEntity<>(ResponseDto.of(1, "ACTIVE 상태인 포럼 리스트 가져오기 성공", ForumListResponse.from(forums)), HttpStatus.OK);
     }
 
-    @GetMapping("/api/forums/{forumId}")
-    public ResponseEntity<ResponseDto<ForumDetailResponse>> get(@PathVariable("forumId") String forumId, @RequestParam(value = "listNum", required = false) Integer listNum,
-                                                                @RequestParam(value = "search_head", required = false) Long searchHead, @PageableDefault(page = 1) Pageable pageable) {
-        Forum forum = forumService.getById(forumId);
-        User forumManager = userRepository.findForumManager(forumId);
-        Page<PostWithWriter> postWithWriters = postService.getList(forumId, listNum, searchHead, pageable);
-        List<User> forumAssistant = userRepository.findForumAssistant(forumId);
-        return new ResponseEntity<>(ResponseDto.of(1, "해당 포럼 상세정보 가져오기 성공", ForumDetailResponse.of(forum, forumManager, forumAssistant, postWithWriters)), HttpStatus.OK);
-    }
+        @GetMapping("/api/forums/{forumId}")
+        public ResponseEntity<?> get(@PathVariable("forumId") String forumId, @RequestParam(value = "page_size", required = false) int pageSize,
+                                                                    @RequestParam(value = "search_head", required = false) long searchHead, @PageableDefault(page = 1) Pageable pageable) {
+            Forum forum = forumService.getById(forumId);
+            User forumManager = userRepository.findForumManager(forumId);
+            List<PostWithWriter> notice = postService.getNotice(forumId);
+            Page<PostWithWriter> postWithWriters = postService.getList(forumId, pageSize, searchHead, pageable);
+            List<User> forumAssistant = userRepository.findForumAssistant(forumId);
+            return new ResponseEntity<>(ResponseDto.of(1, "게시글 리스트 조회 성공", ForumDetailResponse.of(forum, forumManager, forumAssistant, postWithWriters, notice)), HttpStatus.OK);
+        }
 
     @PatchMapping("/api/s/forums/{forumId}")
     public ResponseEntity<ResponseDto<ForumUpdateResponse>> modify(@PathVariable("forumId") String forumId, @RequestBody @Valid ForumUpdate forumUpdate,

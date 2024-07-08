@@ -35,4 +35,9 @@ public class FakeRedisService implements InMemoryService {
         return expirationTimes.get(key);
     }
 
+    @Override
+    public void delete(String key) {
+
+    }
+
 }

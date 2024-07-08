@@ -27,6 +27,7 @@ public class PostEntity {
     private int visitCount;
     private int likeCount;
     private int dislikeCount;
+    private boolean notice;
     @CreatedDate
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
@@ -41,6 +42,7 @@ public class PostEntity {
                 .visitCount(post.getVisitCount())
                 .likeCount(post.getLikeCount())
                 .dislikeCount(post.getDislikeCount())
+                .notice(post.isNotice())
                 .createdAt(post.getCreatedAt())
                 .lastModifiedAt(post.getLastModifiedAt())
                 .build();

@@ -1,6 +1,7 @@
 package store.ppingpong.board.post.domain;
 
 import org.junit.jupiter.api.Test;
+import store.ppingpong.board.common.handler.exception.resource.ResourceNotOwnerException;
 import store.ppingpong.board.mock.forum.TestClockLocalHolder;
 import store.ppingpong.board.post.dto.PostCreateRequest;
 
@@ -55,6 +56,18 @@ public class PostTest {
                 .build();
         // when
         post.checkPostOwner(1L);
+    }
+
+    @Test
+    void Post_소유자가_아닐_시_예외가_발생한다() {
+        // given
+        Post post = Post.builder()
+                .id(1L)
+                .userId(1L)
+                .build();
+        // when
+        assertThatThrownBy(() -> post.checkPostOwner(2L))
+                .isInstanceOf(ResourceNotOwnerException.class);
     }
 
 

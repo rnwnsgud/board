@@ -14,22 +14,26 @@ public class ForumDetailResponse {
     private final String introduction;
     private final String managerName;
     private final List<String> assistantNames;
+    private final List<PostWithWriter> notice;
     private final Page<PostWithWriter> postWithWriters;
 
-    private ForumDetailResponse(String name, String introduction, String managerName, List<String> assistantNames, Page<PostWithWriter> postWithWriters) {
+    private ForumDetailResponse(String name, String introduction, String managerName, List<String> assistantNames
+            , Page<PostWithWriter> postWithWriters, List<PostWithWriter> notice) {
         this.name = name;
         this.introduction = introduction;
         this.managerName = managerName;
         this.assistantNames = assistantNames;
         this.postWithWriters = postWithWriters;
+        this.notice = notice;
     }
 
-    public static ForumDetailResponse of(Forum forum, User forumManager, List<User> forumAssistant, Page<PostWithWriter> postWithWriters) {
+    public static ForumDetailResponse of(Forum forum, User forumManager, List<User> forumAssistant
+            , Page<PostWithWriter> postWithWriters, List<PostWithWriter> notice) {
         String managerName = forumManager.getUserInfo().getNickname() + "(" + forumManager.getLoginInfo().getLoginId() + ")";
         List<String> assistantNames = forumAssistant.stream()
                 .map(assistant -> assistant.getUserInfo().getNickname() + "(" + assistant.getLoginInfo().getLoginId() + ")")
                 .toList();
-        return new ForumDetailResponse(forum.getName(), forum.getIntroduction(), managerName, assistantNames, postWithWriters);
+        return new ForumDetailResponse(forum.getName(), forum.getIntroduction(), managerName, assistantNames, postWithWriters, notice);
     }
 
 }

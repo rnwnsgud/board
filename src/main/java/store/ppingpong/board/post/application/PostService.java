@@ -3,6 +3,7 @@ package store.ppingpong.board.post.application;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
@@ -61,8 +62,14 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PostWithWriter> getList(String forumId, int listNum, Long search_head, Pageable pageable) {
-        return postRepository.findByForumId(forumId, listNum, search_head, pageable);
+    public Page<PostWithWriter> getList(String forumId, int pageSize, Long search_head, Pageable pageable) {
+        return postRepository.findByForumId(forumId, pageSize, search_head, pageable);
+    }
+
+    @Cacheable("notice")
+    @Transactional(readOnly = true)
+    public List<PostWithWriter> getNotice(String forumId) {
+        return postRepository.getNotice(forumId);
     }
 
 
@@ -113,7 +120,5 @@ public class PostService {
         List<Image> images = uploadImages(multipartFiles, post);
         return PostWithImages.modify(post, images);
     }
-
-
 
 }

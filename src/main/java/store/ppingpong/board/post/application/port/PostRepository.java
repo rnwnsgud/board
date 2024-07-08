@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 import store.ppingpong.board.post.domain.Post;
 import store.ppingpong.board.post.domain.PostWithWriter;
 
+import java.util.List;
+
 public interface PostRepository {
     Post create(Post post);
     Page<PostWithWriter> findByForumId(String forumId, Integer listNum, Long search_head, Pageable pageable);
@@ -12,5 +14,7 @@ public interface PostRepository {
     void inquiry(Post post);
     int delete(long id);
     Post modify(Post post);
+
+    List<PostWithWriter> getNotice(String forumId);
 
 }

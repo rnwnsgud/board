@@ -39,7 +39,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String requestURI = request.getRequestURI();
-        if (requestURI.startsWith("/api/users")) {
+        if (requestURI.equals("/api/users")) {
             chain.doFilter(request, response);
             return;
         }

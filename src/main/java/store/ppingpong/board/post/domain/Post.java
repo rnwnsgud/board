@@ -1,7 +1,6 @@
 package store.ppingpong.board.post.domain;
 
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import store.ppingpong.board.common.domain.ClockLocalHolder;
@@ -19,14 +18,16 @@ public class Post {
     private final Long postTypeId;
     private final Long userId;
     private final String forumId;
+    // TODO : PostDetail? PostCount? 분리? 도메인성숙도? : https://youtu.be/X46Php6A4Rs?si=sRdZgic4Q3SGe4Lj => 운영하면서 깨닫는 듯. 성급히 할 필요는 없다.
     private final int visitCount;
     private final int likeCount;
     private final int dislikeCount;
+    private final boolean notice;
     private final LocalDateTime createdAt;
     private final LocalDateTime lastModifiedAt;
 
     @Builder
-    private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, int dislikeCount, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
+    private Post(Long id, String title, String content, Long postTypeId, Long userId, String forumId, int visitCount, int likeCount, int dislikeCount, boolean notice, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -36,6 +37,7 @@ public class Post {
         this.visitCount = visitCount;
         this.likeCount = likeCount;
         this.dislikeCount = dislikeCount;
+        this.notice = notice;
         this.createdAt = createdAt;
         this.lastModifiedAt = lastModifiedAt;
     }
@@ -46,6 +48,7 @@ public class Post {
                 .postTypeId(postCreateRequest.getPostTypeId())
                 .userId(userId)
                 .forumId(forumId)
+                .notice(postCreateRequest.isNotice())
                 .createdAt(clockLocalHolder.localMills())
                 .build();
     }

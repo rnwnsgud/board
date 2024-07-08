@@ -1,5 +1,6 @@
 package store.ppingpong.board.common.handler;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,8 @@ import store.ppingpong.board.common.handler.exception.jwt.RefreshTokenExpired;
 import store.ppingpong.board.common.handler.exception.jwt.TokenInvalidException;
 import store.ppingpong.board.common.handler.exception.resource.*;
 
+
+import java.util.Arrays;
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -103,7 +106,6 @@ public class CustomExceptionHandler {
     public ResponseEntity<ResponseDto<?>> tokenInvalidException(TokenInvalidException e) {
         return new ResponseEntity<>(ResponseDto.of(-1,e.getMessage()), UNAUTHORIZED);
     }
-
 
 
 }

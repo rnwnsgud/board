@@ -95,7 +95,7 @@ public class PostServiceTest {
                 .content("conetent")
                 .postTypeId(1L)
                 .build();
-        User user = User.valueOf(2L, "USER");
+        User user = User.valueOf(2L, "USER", "abc@naver.com");
         LoginUser loginUser = new LoginUser(user);
 
         PostCreateResponse postCreateResponse = postService.create(postCreateRequest, 1L, "reverse1999", null);
@@ -143,8 +143,8 @@ public class PostServiceTest {
     @Test
     void Post는_User의_방문사실을_기록할_수_있다() throws IOException {
         // given
-        LoginUser loginUser = new LoginUser(User.valueOf(1L, "USER"));
-        LoginUser loginUser2 = new LoginUser(User.valueOf(2L, "USER"));
+        LoginUser loginUser = new LoginUser(User.valueOf(1L, "USER", "abc@naver.com"));
+        LoginUser loginUser2 = new LoginUser(User.valueOf(2L, "USER", "abc@naver.com"));
 
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
                 .title("title")
@@ -191,7 +191,7 @@ public class PostServiceTest {
 
         // then
         assertThat(postDeleteResponse.getStatus()).isEqualTo(1);
-        assertThat(postDeleteResponse.getDeletedImageCount()).isEqualTo(2);
+        assertThat(postDeleteResponse.getDeletedCount()).isEqualTo(2);
     }
 
 
